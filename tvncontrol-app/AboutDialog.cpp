@@ -48,11 +48,6 @@ void AboutDialog::onCloseButtonClick()
   kill(IDCANCEL);
 }
 
-void AboutDialog::onOrderSupportButtonClock()
-{
-  openUrl(StringTable::getString(IDS_URL_LICENSING_FSA));
-}
-
 void AboutDialog::onVisitSiteButtonClick()
 {
   openUrl(StringTable::getString(IDS_URL_PRODUCT_FSA));
@@ -119,9 +114,6 @@ BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
   switch (controlID) {
   case IDCANCEL:
     onCloseButtonClick();
-    break;
-  case IDC_ORDER_SUPPORT_BUTTON:
-    onOrderSupportButtonClock();
     break;
   case IDC_VISIT_WEB_SITE_BUTTON:
     onVisitSiteButtonClick();

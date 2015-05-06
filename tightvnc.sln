@@ -38,7 +38,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "http-server-lib", "http-ser
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rfb", "rfb\rfb.vcxproj", "{CEA92B3A-5467-4CC7-80A6-227891F96C05}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tvnserver-app", "tvnserver-app\tvnserver-app.vcxproj", "{EBFC3125-72A4-4029-9941-3BE9EE6444D5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhserver-app", "tvnserver-app\tvnserver-app.vcxproj", "{EBFC3125-72A4-4029-9941-3BE9EE6444D5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62} = {1E316AB4-E681-4F2B-97A7-CD7DE904AF62}
 	EndProjectSection
@@ -53,9 +53,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fb-update-sender", "fb-upda
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rfb-sconn", "rfb-sconn\rfb-sconn.vcxproj", "{5EA5D675-A827-4CC5-8B2A-5639119E3185}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tvncontrol-app", "tvncontrol-app\tvncontrol-app.vcxproj", "{FC19FFE8-6294-4F1A-8D7A-281C93C5C040}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhcontrol-app", "tvncontrol-app\tvncontrol-app.vcxproj", "{FC19FFE8-6294-4F1A-8D7A-281C93C5C040}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tvnserver", "tvnserver\tvnserver.vcxproj", "{D622BCC0-80B6-452E-8C34-9E7A27633C8F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhserver", "tvnserver\tvnserver.vcxproj", "{D622BCC0-80B6-452E-8C34-9E7A27633C8F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log-server", "log-server\log-server.vcxproj", "{7D22B0DC-D240-47DB-AC6B-165AE3C0C54D}"
 EndProject
@@ -65,7 +65,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win-event-log", "win-event-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tcp-dispatcher", "tcp-dispatcher\tcp-dispatcher.vcxproj", "{9A7033FA-6263-425D-83BF-A1D9F48BA997}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tvnviewer", "tvnviewer\tvnviewer.vcxproj", "{082F71AD-CDF6-44DE-84F7-9D2D16784B23}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhviewer", "tvnviewer\tvnviewer.vcxproj", "{082F71AD-CDF6-44DE-84F7-9D2D16784B23}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "viewer-core", "viewer-core\viewer-core.vcxproj", "{3EA91983-D9EB-4369-8167-130122BFDF07}"
 EndProject

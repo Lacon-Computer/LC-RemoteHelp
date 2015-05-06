@@ -38,6 +38,7 @@
     <ProjectGuid>{FC19FFE8-6294-4F1A-8D7A-281C93C5C040}</ProjectGuid>
     <RootNamespace>wscontrollib</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>lcrhcontrol-app</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'" Label="Configuration">

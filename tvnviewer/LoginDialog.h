@@ -80,7 +80,6 @@ private:
   void onConnect();
   void onConfiguration();
   BOOL onOptions();
-  void onOrder();
   void openUrl(const TCHAR *url);
   void onListening();
   void onAbout();

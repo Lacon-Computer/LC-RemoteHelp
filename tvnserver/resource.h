@@ -1,4 +1,4 @@
-//{{NO_DEPENDENCIES}}
+﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by tvnserver.rc
 //
@@ -42,7 +42,6 @@
 #define IDC_VIDEO_RECOGNITION_INTERVAL  1018
 #define IDC_APPLY                       1019
 #define IDC_LOG_FOR_ALL_USERS           1020
-#define IDC_ORDER_SUPPORT_BUTTON        1021
 #define IDC_UNSET_PRIMARY_PASSWORD_BUTTON 1022
 #define IDC_BLOCK_REMOTE_INPUT          1023
 #define IDC_DISPATCH_KEYWORD            1024
@@ -187,7 +186,6 @@
 #define IDS_AUTO_ACCEPT_CONNECTION_FORMAT 40069
 #define IDS_AUTO_REJECT_CONNECTION_FORMAT 40070
 #define IDS_INVALID_CONTROL_PASSWORD    40071
-#define IDS_URL_LICENSING_FSA           40072
 #define IDS_URL_PRODUCT_FSA             40073
 #define IDS_SERVICE_STOP_TIMEOUT        40074
 #define IDS_SERVICE_START_TIMEOUT       40075

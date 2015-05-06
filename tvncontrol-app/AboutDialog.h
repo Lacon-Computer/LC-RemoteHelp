@@ -48,10 +48,6 @@ protected:
    */
   void onCloseButtonClick();
   /**
-   * Called when user press "Order Technical Support" button.
-   */
-  void onOrderSupportButtonClock();
-  /**
    * Called when user press "Visit Web Site" button.
    */
   void onVisitSiteButtonClick();

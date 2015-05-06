@@ -12,7 +12,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Русский (Россия) resources
+// Russian (Russia) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
@@ -40,12 +40,12 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Русский (Россия) resources
+#endif    // Russian (Russia) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Английский (США) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -67,7 +67,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "About...",                    ID_ABOUT_TIGHTVNC_MENUITEM
         MENUITEM SEPARATOR
-        MENUITEM "Shutdown TightVNC Server",    ID_SHUTDOWN_SERVICE
+        MENUITEM "Shutdown LC RemoteHelp Server", ID_SHUTDOWN_SERVICE
         MENUITEM "Close Control Interface",     ID_CLOSE_CONTROL_INTERFACE
     END
 END
@@ -78,20 +78,18 @@ END
 // Dialog
 //
 
-IDD_ABOUT_DIALOG DIALOGEX 0, 0, 308, 138
+IDD_ABOUT_DIALOG DIALOGEX 0, 0, 309, 101
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "About TightVNC Server"
+CAPTION "About LC RemoteHelp Server"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
-    CONTROL         127,IDC_STATIC,"Static",SS_BITMAP | WS_GROUP,24,14,60,55
-    LTEXT           "TightVNC Server for Windows",IDC_STATIC,107,12,189,10
+    CONTROL         IDB_LOGO_BIG,IDC_STATIC,"Static",SS_BITMAP | WS_GROUP,24,14,60,55
+    LTEXT           "LC RemoteHelp Server for Windows",IDC_STATIC,107,12,189,10
     LTEXT           "Version unknown, build time unknown",IDC_STATIC_VERSION,107,20,189,10
-    LTEXT           "Copyright (C) 2008-2013 GlavSoft LLC.\nAll Rights Reserved.",IDC_STATIC,107,38,189,18
-    LTEXT           "",IDC_STATIC_LICENSING,107,64,189,10
-    LTEXT           "We provide technical support, development and customization services on TightVNC.\nThe source code is available commercially as well, if the GPL license is not acceptable.\nPlease visit the Web site for more information on our products.",IDC_STATIC,13,81,283,26
-    DEFPUSHBUTTON   "Visit the Web Site",IDC_VISIT_WEB_SITE_BUTTON,7,116,94,15,WS_GROUP
-    PUSHBUTTON      "Commercial Licensing",IDC_ORDER_SUPPORT_BUTTON,107,116,94,15
-    PUSHBUTTON      "Close This Window",IDCANCEL,207,116,94,15
+    LTEXT           "Copyright (C) 2015 Lacon Computer\nCopyright (C) 2008-2013 GlavSoft LLC.\nAll Rights Reserved.",IDC_STATIC,107,38,189,24
+    LTEXT           "",IDC_STATIC_LICENSING,107,66,189,10
+    DEFPUSHBUTTON   "Visit the Web Site",IDC_VISIT_WEB_SITE_BUTTON,7,78,94,16,WS_GROUP
+    PUSHBUTTON      "Close This Window",IDCANCEL,208,78,94,16
 END
 
 IDD_CHANGE_PASSWORD DIALOGEX 0, 0, 126, 87
@@ -108,9 +106,9 @@ BEGIN
 END
 
 IDD_CONFIG DIALOGEX 0, 0, 319, 246
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTROLPARENT
-CAPTION "TightVNC Server Configuration"
+CAPTION "LC RemoteHelp Server Configuration"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,154,225,50,15,WS_GROUP
@@ -198,7 +196,7 @@ BEGIN
     PUSHBUTTON      "Edit...",IDC_EDIT_PORT,240,47,50,15,WS_DISABLED
     PUSHBUTTON      "Remove",IDC_REMOVE_PORT,240,66,50,15,WS_DISABLED
     GROUPBOX        "Help",IDC_STATIC,6,95,293,98,WS_GROUP
-    LTEXT           "By default, TightVNC Server listens for incoming connections on just one main TCP port, and shows the complete desktop to its clients.",IDC_STATIC,16,108,274,24
+    LTEXT           "By default, LC RemoteHelp Server listens for incoming connections on just one main TCP port, and shows the complete desktop to its clients.",IDC_STATIC,16,108,274,24
     LTEXT           "However, it's possible to make it listen on a number of extra ports, where each port has a specific area of the screen associated with it. If a client then connects to an extra port, only that part of the screen will be shown.",IDC_STATIC,16,132,274,32
     LTEXT           "Screen areas are represented by patterns like 640x480+120+240 (in this example, width is 640, height is 480, horizontal offset is 120 and vertical offset is 240 pixels).",IDC_STATIC,16,164,274,24
 END
@@ -267,17 +265,17 @@ BEGIN
     LTEXT           "ms",IDC_STATIC,149,85,18,10
     CONTROL         "",IDC_VIDEO_RECOGNITION_INTERVAL_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS,162,81,11,14
     GROUPBOX        "Help",IDC_STATIC,6,104,293,89
-    LTEXT           "TightVNC cannot detect video windows on the screen automatically (that cannot be done reliably). However, you can help it by providing a list of window class names to be recognized as video windows.",IDC_STATIC,16,117,273,26
+    LTEXT           "LC RemoteHelp cannot detect video windows on the screen automatically (that cannot be done reliably). However, you can help it by providing a list of window class names to be recognized as video windows.",IDC_STATIC,16,117,273,26
     LTEXT           "Class name is a special string assigned to each window (e.g. certain versions of Windows Media Player show video in windows with ""WMPlayerApp"" class name).",IDC_STATIC,16,169,273,18
     LTEXT           "Once such a video window is found, its contents will be encoded with JPEG and sent to the viewer continuously with minimum delays.",IDC_STATIC,16,147,273,18
 END
 
 IDD_CONTROL_AUTH DIALOGEX 0, 0, 186, 78
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "TightVNC Control Authentication"
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "LC RemoteHelp Control Authentication"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
-    LTEXT           "This operation requires authentication on the TightVNC Server.  Please enter the administrative password as set in the server's configuration.",IDC_STATIC,7,7,172,26
+    LTEXT           "This operation requires authentication on the LC RemoteHelp Server.  Please enter the administrative password as set in the server's configuration.",IDC_STATIC,7,7,172,26
     LTEXT           "Administrative password:",IDC_STATIC,7,38,84,10
     EDITTEXT        IDC_PASSWORD_EDIT,100,36,77,12,ES_PASSWORD | ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,39,56,50,15,WS_GROUP
@@ -336,11 +334,11 @@ BEGIN
 END
 
 IDD_OUTGOING_CONN DIALOGEX 0, 0, 257, 107
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Attach Listening Viewer"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
-    LTEXT           "Here you can attach a TightVNC Viewer running in the Listening Mode.\nThis is called a reverse connection, since the server connects to a client.",IDC_STATIC,7,7,243,18
+    LTEXT           "Here you can attach a LC RemoteHelp Viewer running in the Listening Mode.\nThis is called a reverse connection, since the server connects to a client.",IDC_STATIC,7,7,243,18
     LTEXT           "To specify a TCP port, append it after two colons (myhost::443).  A number up to 99 after just one colon specifies an offset from the default port 5500.",IDC_STATIC,7,27,240,18,NOT WS_GROUP
     LTEXT           "Host name or IP address of the viewer:",IDC_STATIC,7,51,127,10,NOT WS_GROUP
     COMBOBOX        IDC_HOSTNAME_COMBO,138,49,110,55,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS | WS_GROUP | WS_TABSTOP
@@ -350,48 +348,48 @@ BEGIN
     PUSHBUTTON      "&Cancel",IDCANCEL,132,85,50,15
 END
 
-IDD_QUERY_RFB_CONNECTION DIALOGEX 0, 0, 250, 104
+IDD_QUERY_RFB_CONNECTION DIALOGEX 0, 0, 261, 103
 STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
-CAPTION "Incoming TightVNC Connection"
+CAPTION "Incoming LC RemoteHelp Connection"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
-    LTEXT           "TightVNC Server has received an incoming connection originating from",IDC_STATIC,7,7,236,10
-    EDITTEXT        IDC_IP_EDIT,7,19,236,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | WS_GROUP | NOT WS_TABSTOP
-    LTEXT           "By accepting the connection, you allow the remote person to view and possibly control your computer.  Choose the action by pressing a button below.",IDC_STATIC,7,36,236,26,NOT WS_GROUP
-    PUSHBUTTON      "&Accept",IDC_ACCEPT_BUTTON,71,64,50,15,WS_GROUP
-    PUSHBUTTON      "&Reject",IDC_REJECT_BUTTON,128,64,50,15
-    CTEXT           "[default action]",IDC_TIMEOUT_LABEL,7,86,236,10
+    LTEXT           "LC RemoteHelp Server has received an incoming connection originating from",IDC_STATIC,7,7,246,10
+    EDITTEXT        IDC_IP_EDIT,7,19,245,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | WS_GROUP | NOT WS_TABSTOP
+    LTEXT           "By accepting the connection, you allow the remote person to view and possibly control your computer.  Choose the action by pressing a button below.",IDC_STATIC,7,36,245,26,NOT WS_GROUP
+    PUSHBUTTON      "&Accept",IDC_ACCEPT_BUTTON,76,64,50,15,WS_GROUP
+    PUSHBUTTON      "&Reject",IDC_REJECT_BUTTON,133,64,50,15
+    CTEXT           "[default action]",IDC_TIMEOUT_LABEL,7,86,245,10
 END
 
-IDD_SET_PASSWORDS DIALOGEX 0, 0, 299, 230
+IDD_SET_PASSWORDS DIALOGEX 0, 0, 299, 237
 STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_CAPTION
-CAPTION "TightVNC Server: Set Passwords"
+CAPTION "LC RemoteHelp Server: Set Passwords"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
-    LTEXT           "Please protect your TightVNC Service. Make sure to enter a password for remote access. Also, it might be a good idea to use administrative password on multi-user systems.",IDC_STATIC,7,7,285,18
-    GROUPBOX        "Password for Remote Access",IDC_STATIC,7,29,285,85,WS_GROUP
+    LTEXT           "Please protect your LC RemoteHelp Service. Make sure to enter a password for remote access. Also, it might be a good idea to use administrative password on multi-user systems.",IDC_STATIC,7,7,285,25
+    GROUPBOX        "Password for Remote Access",IDC_STATIC,7,37,285,85,WS_GROUP
     CONTROL         "Do not change",IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO,
-                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,16,41,96,10
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,16,49,96,10
     CONTROL         "Do not use password protection (DANGEROUS!)",IDC_DONT_USE_RFB_AUTH_RADIO,
-                    "Button",BS_AUTORADIOBUTTON,16,54,196,10
+                    "Button",BS_AUTORADIOBUTTON,16,62,196,10
     CONTROL         "Require password-based authentication (make sure this box is always checked!)",IDC_USE_RFB_AUTH_RADIO,
-                    "Button",BS_AUTORADIOBUTTON,16,67,270,10
-    LTEXT           "Enter password:",IDC_STATIC,36,82,61,10
-    LTEXT           "Confirm password:",IDC_STATIC,36,97,61,10
-    EDITTEXT        IDC_ENTER_RFB_PASSWORD,101,80,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
-    EDITTEXT        IDC_CONFIRM_RFB_PASSWORD,101,95,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
-    GROUPBOX        "Administrative Password",IDC_STATIC,7,118,285,85,WS_GROUP
+                    "Button",BS_AUTORADIOBUTTON,16,75,270,10
+    LTEXT           "Enter password:",IDC_STATIC,36,90,61,10
+    LTEXT           "Confirm password:",IDC_STATIC,36,104,61,10
+    EDITTEXT        IDC_ENTER_RFB_PASSWORD,101,88,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
+    EDITTEXT        IDC_CONFIRM_RFB_PASSWORD,101,102,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
+    GROUPBOX        "Administrative Password",IDC_STATIC,7,125,285,85,WS_GROUP
     CONTROL         "Do not change",IDC_DONT_CHANGE_CONTROL_PROTECTION_SETTINGS_RADIO,
-                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,16,130,96,10
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,16,138,96,10
     CONTROL         "Do not use password protection",IDC_DONT_USE_CONTROL_PROTECTION_RADIO,
-                    "Button",BS_AUTORADIOBUTTON,16,143,146,10
+                    "Button",BS_AUTORADIOBUTTON,16,151,146,10
     CONTROL         "Protect control interface with an administrative password",IDC_PROTECT_CONTROL_INTERFACE_RADIO,
-                    "Button",BS_AUTORADIOBUTTON,16,156,219,10
-    LTEXT           "Enter password:",IDC_STATIC,36,171,61,10
-    LTEXT           "Confirm password:",IDC_STATIC,36,186,61,10
-    EDITTEXT        IDC_ENTER_ADMIN_PASSWORD,101,169,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
-    EDITTEXT        IDC_CONFIRM_ADMIN_PASSWORD,101,184,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
-    DEFPUSHBUTTON   "OK",IDOK,124,209,50,14,WS_GROUP
+                    "Button",BS_AUTORADIOBUTTON,16,164,219,10
+    LTEXT           "Enter password:",IDC_STATIC,36,178,61,10
+    LTEXT           "Confirm password:",IDC_STATIC,36,193,61,10
+    EDITTEXT        IDC_ENTER_ADMIN_PASSWORD,101,176,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
+    EDITTEXT        IDC_CONFIRM_ADMIN_PASSWORD,101,191,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
+    DEFPUSHBUTTON   "OK",IDOK,124,217,50,14,WS_GROUP
 END
 
 
@@ -400,7 +398,7 @@ END
 // Bitmap
 //
 
-IDB_LOGO_BIG            BITMAP                  ".\\res\\tightvnc.bmp"
+IDB_LOGO_BIG            BITMAP                  ".\\res\\logo.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -419,8 +417,8 @@ IDI_DISABLED            ICON                    ".\\res\\disabled.ico"
 //
 
 1 VERSIONINFO
- FILEVERSION 2,7,10,0
- PRODUCTVERSION 2,7,10,0
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
  FILEFLAGSMASK 0x0L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -435,14 +433,14 @@ BEGIN
     BEGIN
         BLOCK "040904e2"
         BEGIN
-            VALUE "CompanyName", "GlavSoft LLC."
-            VALUE "FileDescription", "TightVNC Server"
-            VALUE "FileVersion", "2, 7, 10, 0"
-            VALUE "InternalName", "tvnserver"
-            VALUE "LegalCopyright", "Copyright (C) 2008-2013 GlavSoft LLC."
-            VALUE "OriginalFilename", "tvnserver.exe"
-            VALUE "ProductName", "TightVNC"
-            VALUE "ProductVersion", "2, 7, 10, 0"
+            VALUE "CompanyName", "Lacon Computer"
+            VALUE "FileDescription", "LC RemoteHelp Server"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "lcrhserver"
+            VALUE "LegalCopyright", "Copyright (C) 2015 Lacon Computer, Copyright (C) 2008-2013 GlavSoft LLC."
+            VALUE "OriginalFilename", "lcrhserver.exe"
+            VALUE "ProductName", "LC RemoteHelp"
+            VALUE "ProductVersion", "1.0.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -463,12 +461,20 @@ BEGIN
     IDD_ABOUT_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 301
+        RIGHTMARGIN, 302
         VERTGUIDE, 107
         VERTGUIDE, 296
         TOPMARGIN, 7
-        BOTTOMMARGIN, 131
-        HORZGUIDE, 116
+        BOTTOMMARGIN, 94
+        HORZGUIDE, 78
+    END
+
+    IDD_CHANGE_PASSWORD, DIALOG
+    BEGIN
+    END
+
+    IDD_CONFIG, DIALOG
+    BEGIN
     END
 
     IDD_CONFIG_ACCESS_CONTROL_PAGE, DIALOG
@@ -542,6 +548,31 @@ BEGIN
         HORZGUIDE, 95
     END
 
+    IDD_CONTROL_AUTH, DIALOG
+    BEGIN
+    END
+
+    IDD_DISPATCHER_CONN, DIALOG
+    BEGIN
+    END
+
+    IDD_EDIT_IP_ACESS_CONTROL, DIALOG
+    BEGIN
+    END
+
+    IDD_EDIT_PORT_MAPPING, DIALOG
+    BEGIN
+    END
+
+    IDD_OUTGOING_CONN, DIALOG
+    BEGIN
+    END
+
+    IDD_QUERY_RFB_CONNECTION, DIALOG
+    BEGIN
+        RIGHTMARGIN, 250
+    END
+
     IDD_SET_PASSWORDS, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -551,11 +582,11 @@ BEGIN
         VERTGUIDE, 101
         VERTGUIDE, 286
         TOPMARGIN, 7
-        BOTTOMMARGIN, 223
-        HORZGUIDE, 92
-        HORZGUIDE, 107
-        HORZGUIDE, 181
-        HORZGUIDE, 196
+        BOTTOMMARGIN, 230
+        HORZGUIDE, 100
+        HORZGUIDE, 114
+        HORZGUIDE, 188
+        HORZGUIDE, 203
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -574,11 +605,11 @@ BEGIN
     IDS_CAPTION_BAD_INPUT   "Input Validation Error"
     IDS_INVALID_LOG_LEVEL   "The specified log level value is incorrect.\nLog level must be a number between 0 and 9."
     IDS_CONTROL_SERVER_RAISE_EXCEPTION 
-                            "TightVNC Server has reported an error:\n%s"
+                            "LC RemoteHelp Server has reported an error:\n%s"
     IDS_CONTROL_CONNECTION_LOST 
-                            "Connection to the TightVNC Server has been lost."
+                            "Connection to the LC RemoteHelp Server has been lost."
     IDS_SERVER_ALREADY_RUNNING 
-                            "Another copy of TightVNC Server is already running."
+                            "Another copy of LC RemoteHelp Server is already running."
     IDS_MBC_ERROR           "Error"
     IDS_CANNOT_SAVE_CONFIG  "Failed to save configuration."
 END
@@ -591,8 +622,8 @@ BEGIN
     IDS_PORT_ALREADY_IN_USE "An entry with the specified port already exists.\nPlease choose a different port number."
     IDS_SET_PASSWORD_NOTIFICATION 
                             "You have chosen to use password-based authentication but have not set the passwords.\n\nPlease either set at least one of the passwords (press the corresponding ""Set..."" button) or uncheck ""Require VNC authentication""."
-    IDS_MBC_TVNSERVER       "TightVNC Server"
-    IDS_MBC_TVNCONTROL      "TightVNC Control Interface"
+    IDS_MBC_TVNSERVER       "LC RemoteHelp Server"
+    IDS_MBC_TVNCONTROL      "LC RemoteHelp Control Interface"
     IDS_LOGPATH_UNAVALIABLE "(n/a)"
     IDS_PASSWORD_IS_EMPTY   "Password is empty."
     IDS_PASSWORDS_NOT_MATCH "Passwords do not match."
@@ -610,7 +641,7 @@ BEGIN
     IDS_SERVICE             "Service"
     IDS_SERVER              "Server"
     IDS_OFFLINE_MODE        " (Offline)"
-    IDS_SERVER_CONFIG_CAPTION_FORMAT "TightVNC %s Configuration%s"
+    IDS_SERVER_CONFIG_CAPTION_FORMAT "LC RemoteHelp %s Configuration%s"
     IDS_INVALID_IP_TITLE    "Invalid IP Address"
     IDS_IP_ADDRESS_HINT     "Valid IP addresses should consist of four numbers, each in the range 0..255, separated by dots."
     IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST 
@@ -643,11 +674,11 @@ BEGIN
     IDS_ACTION_DENY         "Deny"
     IDS_ACTION_QUERY        "Query"
     IDS_USER_CANCEL_CONTROL_AUTH "Authentication cancelled by the user."
-    IDS_TVNSERVER_USAGE     "TightVNC Server supports the following command-line options:\n\ntvnserver\t-help\ntvnserver\t[ -run ]\ntvnserver\t{ -install | -reinstall | -remove | -start | -stop }  [ -silent ]\ntvnserver\t{ -controlservice | -controlapp }\ntvnserver\t{ -controlservice | -controlapp }\n\t   { -connect HOST | -disconnectall | -reload | -shutdown |\n\t      -sharefull | -shareprimary |\n\t      -sharedisplay DISPLAY_NUMBER  | \n\t      -sharerect WIDTHxHEIGHT+LEFT+TOP |\n\t      -sharewindow CAPTION }\n\t   [ -passfile FILE ]\ntvnserver\t{ -configservice | -configapp }"
+    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t{ -install | -reinstall | -remove | -start | -stop }  [ -silent ]\nlcrhserver\t{ -controlservice | -controlapp }\nlcrhserver\t{ -controlservice | -controlapp }\n\t   { -connect HOST | -disconnectall | -reload | -shutdown |\n\t      -sharefull | -shareprimary |\n\t      -sharedisplay DISPLAY_NUMBER  | \n\t      -sharerect WIDTHxHEIGHT+LEFT+TOP |\n\t      -sharewindow CAPTION }\n\t   [ -passfile FILE ]\nlcrhserver\t{ -configservice | -configapp }"
     IDS_SERVER_NOT_LISTENING "not listening"
     IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER 
-                            "Failed to connect to TightVNC Server."
-    IDS_MBC_TVNSERVER_USAGE "TightVNC Server Usage Help"
+                            "Failed to connect to LC RemoteHelp Server."
+    IDS_MBC_TVNSERVER_USAGE "LC RemoteHelp Server Usage Help"
 END
 
 STRINGTABLE
@@ -657,7 +688,7 @@ BEGIN
                             "Failed to open Web resource for the following reason:\n%s"
     IDS_PRODUCT_VERSION_FORMAT "Version %s (built on %s)"
     IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION 
-                            "Changes to the configuration will not take effect until you restart the TightVNC Server."
+                            "Changes to the configuration will not take effect until you restart the LC RemoteHelp Server."
     IDS_ADMIN_RIGHTS_NEEDED "You need administrator privileges to run the application."
     IDS_AUTO_ACCEPT_CONNECTION_FORMAT 
                             "Connection will be accepted automatically in %d seconds."
@@ -665,28 +696,27 @@ BEGIN
                             "Connection will be rejected automatically in %d seconds."
     IDS_INVALID_CONTROL_PASSWORD 
                             "The specified administrative password is invalid."
-    IDS_URL_LICENSING_FSA   "http://www.tightvnc.com/licensing/?f=sa"
-    IDS_URL_PRODUCT_FSA     "http://www.tightvnc.com/?f=sa"
+    IDS_URL_PRODUCT_FSA     "https://laconcomputer.com/"
     IDS_SERVICE_STOP_TIMEOUT "Timed out waiting for service shutdown"
     IDS_SERVICE_START_TIMEOUT "Timed out waiting for service startup"
     IDS_SERVICE_ALREADY_RUNNING "Service is already running"
     IDS_SERVICE_ALREADY_STOPPED "Service is not running"
     IDS_CONTROL_CLIENT_NOT_CONNECTED "Not connected"
     IDS_FAILED_TO_INSTALL_SERVICE_FORMAT 
-                            "Failed to register TightVNC service for the following reason:\n%s."
+                            "Failed to register LC RemoteHelp service for the following reason:\n%s."
 END
 
 STRINGTABLE
 BEGIN
     IDS_FAILED_TO_REMOVE_SERVICE_FORMAT 
-                            "Failed to unregister TightVNC service for the following reason:\n%s."
+                            "Failed to unregister LC RemoteHelp service for the following reason:\n%s."
     IDS_FAILED_TO_START_SERVICE_FORMAT 
-                            "Failed to start TightVNC service for the following reason:\n%s."
+                            "Failed to start LC RemoteHelp service for the following reason:\n%s."
     IDS_FAILED_TO_STOP_SERVICE_FORMAT 
-                            "Failed to stop TightVNC service for the following reason:\n%s."
-    IDS_SERVICE_INSTALLED   "TightVNC service has been registered."
-    IDS_SERVICE_REMOVED     "TightVNC service has been unregistered."
-    IDS_SERVICE_REINSTALLED "TightVNC service has been reinstalled."
+                            "Failed to stop LC RemoteHelp service for the following reason:\n%s."
+    IDS_SERVICE_INSTALLED   "LC RemoteHelp service has been registered."
+    IDS_SERVICE_REMOVED     "LC RemoteHelp service has been unregistered."
+    IDS_SERVICE_REINSTALLED "LC RemoteHelp service has been reinstalled."
     IDS_INVALID_POLLING_INTERVAL 
                             "Polling interval must be a number between 30 and 4294967295."
     IDS_INVALID_INACTIVITY_TIMEOUT 
@@ -696,23 +726,23 @@ BEGIN
                             "Query timeout must be a number between 1 and 4294967295."
     IDS_INVALID_VIDEO_RECOGNITION_INTERVAL 
                             "Video recognition interval must be a number between 1 and 4294967295."
-    IDS_TVNSERVER_SERVICE   "TightVNC Service"
+    IDS_TVNSERVER_SERVICE   "LC RemoteHelp Service"
     IDS_1060_ERROR_DESCRIPTION "Service is not registered"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_TVNSERVER_APP       "TightVNC Server"
+    IDS_TVNSERVER_APP       "LC RemoteHelp Server"
     IDS_1073_ERROR_DESCRIPTION "Service is already registered"
     IDS_SHUTDOWN_NOTIFICATION_FORMAT 
-                            "This will disconnect all clients and they will not be able to reconnect until the TightVNC Server is restarted.\n\nAre you sure you want to shutdown the %s?"
+                            "This will disconnect all clients and they will not be able to reconnect until the LC RemoteHelp Server is restarted.\n\nAre you sure you want to shutdown the %s?"
     IDS_NO_AUTH_STATUS      " (no auth!)"
     IDS_LICENSING_INFO      "Licensing Terms: GNU General Public License version 2"
     IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS 
-                            "Unable to update TightVNC service with the new configuration with reason: %s."
+                            "Unable to update LC RemoteHelp service with the new configuration with reason: %s."
 END
 
-#endif    // Английский (США) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

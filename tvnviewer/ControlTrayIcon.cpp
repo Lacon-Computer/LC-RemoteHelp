@@ -36,7 +36,7 @@ ControlTrayIcon::ControlTrayIcon(TvnViewer *viewerApplication)
 {
   ResourceStrings resStr;
   m_menu.createPopupMenu();
-  m_menu.appendMenu(resStr.getStrRes(IDS_TB_NEWCONNECTION), IDS_NEW_CONN);
+  m_menu.appendMenu(resStr.getStrRes(IDS_NEW_CONN), IDS_NEW_CONN);
   m_menu.appendSeparator();
   m_menu.appendMenu(resStr.getStrRes(IDS_LISTENING_OPTIONS), IDS_LISTENING_OPTIONS);
   m_menu.appendMenu(resStr.getStrRes(IDS_CONFIG), IDS_CONFIG);

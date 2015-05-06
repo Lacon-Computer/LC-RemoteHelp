@@ -24,18 +24,18 @@
 
 #include "NamingDefs.h"
 
-const TCHAR ProductNames::PRODUCT_NAME[] = _T("TightVNC");
-const TCHAR ProductNames::VIEWER_PRODUCT_NAME[] = _T("TightVNC Viewer");
+const TCHAR ProductNames::PRODUCT_NAME[] = _T("LC RemoteHelp");
+const TCHAR ProductNames::VIEWER_PRODUCT_NAME[] = _T("LC RemoteHelp Viewer");
 
-const TCHAR LogNames::VIEWER_LOG_FILE_STUB_NAME[] = _T("tvnviewer");
-const TCHAR LogNames::LOG_DIR_NAME[] = _T("TightVNC");
+const TCHAR LogNames::VIEWER_LOG_FILE_STUB_NAME[] = _T("lcrhviewer");
+const TCHAR LogNames::LOG_DIR_NAME[] = _T("LC RemoteHelp");
 
-const TCHAR RegistryPaths::VIEWER_PATH[] = _T("Software\\TightVNC\\Viewer");
+const TCHAR RegistryPaths::VIEWER_PATH[] = _T("Software\\LC RemoteHelp\\Viewer");
 
 const TCHAR ApplicationNames::WINDOW_CLASS_NAME[] = 
-  _T("TvnApplicationClass");
+  _T("LcrhApplicationClass");
 
-const TCHAR WindowNames::TVN_WINDOW_CLASS_NAME[] = _T("TvnWindowClass");
-const TCHAR WindowNames::TVN_WINDOW_TITLE_NAME[] = _T("TightVNC Viewer");
+const TCHAR WindowNames::TVN_WINDOW_CLASS_NAME[] = _T("LcrhWindowClass");
+const TCHAR WindowNames::TVN_WINDOW_TITLE_NAME[] = _T("LC RemoteHelp Viewer");
 const TCHAR WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = _T("Viewer");
 

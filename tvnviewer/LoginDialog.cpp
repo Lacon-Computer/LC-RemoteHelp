@@ -131,11 +131,6 @@ BOOL LoginDialog::onOptions()
   return TRUE;
 }
 
-void LoginDialog::onOrder()
-{
-  openUrl(StringTable::getString(IDS_URL_LICENSING_FVC));
-}
-
 void LoginDialog::openUrl(const TCHAR *url)
 {
   // TODO: removed duplicated code (see AboutDialog.h)
@@ -227,10 +222,6 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
   case IDC_LISTENING:
     onListening();
     kill(0);
-    break;
-
-  case IDC_ORDER_SUPPORT_BUTTON:
-    onOrder();
     break;
 
   case IDC_BABOUT:

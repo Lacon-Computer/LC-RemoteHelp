@@ -8,7 +8,6 @@
 #define IDI_APPICON                     104
 #define IDI_FILE_ICON                   105
 #define IDI_FILEUP                      106
-#define IDI_ICON1                       107
 #define IDI_FOLDER_ICON                 108
 #define IDI_CDOT                        109
 #define IDS_NEW_CONN                    120
@@ -19,7 +18,6 @@
 #define IDS_CONFIG                      123
 #define ftclient_fileExistDialog        124
 #define IDS_CLOSE                       124
-#define IDS_URL_LICENSING_FVA           125
 #define IDS_URL_PRODUCT_FVA             126
 #define IDD_CMDLINE                     127
 #define IDS_CMDLINE_HELP                127
@@ -44,7 +42,6 @@
 #define IDS_ABOUT_VIEWER                140
 #define IDB_LOGO_48                     141
 #define IDS_CONNECTION_INFO_FORMAT      141
-#define IDS_URL_LICENSING_FVC           142
 #define IDS_UNKNOWN_ERROR_IN_VIEWER     143
 #define IDS_CONFIGURATION_LISTEN_PORT   144
 #define IDS_CONFIGURATION_LOG_LEVEL     145
@@ -136,7 +133,6 @@
 #define IDC_CSCALE                      1061
 #define IDC_CFULLSCR                    1062
 #define IDC_CDEICONFY                   1063
-#define IDC_CEMUL3B                     1064
 #define IDC_CSWAPMOUSE                  1065
 #define IDC_RTRACK                      1066
 #define IDC_RCURSOR                     1067
@@ -152,7 +148,6 @@
 #define IDC_STQUALITY                   1077
 #define IDC_STQUALITY2                  1078
 #define IDC_VISIT_WEB_SITE_BUTTON       1079
-#define IDC_ORDER_SUPPORT_BUTTON        1080
 #define IDC_STATIC_VERSION              1081
 #define IDC_STATIC_LICENSING            1082
 #define IDC_LISTENING                   1083

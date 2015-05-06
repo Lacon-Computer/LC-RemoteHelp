@@ -50,10 +50,6 @@ protected:
   /**
    * Called when user press "Order Technical Support" button.
    */
-  void onOrderSupportButtonClock();
-  /**
-   * Called when user press "Visit Web Site" button.
-   */
   void onVisitSiteButtonClick();
   /**
    * Opens url in default browser or shows error message on fail.

@@ -38,6 +38,7 @@
     <ProjectGuid>{EBFC3125-72A4-4029-9941-3BE9EE6444D5}</ProjectGuid>
     <RootNamespace>tvnserverapp</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>lcrhserver-app</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|Win32'" Label="Configuration">
