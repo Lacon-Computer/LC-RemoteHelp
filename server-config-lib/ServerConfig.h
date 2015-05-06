@@ -103,9 +103,6 @@ public:
   void setRfbPort(int port);
   int getRfbPort();
 
-  void setHttpPort(int port);
-  int getHttpPort();
-
   //
   // Other server options access methods
   //
@@ -157,14 +154,6 @@ public:
   bool isOnlyLoopbackConnectionsAllowed();
 
   void acceptOnlyLoopbackConnections(bool enabled);
-
-  bool isAcceptingHttpConnections();
-
-  void acceptHttpConnections(bool accept);
-
-  bool isAppletParamInUrlEnabled();
-
-  void enableAppletParamInUrl(bool enabled);
 
   int getLogLevel();
 
@@ -278,7 +267,6 @@ protected:
   //
 
   int m_rfbPort;
-  int m_httpPort;
 
   //
   // Other server options members group
@@ -298,7 +286,6 @@ protected:
   //
 
   bool m_acceptRfbConnections;
-  bool m_acceptHttpConnections;
 
   unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
   unsigned char m_readonlyPassword[VNC_PASSWORD_SIZE];
@@ -310,7 +297,6 @@ protected:
 
   bool m_useAuthentication;
   bool m_onlyLoopbackConnections;
-  bool m_enableAppletParamInUrl;
   int m_logLevel;
   bool m_useControlAuth;
   bool m_controlAuthAlwaysChecking;

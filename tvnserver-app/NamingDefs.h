@@ -104,11 +104,4 @@ public:
   static const TCHAR DEFAULT_COMPUTER_NAME[];
 };
 
-class HttpStrings
-{
-public:
-  static const char HTTP_INDEX_PAGE_FORMAT[];
-  static const char HTTP_MSG_BADPARAMS[];
-};
-
 #endif // _PUBLIC_NAMES_H_

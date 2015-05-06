@@ -73,9 +73,6 @@ BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
     case IDC_ACCEPT_RFB_CONNECTIONS:
       onAcceptRfbConnectionsClick();
       break;
-    case IDC_ACCEPT_HTTP_CONNECTIONS:
-      onAcceptHttpConnectionsClick();
-      break;
     case IDC_USE_AUTHENTICATION:
       onAuthenticationClick();
       break;
@@ -122,9 +119,6 @@ BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
     case IDC_RFB_PORT:
       onRfbPortUpdate();
       break;
-    case IDC_HTTP_PORT:
-      onHttpPortUpdate();
-      break;
     case IDC_POLLING_INTERVAL:
       onPollingIntervalUpdate();
       break;
@@ -140,7 +134,6 @@ bool ServerConfigDialog::validateInput()
 {
   bool commonValidationOk =
     CommonInputValidation::validatePort(&m_rfbPort) &&
-    CommonInputValidation::validatePort(&m_httpPort) &&
     CommonInputValidation::validateUINT(
       &m_pollingInterval,
       StringTable::getString(IDS_INVALID_POLLING_INTERVAL)) &&
@@ -152,17 +145,9 @@ bool ServerConfigDialog::validateInput()
     return false;
   }
 
-  int httpPort, rfbPort;
+  int rfbPort;
 
   UIDataAccess::queryValueAsInt(&m_rfbPort, &rfbPort);
-  UIDataAccess::queryValueAsInt(&m_httpPort, &httpPort);
-
-  if (rfbPort == httpPort && m_acceptHttpConnections.isChecked()) {
-    CommonInputValidation::notifyValidationError(
-      &m_httpPort,
-      StringTable::getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
-    return false;
-  }
 
   unsigned int pollingInterval;
 
@@ -204,14 +189,12 @@ bool ServerConfigDialog::validateInput()
 void ServerConfigDialog::updateUI()
 {
   m_rfbPort.setSignedInt(m_config->getRfbPort());
-  m_httpPort.setSignedInt(m_config->getHttpPort());
   m_pollingInterval.setUnsignedInt(m_config->getPollingInterval());
 
   m_enableFileTransfers.check(m_config->isFileTransfersEnabled());
   m_removeWallpaper.check(m_config->isRemovingDesktopWallpaperEnabled());
 
   m_acceptRfbConnections.check(m_config->isAcceptingRfbConnections());
-  m_acceptHttpConnections.check(m_config->isAcceptingHttpConnections());
 
   if (m_config->hasPrimaryPassword()) {
     UINT8 ppCrypted[8];
@@ -247,12 +230,10 @@ void ServerConfigDialog::updateUI()
 void ServerConfigDialog::apply()
 {
   StringStorage rfbPortText;
-  StringStorage httpPortText;
   // Polling interval string storage
   StringStorage pollingIntervalText;
 
   m_rfbPort.getText(&rfbPortText);
-  m_httpPort.getText(&httpPortText);
   m_pollingInterval.getText(&pollingIntervalText);
 
   int intVal = 0;
@@ -260,9 +241,6 @@ void ServerConfigDialog::apply()
   StringParser::parseInt(rfbPortText.getString(), &intVal);
   m_config->setRfbPort(intVal);
   
-  StringParser::parseInt(httpPortText.getString(), &intVal);
-  m_config->setHttpPort(intVal);
-
   StringParser::parseInt(pollingIntervalText.getString(), &intVal);
   m_config->setPollingInterval(intVal);
 
@@ -270,7 +248,6 @@ void ServerConfigDialog::apply()
   m_config->enableRemovingDesktopWallpaper(m_removeWallpaper.isChecked());
 
   m_config->acceptRfbConnections(m_acceptRfbConnections.isChecked());
-  m_config->acceptHttpConnections(m_acceptHttpConnections.isChecked());
   m_config->useAuthentication(m_useAuthentication.isChecked());
 
   //
@@ -315,14 +292,12 @@ void ServerConfigDialog::initControls()
 {
   HWND hwnd = m_ctrlThis.getWindow();
   m_rfbPort.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT));
-  m_httpPort.setWindow(GetDlgItem(hwnd, IDC_HTTP_PORT));
   m_pollingInterval.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL));
   m_grabTransparentWindows.setWindow(GetDlgItem(hwnd, IDC_GRAB_TRANSPARENT));
   m_useMirrorDriver.setWindow(GetDlgItem(hwnd, IDC_USE_MIRROR_DRIVER));
   m_enableFileTransfers.setWindow(GetDlgItem(hwnd, IDC_ENABLE_FILE_TRANSFERS));
   m_removeWallpaper.setWindow(GetDlgItem(hwnd, IDC_REMOVE_WALLPAPER));
   m_acceptRfbConnections.setWindow(GetDlgItem(hwnd, IDC_ACCEPT_RFB_CONNECTIONS));
-  m_acceptHttpConnections.setWindow(GetDlgItem(hwnd, IDC_ACCEPT_HTTP_CONNECTIONS));
   m_primaryPassword.setWindow(GetDlgItem(hwnd, IDC_PRIMARY_PASSWORD));
   m_readOnlyPassword.setWindow(GetDlgItem(hwnd, IDC_VIEW_ONLY_PASSWORD));
   m_useAuthentication.setWindow(GetDlgItem(hwnd, IDC_USE_AUTHENTICATION));
@@ -331,16 +306,11 @@ void ServerConfigDialog::initControls()
   m_showTrayIcon.setWindow(GetDlgItem(hwnd, IDC_SHOW_TVNCONTROL_ICON_CHECKBOX));
 
   m_rfbPortSpin.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT_SPIN));
-  m_httpPortSpin.setWindow(GetDlgItem(hwnd, IDC_HTTP_PORT_SPIN));
   m_pollingIntervalSpin.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL_SPIN));
 
   m_rfbPortSpin.setBuddy(&m_rfbPort);
   m_rfbPortSpin.setAccel(0, 1);
   m_rfbPortSpin.setRange32(1, 65535);
-
-  m_httpPortSpin.setBuddy(&m_httpPort);
-  m_httpPortSpin.setAccel(0, 1);
-  m_httpPortSpin.setRange32(1, 65535);
 
   int limitersTmp[] = {50, 200};
   int deltasTmp[] = {5, 10};
@@ -381,18 +351,10 @@ void ServerConfigDialog::updateControlDependencies()
 {
   if (m_acceptRfbConnections.isChecked()) {
     m_rfbPort.setEnabled(true);
-    m_acceptHttpConnections.setEnabled(true);
     m_useAuthentication.setEnabled(true);
   } else {
     m_rfbPort.setEnabled(false);
-    m_acceptHttpConnections.setEnabled(false);
     m_useAuthentication.setEnabled(false);
-  }
-
-  if ((m_acceptHttpConnections.isChecked()) && (m_acceptHttpConnections.isEnabled())) {
-    m_httpPort.setEnabled(true);
-  } else {
-    m_httpPort.setEnabled(false);
   }
 
   bool passwordsAreEnabled = ((m_useAuthentication.isChecked()) && (m_useAuthentication.isEnabled()));
@@ -401,17 +363,10 @@ void ServerConfigDialog::updateControlDependencies()
   m_vpControl->setEnabled(passwordsAreEnabled);
 
   m_rfbPortSpin.invalidate();
-  m_httpPortSpin.invalidate();
   m_pollingIntervalSpin.invalidate();
 }
 
 void ServerConfigDialog::onAcceptRfbConnectionsClick()
-{
-  updateControlDependencies();
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void ServerConfigDialog::onAcceptHttpConnectionsClick()
 {
   updateControlDependencies();
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
@@ -468,16 +423,6 @@ void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN message)
 }
 
 void ServerConfigDialog::onRfbPortUpdate()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void ServerConfigDialog::onHttpPortUpdate()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void ServerConfigDialog::onUrlParamsClick()
 {
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }

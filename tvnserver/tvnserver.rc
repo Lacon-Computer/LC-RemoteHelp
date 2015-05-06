@@ -225,12 +225,6 @@ BEGIN
     CONTROL         "Hide desktop wallpaper",IDC_REMOVE_WALLPAPER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,161,121,10
     CONTROL         "Show icon in the notification area",IDC_SHOW_TVNCONTROL_ICON_CHECKBOX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,176,121,10
-    GROUPBOX        "Web Access",IDC_STATIC,157,4,142,45,WS_GROUP
-    CONTROL         "Serve Java Viewer to Web clients",IDC_ACCEPT_HTTP_CONNECTIONS,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,167,17,128,10
-    LTEXT           "Web access port:",IDC_STATIC,178,32,58,10
-    EDITTEXT        IDC_HTTP_PORT,239,31,38,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_HTTP_PORT_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS,278,30,11,14
     GROUPBOX        "Input Handling",IDC_STATIC,157,54,142,73
     CONTROL         "Block remote input events",IDC_BLOCK_REMOTE_INPUT,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,167,67,128,10
@@ -659,8 +653,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_HTTP_RFB_PORTS_ARE_EQUAL 
-                            "The same TCP port number cannot be assigned to both main server port and Web access port."
     IDS_POLL_INTERVAL_TOO_SMALL 
                             "Polling interval is too small, minimal allowed value is 30 ms."
     IDS_INACTIVITY_TIMEOUT_TOO_SMALL 

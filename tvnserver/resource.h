@@ -67,8 +67,6 @@
 #define IDC_REFUSE                      1043
 #define IDC_ACCEPT                      1044
 #define IDC_ACCEPT_RFB_CONNECTIONS      1045
-#define IDC_ACCEPT_HTTP_CONNECTIONS     1046
-#define IDC_HTTP_PORT                   1047
 #define IDC_RFB_PORT                    1048
 #define IDC_LOCK_WORKSTATION            1049
 #define IDC_LOGOFF_WORKSTATION          1050
@@ -76,7 +74,6 @@
 #define IDC_REMOVE_WALLPAPER            1052
 #define IDC_LOG_LEVEL                   1053
 #define IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS 1054
-#define IDC_APPLET_PARAMS_IN_URL        1055
 #define IDC_USE_AUTHENTICATION          1056
 #define IDC_ALLOW                       1057
 #define IDC_DENY                        1058
@@ -91,7 +88,6 @@
 #define IDC_SHARED_RADIO4               1067
 #define IDC_SHARED_RADIO5               1068
 #define IDC_POLLING_INTERVAL            1069
-#define IDC_HTTP_PORT_SPIN              1070
 #define IDC_POLLING_INTERVAL_SPIN       1071
 #define IDC_QUERY_TIMEOUT_SPIN          1072
 #define IDC_INACTIVITY_TIMEOUT_SPIN     1073
@@ -162,7 +158,6 @@
 #define IDS_ACTION_COLUMN               40045
 #define IDS_SET_PASSWORD_CAPTION        40046
 #define IDS_CHANGE_PASSWORD_CAPTION     40047
-#define IDS_HTTP_RFB_PORTS_ARE_EQUAL    40048
 #define IDS_POLL_INTERVAL_TOO_SMALL     40049
 #define IDS_INACTIVITY_TIMEOUT_TOO_SMALL 40050
 #define IDS_BAD_IP_HINT                 40051

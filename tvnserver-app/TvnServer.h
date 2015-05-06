@@ -35,8 +35,6 @@
 #include "ControlServer.h"
 #include "TvnServerListener.h"
 
-#include "http-server-lib/HttpServer.h"
-
 #include "thread/ZombieKiller.h"
 #include "thread/LocalMutex.h"
 #include "log-writer/LogWriter.h"
@@ -55,9 +53,8 @@
  *   2) Configurator singleton.
  *   3) Log singleton.
  *   4) Rfb servers (main rfb server and extra servers).
- *   5) Http server.
- *   6) Control server.
- *   7) Other features:
+ *   5) Control server.
+ *   6) Other features:
      1) Do action when last client disconnects.
  */
 class TvnServer : public Singleton<TvnServer>,
@@ -106,7 +103,6 @@ public:
    * Make several things:
    *  1) Changes log level.
    *  2) Restarts rfb servers.
-   *  3) Restarts http server.
    */
   virtual void onConfigReload(ServerConfig *serverConfig);
 
@@ -142,11 +138,9 @@ public:
   virtual void afterLastClientDisconnect();
 
 protected:
-  void restartHttpServer();
   void restartControlServer();
   void restartMainRfbServer();
 
-  void stopHttpServer();
   void stopControlServer();
   void stopMainRfbServer();
 
@@ -185,10 +179,6 @@ protected:
    * Control server.
    */
   ControlServer *m_controlServer;
-  /**
-   * Builtin http server.
-   */
-  HttpServer *m_httpServer;
   /**
    * Main rfb server.
    */

@@ -460,10 +460,6 @@
       <Project>{97d4f12a-916c-4cb2-b4d9-f0d35128065a}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\http-server-lib\http-server-lib.vcxproj">
-      <Project>{0050120d-9c47-496c-860d-c16b10d09c88}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\io-lib\io-lib.vcxproj">
       <Project>{bbbc0986-6499-483d-a608-905d6930c55a}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

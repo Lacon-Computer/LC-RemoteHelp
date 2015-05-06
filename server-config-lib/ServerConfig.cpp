@@ -29,12 +29,12 @@
 #include "file-lib/File.h"
 
 ServerConfig::ServerConfig()
-: m_rfbPort(5900), m_httpPort(5800),
+: m_rfbPort(5900),
   m_disconnectAction(DA_DO_NOTHING), m_logLevel(0), m_useControlAuth(false),
   m_controlAuthAlwaysChecking(false),
   m_acceptRfbConnections(true), m_useAuthentication(true),
-  m_onlyLoopbackConnections(false), m_acceptHttpConnections(true),
-  m_enableAppletParamInUrl(true), m_enableFileTransfers(true),
+  m_onlyLoopbackConnections(false),
+  m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
   m_removeWallpaper(true), m_hasReadOnlyPassword(false),
   m_hasPrimaryPassword(false), m_alwaysShared(false), m_neverShared(false),
@@ -60,19 +60,16 @@ void ServerConfig::serialize(DataOutputStream *output)
   AutoLock l(this);
 
   output->writeInt32(m_rfbPort);
-  output->writeInt32(m_httpPort);
   output->writeInt8(m_enableFileTransfers ? 1 : 0);
   output->writeInt8(m_removeWallpaper ? 1 : 0);
   output->writeInt8(m_mirrorDriverAllowed ? 1 : 0);
   output->writeInt32(m_disconnectAction);
   output->writeInt8(m_acceptRfbConnections ? 1 : 0);
-  output->writeInt8(m_acceptHttpConnections ? 1 : 0);
   output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   output->writeFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
   output->writeFully(m_controlPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_useAuthentication ? 1 : 0);
   output->writeInt8(m_onlyLoopbackConnections ? 1 : 0);
-  output->writeInt8(m_enableAppletParamInUrl ? 1 : 0);
   output->writeInt32(m_logLevel);
   output->writeInt8(m_useControlAuth ? 1 : 0);
   output->writeInt8(m_controlAuthAlwaysChecking ? 1 : 0);
@@ -116,19 +113,16 @@ void ServerConfig::deserialize(DataInputStream *input)
   AutoLock l(this);
 
   m_rfbPort = input->readInt32();
-  m_httpPort = input->readInt32();
   m_enableFileTransfers = input->readInt8() == 1;
   m_removeWallpaper = input->readInt8() == 1;
   m_mirrorDriverAllowed = input->readInt8() != 0;
   m_disconnectAction = (ServerConfig::DisconnectAction)input->readInt32();
   m_acceptRfbConnections = input->readInt8() == 1;
-  m_acceptHttpConnections = input->readInt8() == 1;
   input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   input->readFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
   input->readFully(m_controlPassword, VNC_PASSWORD_SIZE);
   m_useAuthentication = input->readInt8() == 1;
   m_onlyLoopbackConnections = input->readInt8() == 1;
-  m_enableAppletParamInUrl = input->readInt8() == 1;
   m_logLevel = input->readInt32();
   m_useControlAuth = input->readInt8() == 1;
   m_controlAuthAlwaysChecking = input->readInt8() != 0;
@@ -259,24 +253,6 @@ int ServerConfig::getRfbPort()
 {
   AutoLock lock(&m_objectCS);
   return m_rfbPort;
-}
-
-void ServerConfig::setHttpPort(int port)
-{
-  AutoLock lock(&m_objectCS);
-  if (port > 65535) {
-    m_httpPort = 65535;
-  } else if (port < 0) {
-    m_httpPort = 1;
-  } else {
-    m_httpPort = port;
-  }
-}
-
-int ServerConfig::getHttpPort()
-{
-  AutoLock lock(&m_objectCS);
-  return m_httpPort;
 }
 
 void ServerConfig::enableFileTransfers(bool enabled)
@@ -451,30 +427,6 @@ void ServerConfig::acceptOnlyLoopbackConnections(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_onlyLoopbackConnections = enabled;
-}
-
-bool ServerConfig::isAcceptingHttpConnections()
-{
-  AutoLock lock(&m_objectCS);
-  return m_acceptHttpConnections;
-}
-
-void ServerConfig::acceptHttpConnections(bool accept)
-{
-  AutoLock lock(&m_objectCS);
-  m_acceptHttpConnections = accept;
-}
-
-bool ServerConfig::isAppletParamInUrlEnabled()
-{
-  AutoLock lock(&m_objectCS);
-  return m_enableAppletParamInUrl;
-}
-
-void ServerConfig::enableAppletParamInUrl(bool enabled)
-{
-  AutoLock lock(&m_objectCS);
-  m_enableAppletParamInUrl = enabled;
 }
 
 int ServerConfig::getLogLevel()

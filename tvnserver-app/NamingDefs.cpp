@@ -74,27 +74,3 @@ const UINT HookDefinitions::SPEC_IPC_CODE =
   RegisterWindowMessage(_T("LCRH.HOOK.MESSAGE.CODE"));
 
 const TCHAR DefaultNames::DEFAULT_COMPUTER_NAME[] = _T("LC RemoteHelp Server");
-
-
-const char HttpStrings::HTTP_INDEX_PAGE_FORMAT[] =
-"<HTML>\n"
-"  <HEAD><TITLE>LC RemoteHelp desktop [%.256s]</TITLE></HEAD>\n"
-"  <BODY>\n"
-"    <APPLET ARCHIVE=\"tightvnc-jviewer.jar\""
-" CODE=\"com.glavsoft.viewer.Viewer\" WIDTH=1 HEIGHT=1>\n"
-"      <PARAM NAME=\"PORT\" VALUE=\"%d\">\n"
-"      <PARAM NAME=\"OpenNewWindow\" VALUE=\"YES\">\n"
-"%.1024s"
-"    </APPLET><BR>\n"
-"    <A HREF=\"https://laconcomputer.com/\">Lacon Computer</A>\n"
-"  </BODY>\n"
-"</HTML>\n";
-
-const char HttpStrings::HTTP_MSG_BADPARAMS[] =
-"<HTML>\n"
-"  <HEAD><TITLE>LC RemoteHelp desktop</TITLE></HEAD>\n"
-"  <BODY>\n"
-"    <H1>Bad Parameters</H1>\n"
-"    The sequence of applet parameters specified within the URL is invalid.\n"
-"  </BODY>\n"
-"</HTML>\n";
