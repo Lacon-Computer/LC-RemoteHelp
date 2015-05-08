@@ -227,6 +227,17 @@ BEGIN
     LTEXT           "Alternatively, press Ctrl+Esc and then right-click on the application taskbar icon to see the menu.",IDC_STATIC,7,19,199,17,NOT WS_GROUP
 END
 
+IDD_SESSION_ENTRY DIALOGEX 0, 0, 186, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "LC RemoteHelp Session ID"
+FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
+BEGIN
+    LTEXT           "Session ID:",IDC_STATIC,16,13,51,10
+    EDITTEXT        IDC_SESSION_ID,70,11,101,12,ES_AUTOHSCROLL | ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,37,33,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,97,33,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -347,6 +358,15 @@ BEGIN
         RIGHTMARGIN, 206
         TOPMARGIN, 7
         BOTTOMMARGIN, 77
+    END
+
+    IDD_SESSION_ENTRY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 47
+        HORZGUIDE, 23
     END
 END
 #endif    // APSTUDIO_INVOKED

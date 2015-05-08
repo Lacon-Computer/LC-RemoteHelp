@@ -99,6 +99,9 @@
     <ClCompile Include="ViewerVncAuthHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SessionEntryDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthenticationDialog.h">
@@ -186,6 +189,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewerVncAuthHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionEntryDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

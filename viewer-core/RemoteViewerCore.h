@@ -480,6 +480,7 @@ private:
   void connectToHost();
   void handshake();
   int negotiateAboutSecurityType();
+  void session();
   void authenticate();
   void clientAndServerInit();
   void readSecurityTypeList(vector<UINT32> *secTypes);

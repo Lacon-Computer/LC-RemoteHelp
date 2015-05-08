@@ -56,6 +56,8 @@
 #include "PointerPosDecoder.h"
 #include "RichCursorDecoder.h"
 
+#include "tvnviewer/SessionEntryDialog.h"
+
 #include <algorithm>
 
 RemoteViewerCore::RemoteViewerCore(Logger *logger)
@@ -495,6 +497,30 @@ void RemoteViewerCore::connectToHost()
   }
 }
 
+void RemoteViewerCore::session()
+{
+  SessionEntryDialog sessionEntryDialog;
+  unsigned int sessionId;
+  unsigned int status;
+
+  while (true) {
+    if (sessionEntryDialog.showModal()) {
+      sessionId = sessionEntryDialog.getSessionId();
+    } else {
+      throw AuthCanceledException();
+    }
+
+    m_output->writeUInt32(sessionId);
+    m_output->flush();
+    status = m_input->readUInt32();
+
+    if (status > 0) {
+      break;
+    }
+    MessageBox(0, _T("Session ID is invalid."), _T("LC RemoteHelp Viewer"), MB_OK | MB_ICONERROR);
+  }
+}
+
 void RemoteViewerCore::authenticate()
 {
   m_logWriter.detail(_T("Negotiating about security type..."));
@@ -772,6 +798,10 @@ void RemoteViewerCore::execute()
     // if already connected, then function do nothing
     m_logWriter.info(_T("Protocol stage is \"Connection establishing\"."));
     connectToHost();
+
+    // attach to a server via session id
+    m_logWriter.info(_T("Protocol stage is \"Session\"."));
+    session();
 
     // get server version and set client version
     m_logWriter.info(_T("Protocol stage is \"Handshake\"."));

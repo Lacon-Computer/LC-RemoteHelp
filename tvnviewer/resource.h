@@ -72,6 +72,7 @@
 #define IDS_TB_FULLSCREEN               215
 #define IDS_TB_CONFIGURATION            216
 #define IDD_FS_WARNING                  230
+#define IDD_SESSION_ENTRY               231
 #define IDC_LABEL                       1001
 #define IDC_FILENAME_EDIT               1002
 #define IDC_FILENAME_LABEL              1004
@@ -154,6 +155,7 @@
 #define IDC_BABOUT                      1084
 #define IDC_OPEN_LOG_FOLDER_BUTTON      1087
 #define IDC_CWARN_FS                    1088
+#define IDC_SESSION_ID                  1089
 #define ID_CONN_OPTIONS                 40001
 #define ID_CONN_INFO                    40002
 #define ID_SHOW_TOOLBAR                 40004
@@ -166,9 +168,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        231
+#define _APS_NEXT_RESOURCE_VALUE        232
 #define _APS_NEXT_COMMAND_VALUE         40010
-#define _APS_NEXT_CONTROL_VALUE         1089
+#define _APS_NEXT_CONTROL_VALUE         1090
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

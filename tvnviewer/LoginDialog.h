@@ -53,7 +53,7 @@ public:
   // set listening mode
   void setListening(bool isListening);
 
-  static const int DEFAULT_PORT = 5900;
+  static const int DEFAULT_PORT = 5899;
 
   // this constant will be returned if user have pressed 'Connect...' button
   static const int CANCEL_MODE = 0;

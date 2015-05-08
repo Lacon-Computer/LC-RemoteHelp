@@ -337,6 +337,7 @@
     <ClCompile Include="OptionsDialog.cpp" />
     <ClCompile Include="ResourceStrings.cpp" />
     <ClCompile Include="ScaleManager.cpp" />
+    <ClCompile Include="SessionEntryDialog.cpp" />
     <ClCompile Include="TvnViewer.cpp" />
     <ClCompile Include="ViewerCmdLine.cpp" />
     <ClCompile Include="ViewerCollector.cpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceStrings.h" />
     <ClInclude Include="ScaleManager.h" />
+    <ClInclude Include="SessionEntryDialog.h" />
     <ClInclude Include="TvnViewer.h" />
     <ClInclude Include="ViewerCmdLine.h" />
     <ClInclude Include="ViewerCollector.h" />

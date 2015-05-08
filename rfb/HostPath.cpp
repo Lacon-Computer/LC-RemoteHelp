@@ -38,7 +38,7 @@ HostPath::HostPath()
     m_sshPort(0),
     m_vncHost(0),
     m_vncPort(0),
-    m_defaultPort(5900)
+    m_defaultPort(5899)
 {
 }
 
