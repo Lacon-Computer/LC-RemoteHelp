@@ -45,7 +45,8 @@ RfbInitializer::RfbInitializer(Channel *stream,
   m_minorVerNum(0),
   m_extAuthListener(extAuthListener),
   m_client(client),
-  m_authAllowed(authAllowed)
+  m_authAllowed(authAllowed),
+  m_sessionId(0)
 {
   m_output = new DataOutputStream(stream);
   m_input = new DataInputStream(stream);
@@ -55,6 +56,21 @@ RfbInitializer::~RfbInitializer()
 {
   delete m_output;
   delete m_input;
+}
+
+void RfbInitializer::sessionPhase()
+{
+  Configurator *conf = Configurator::getInstance();
+  ServerConfig *srvConf = conf->getServerConfig();
+  unsigned int id = srvConf->getLastSessionId();
+
+  m_output->writeUInt32(id);
+  m_sessionId = m_input->readUInt32();
+
+  if (m_sessionId != id) {
+    srvConf->setLastSessionId(m_sessionId);
+    conf->save();
+  }
 }
 
 void RfbInitializer::authPhase()

@@ -30,6 +30,7 @@
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
 #include "server-config-lib/Configurator.h"
+#include "tvnserver-app/SessionPresenterThread.h"
 
 RfbClient::RfbClient(SocketIPv4 *socket,
                      ClientTerminationListener *extTermListener,
@@ -183,6 +184,14 @@ void RfbClient::execute()
   try {
     // First initialization phase
     try {
+      m_log->info(_T("Entering session phase"));
+      rfbInitializer.sessionPhase();
+      unsigned int sessionId = rfbInitializer.getSessionId();
+      m_log->debug(_T("Session ID = %d"), sessionId);
+
+      SessionPresenterThread sessionPresenterThread(this, sessionId);
+      sessionPresenterThread.resume();
+
       m_log->info(_T("Entering RFB initialization phase 1"));
       rfbInitializer.authPhase();
       setClientState(IN_AUTH);

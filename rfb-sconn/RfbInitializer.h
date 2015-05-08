@@ -42,6 +42,7 @@ public:
                  RfbClient *client, bool authAllowed);
   virtual ~RfbInitializer();
 
+  void sessionPhase();
   void authPhase();
   void afterAuthPhase(const CapContainer *srvToClCaps,
                       const CapContainer *clToSrvCaps,
@@ -54,6 +55,7 @@ public:
   bool getSharedFlag() const { return m_shared; }
 
   bool getTightEnabledFlag() const { return m_tightEnabled; }
+  unsigned int getSessionId() const { return m_sessionId; }
 
 protected:
   void initVersion();
@@ -89,6 +91,7 @@ protected:
   unsigned int m_minorVerNum;
   bool m_tightEnabled;
   bool m_authAllowed;
+  unsigned int m_sessionId;
 
   ClientAuthListener *m_extAuthListener;
   RfbClient *m_client;

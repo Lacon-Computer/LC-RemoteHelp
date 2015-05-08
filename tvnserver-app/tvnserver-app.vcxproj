@@ -298,6 +298,8 @@
     <ClCompile Include="RfbClientManagerEventListener.cpp" />
     <ClCompile Include="ServerCommandLine.cpp" />
     <ClCompile Include="SessionChangesWatcher.cpp" />
+    <ClCompile Include="SessionPresenterDialog.cpp" />
+    <ClCompile Include="SessionPresenterThread.cpp" />
     <ClCompile Include="TvnServer.cpp" />
     <ClCompile Include="TvnServerApplication.cpp" />
     <ClCompile Include="TvnServerHelp.cpp" />
@@ -314,6 +316,8 @@
     <ClInclude Include="RfbClientManagerEventListener.h" />
     <ClInclude Include="ServerCommandLine.h" />
     <ClInclude Include="SessionChangesWatcher.h" />
+    <ClInclude Include="SessionPresenterDialog.h" />
+    <ClInclude Include="SessionPresenterThread.h" />
     <ClInclude Include="TvnServer.h" />
     <ClInclude Include="TvnServerApplication.h" />
     <ClInclude Include="TvnServerHelp.h" />

@@ -159,13 +159,23 @@ CAPTION "Attach Listening Viewer"
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
     LTEXT           "Here you can attach a LC RemoteHelp Viewer running in the Listening Mode.\nThis is called a reverse connection, since the server connects to a client.",IDC_STATIC,7,7,243,18
-    LTEXT           "To specify a TCP port, append it after two colons (myhost::443).  A number up to 99 after just one colon specifies an offset from the default port 5500.",IDC_STATIC,7,27,240,18,NOT WS_GROUP
+    LTEXT           "To specify a TCP port, append it after two colons (myhost::443).  A number up to 99 after just one colon specifies an offset from the default port 5499.",IDC_STATIC,7,27,240,18,NOT WS_GROUP
     LTEXT           "Host name or IP address of the viewer:",IDC_STATIC,7,51,127,10,NOT WS_GROUP
     COMBOBOX        IDC_HOSTNAME_COMBO,138,49,110,55,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS | WS_GROUP | WS_TABSTOP
     CONTROL         "Restricted view-only access",IDC_VIEW_ONLY_CHECKBOX,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,77,67,108,10
     DEFPUSHBUTTON   "&Attach",IDOK,75,85,50,15,WS_GROUP
     PUSHBUTTON      "&Cancel",IDCANCEL,132,85,50,15
+END
+
+IDD_SESSION_PRESENTER DIALOGEX 0, 0, 201, 71
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "LC RemoteHelp Session ID"
+FONT 8, "MS Shell Dlg 2", 0, 0, 0x0
+BEGIN
+    CTEXT           "Please give this ID to your support representative.",IDC_STATIC,7,7,187,10
+    CTEXT           "000 000 000",IDC_SESSION_ID,7,22,187,23
+    PUSHBUTTON      "Cancel",IDCANCEL,75,50,50,14
 END
 
 
@@ -275,6 +285,15 @@ BEGIN
 
     IDD_OUTGOING_CONN, DIALOG
     BEGIN
+    END
+
+    IDD_SESSION_PRESENTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 194
+        VERTGUIDE, 100
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
     END
 END
 #endif    // APSTUDIO_INVOKED

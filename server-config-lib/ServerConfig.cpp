@@ -33,6 +33,7 @@ ServerConfig::ServerConfig()
   m_useAuthentication(true),
   m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
+  m_lastSessionId(0),
   m_removeWallpaper(true),
   m_hasPrimaryPassword(false),
   m_pollingInterval(1000), m_localInputPriorityTimeout(3),
@@ -55,6 +56,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_enableFileTransfers ? 1 : 0);
   output->writeInt8(m_removeWallpaper ? 1 : 0);
   output->writeInt8(m_mirrorDriverAllowed ? 1 : 0);
+  output->writeUInt32(m_lastSessionId);
   output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_useAuthentication ? 1 : 0);
   output->writeInt32(m_logLevel);
@@ -79,6 +81,7 @@ void ServerConfig::deserialize(DataInputStream *input)
   m_enableFileTransfers = input->readInt8() == 1;
   m_removeWallpaper = input->readInt8() == 1;
   m_mirrorDriverAllowed = input->readInt8() != 0;
+  m_lastSessionId = input->readUInt32();
   input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   m_useAuthentication = input->readInt8() == 1;
   m_logLevel = input->readInt32();
@@ -158,6 +161,18 @@ void ServerConfig::setMirrorAllowing(bool value)
 {
   AutoLock lock(&m_objectCS);
   m_mirrorDriverAllowed = value;
+}
+
+unsigned int ServerConfig::getLastSessionId()
+{
+  AutoLock lock(&m_objectCS);
+  return m_lastSessionId;
+}
+
+void ServerConfig::setLastSessionId(unsigned int id)
+{
+  AutoLock lock(&m_objectCS);
+  m_lastSessionId = id;
 }
 
 void ServerConfig::getPrimaryPassword(unsigned char *password)

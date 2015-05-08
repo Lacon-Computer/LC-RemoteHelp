@@ -232,7 +232,7 @@ void ControlClient::addClientMsgRcvd()
   // Parse host and port from connection string.
   //
   AnsiStringStorage connectStringAnsi(&connectString);
-  HostPath hp(connectStringAnsi.getString(), 5500);
+  HostPath hp(connectStringAnsi.getString(), 5499);
 
   if (!hp.isValid()) {
     return;

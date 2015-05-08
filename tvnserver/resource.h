@@ -11,6 +11,7 @@
 #define IDI_DISABLED                    119
 #define IDD_ABOUT_DIALOG                125
 #define IDB_LOGO_BIG                    127
+#define IDD_SESSION_PRESENTER           135
 #define IDC_SHOW_TVNCONTROL_ICON_CHECKBOX 1001
 #define IDC_STATIC_VERSION              1002
 #define IDC_CONFIG_TAB                  1003
@@ -34,6 +35,7 @@
 #define IDC_POLLING_INTERVAL_SPIN       1071
 #define IDC_INACTIVITY_TIMEOUT_SPIN     1073
 #define IDC_USE_MIRROR_DRIVER           1082
+#define IDC_SESSION_ID                  1097
 #define ID_ABOUT_TIGHTVNC_MENUITEM      40001
 #define IDR_TRAYMENU                    40002
 #define IDS_CAPTION_BAD_INPUT           40003
@@ -89,9 +91,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        135
+#define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         40101
-#define _APS_NEXT_CONTROL_VALUE         1094
+#define _APS_NEXT_CONTROL_VALUE         1098
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

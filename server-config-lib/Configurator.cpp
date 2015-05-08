@@ -205,6 +205,9 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   if (!sm->setBoolean(_T("UseMirrorDriver"), m_serverConfig.getMirrorIsAllowed())) {
     saveResult = false;
   }
+  if (!sm->setUINT(_T("LastSessionId"), m_serverConfig.getLastSessionId())) {
+    saveResult = false;
+  }
   if (m_serverConfig.hasPrimaryPassword()) {
     unsigned char password[VNC_PASSWORD_SIZE];
 
@@ -273,6 +276,12 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setMirrorAllowing(boolVal);
+  }
+  if (!sm->getUINT(_T("LastSessionId"), &uintVal)) {
+    loadResult = false;
+  } else {
+    m_isConfigLoadedPartly = true;
+    m_serverConfig.setLastSessionId(uintVal);
   }
 
   size_t passSize = 8;

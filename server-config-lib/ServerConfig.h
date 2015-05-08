@@ -88,6 +88,9 @@ public:
   bool getMirrorIsAllowed();
   void setMirrorAllowing(bool value);
 
+  void setLastSessionId(unsigned int id);
+  unsigned int getLastSessionId();
+
   void getPrimaryPassword(unsigned char *password);
   void setPrimaryPassword(const unsigned char *value);
 
@@ -152,6 +155,7 @@ protected:
   bool m_enableFileTransfers;
   bool m_removeWallpaper;
   bool m_mirrorDriverAllowed;
+  unsigned int m_lastSessionId;
 
   unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
 
