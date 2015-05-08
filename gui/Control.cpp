@@ -140,6 +140,11 @@ HWND Control::getWindow()
   return m_hwnd;
 }
 
+void Control::setFont(Font *font)
+{
+  SendMessage(m_hwnd, WM_SETFONT, (WPARAM)font->m_font, TRUE);
+}
+
 void Control::setStyle(DWORD style)
 {
   ::SetWindowLong(m_hwnd, GWL_STYLE, style);

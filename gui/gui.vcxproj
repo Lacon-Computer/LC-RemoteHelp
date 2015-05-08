@@ -283,6 +283,7 @@
     <ClCompile Include="FilteredTextBox.cpp" />
     <ClCompile Include="drawing\Graphics.cpp" />
     <ClCompile Include="drawing\Icon.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="ImagedButton.cpp" />
     <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="ListView.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="FilteredTextBox.h" />
     <ClInclude Include="drawing\Graphics.h" />
     <ClInclude Include="drawing\Icon.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="ImagedButton.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />

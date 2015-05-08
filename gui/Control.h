@@ -27,6 +27,7 @@
 
 #include "util/CommonHeader.h"
 #include "util/StringStorage.h"
+#include "Font.h"
 
 enum VerticalAlignment
 {
@@ -130,6 +131,12 @@ public:
   {
     setWindow(window);
   };
+
+  //
+  // Sets the font for the control
+  //
+
+  void setFont(Font *font);
 
 protected:
 
