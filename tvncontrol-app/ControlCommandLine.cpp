@@ -40,12 +40,6 @@ const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = _T("-reload");
 const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
 const TCHAR ControlCommandLine::CONNECT[] = _T("-connect");
 const TCHAR ControlCommandLine::SHUTDOWN[] = _T("-shutdown");
-const TCHAR ControlCommandLine::SHARE_PRIMARY[] = _T("-shareprimary");
-const TCHAR ControlCommandLine::SHARE_RECT[] = _T("-sharerect");
-const TCHAR ControlCommandLine::SHARE_DISPLAY[] = _T("-sharedisplay");
-const TCHAR ControlCommandLine::SHARE_WINDOW[] = _T("-sharewindow");
-const TCHAR ControlCommandLine::SHARE_FULL[] = _T("-sharefull");
-const TCHAR ControlCommandLine::SHARE_APP[] = _T("-shareapp");
 
 const TCHAR ControlCommandLine::CONFIG_APPLICATION[] = _T("-configapp");
 const TCHAR ControlCommandLine::CONFIG_SERVICE[] = _T("-configservice");
@@ -55,8 +49,6 @@ const TCHAR ControlCommandLine::SLAVE_MODE[] = _T("-slave");
 const TCHAR ControlCommandLine::DONT_ELEVATE[] = _T("-dontelevate");
 
 ControlCommandLine::ControlCommandLine()
-: m_displayNumber(0),
-  m_sharedAppProcessId(0)
 {
 }
 
@@ -73,12 +65,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
     { SHUTDOWN, NO_ARG },
     { SET_PRIMARY_VNC_PASSWORD, NEEDS_ARG },
     { CHECK_SERVICE_PASSWORDS, NO_ARG },
-    { SHARE_PRIMARY, NO_ARG },
-    { SHARE_RECT, NEEDS_ARG },
-    { SHARE_DISPLAY, NEEDS_ARG },
-    { SHARE_WINDOW, NEEDS_ARG },
-    { SHARE_FULL, NO_ARG },
-    { SHARE_APP, NEEDS_ARG },
     { CONTROL_SERVICE, NO_ARG },
     { CONTROL_APPLICATION, NO_ARG },
     { CONFIG_APPLICATION, NO_ARG },
@@ -97,28 +83,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 
   if (hasConfigAppFlag() && m_foundKeys.size() > 1) {
     throw CommandLineFormatException();
-  }
-
-  if (hasShareRect()) {
-    StringStorage strRect;
-    optionSpecified(SHARE_RECT, &strRect);
-    parseRectCoordinates(&strRect);
-  }
-
-  if (hasShareDisplay()) {
-    StringStorage strDisplayNumber;
-    optionSpecified(SHARE_DISPLAY, &strDisplayNumber);
-    parseDisplayNumber(&strDisplayNumber);
-  }
-
-  if (hasShareWindow()) {
-    optionSpecified(SHARE_WINDOW, &m_windowHeaderName);
-  }
-
-  if (hasShareApp()) {
-    StringStorage strAppProcId;
-    optionSpecified(SHARE_APP, &strAppProcId);
-    parseProcessId(&strAppProcId);
   }
 
   if (hasKillAllFlag() && hasReloadFlag()) {
@@ -209,56 +173,6 @@ bool ControlCommandLine::isSlave()
   return optionSpecified(SLAVE_MODE);
 }
 
-bool ControlCommandLine::hasSharePrimaryFlag()
-{
-  return optionSpecified(SHARE_PRIMARY);
-}
-
-bool ControlCommandLine::hasShareRect()
-{
-  return optionSpecified(SHARE_RECT);
-}
-
-bool ControlCommandLine::hasShareDisplay()
-{
-  return optionSpecified(SHARE_DISPLAY);
-}
-
-bool ControlCommandLine::hasShareWindow()
-{
-  return optionSpecified(SHARE_WINDOW);
-}
-
-bool ControlCommandLine::hasShareFull()
-{
-  return optionSpecified(SHARE_FULL);
-}
-
-bool ControlCommandLine::hasShareApp()
-{
-  return optionSpecified(SHARE_APP);
-}
-
-unsigned char ControlCommandLine::getShareDisplayNumber()
-{
-  return m_displayNumber;
-}
-
-void ControlCommandLine::getShareWindowName(StringStorage *out)
-{
-  *out = m_windowHeaderName;
-}
-
-Rect ControlCommandLine::getShareRect()
-{
-  return m_shareRect;
-}
-
-unsigned int ControlCommandLine::getSharedAppProcessId()
-{
-  return m_sharedAppProcessId;
-}
-
 bool ControlCommandLine::hasCheckServicePasswords()
 {
   return optionSpecified(CHECK_SERVICE_PASSWORDS);
@@ -272,35 +186,5 @@ const TCHAR *ControlCommandLine::getPrimaryVncPassword() const
 bool ControlCommandLine::isCommandSpecified()
 {
   return hasKillAllFlag() || hasReloadFlag() ||
-         hasSetVncPasswordFlag() || hasConnectFlag() || hasShutdownFlag() ||
-         hasSharePrimaryFlag() || hasShareDisplay() || hasShareWindow() ||
-         hasShareRect() || hasShareFull() || hasShareApp();
-}
-
-void ControlCommandLine::parseRectCoordinates(const StringStorage *strCoord)
-{
-  m_shareRect = RectSerializer::toRect(strCoord);
-}
-
-void ControlCommandLine::parseDisplayNumber(const StringStorage *strDispNumber)
-{
-  if (!StringParser::parseByte(strDispNumber->getString(),
-                               &m_displayNumber)) {
-    StringStorage errMess;
-    errMess.format(_T("Can't parse the %s argument to a display number"),
-                   strDispNumber->getString());
-    throw Exception(errMess.getString());
-  }
-}
-
-void ControlCommandLine::parseProcessId(const StringStorage *str)
-{
-  if (!StringParser::parseUInt(str->getString(),
-                               &m_sharedAppProcessId)) {
-    StringStorage errMess;
-    // FIXME: Here the next string must be placed to the resource.
-    errMess.format(_T("Can't parse the %s argument to a process id"),
-                   str->getString());
-    throw Exception(errMess.getString());
-  }
+         hasSetVncPasswordFlag() || hasConnectFlag() || hasShutdownFlag();
 }

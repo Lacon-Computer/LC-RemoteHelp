@@ -117,30 +117,6 @@ void ControlClient::execute()
           m_log->detail(_T("Control client sends process ID"));
           updateTvnControlProcessIdMsgRcvd();
           break;
-        case ControlProto::SHARE_PRIMARY_MSG_ID:
-          m_log->message(_T("Share primary message recieved"));
-          sharePrimaryIdMsgRcvd();
-          break;
-        case ControlProto::SHARE_DISPLAY_MSG_ID:
-          m_log->message(_T("Share display message recieved"));
-          shareDisplayIdMsgRcvd();
-          break;
-        case ControlProto::SHARE_WINDOW_MSG_ID:
-          m_log->message(_T("Share window message recieved"));
-          shareWindowIdMsgRcvd();
-          break;
-        case ControlProto::SHARE_RECT_MSG_ID:
-          m_log->message(_T("Share rect message recieved"));
-          shareRectIdMsgRcvd();
-          break;
-        case ControlProto::SHARE_FULL_MSG_ID:
-          m_log->message(_T("Share full message recieved"));
-          shareFullIdMsgRcvd();
-          break;
-        case ControlProto::SHARE_APP_MSG_ID:
-          m_log->message(_T("Share app message recieved"));
-          shareAppIdMsgRcvd();
-          break;
         default:
           m_gate->skipBytes(messageSize);
           m_log->warning(_T("Received unsupported message from control client"));
@@ -318,69 +294,6 @@ void ControlClient::getServerConfigMsgRcvd()
   m_gate->writeUInt32(ControlProto::REPLY_OK);
 
   Configurator::getInstance()->getServerConfig()->serialize(m_gate);
-}
-
-void ControlClient::sharePrimaryIdMsgRcvd()
-{
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-  ViewPortState dynViewPort;
-  dynViewPort.setPrimaryDisplay();
-  m_rfbClientManager->setDynViewPort(&dynViewPort);
-}
-
-void ControlClient::shareDisplayIdMsgRcvd()
-{
-  unsigned char displayNumber = m_gate->readUInt8();
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  ViewPortState dynViewPort;
-  dynViewPort.setDisplayNumber(displayNumber);
-  m_rfbClientManager->setDynViewPort(&dynViewPort);
-}
-
-void ControlClient::shareWindowIdMsgRcvd()
-{
-  StringStorage windowName;
-  m_gate->readUTF8(&windowName);
-
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  ViewPortState dynViewPort;
-  dynViewPort.setWindowName(&windowName);
-  m_rfbClientManager->setDynViewPort(&dynViewPort);
-}
-
-void ControlClient::shareRectIdMsgRcvd()
-{
-  Rect shareRect;
-  shareRect.left = m_gate->readInt32();
-  shareRect.top = m_gate->readInt32();
-  shareRect.right = m_gate->readInt32();
-  shareRect.bottom = m_gate->readInt32();
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  ViewPortState dynViewPort;
-  dynViewPort.setArbitraryRect(&shareRect);
-  m_rfbClientManager->setDynViewPort(&dynViewPort);
-}
-
-void ControlClient::shareFullIdMsgRcvd()
-{
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  ViewPortState dynViewPort;
-  dynViewPort.setFullDesktop();
-  m_rfbClientManager->setDynViewPort(&dynViewPort);
-}
-
-void ControlClient::shareAppIdMsgRcvd()
-{
-  unsigned int procId = m_gate->readUInt32();
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  ViewPortState dynViewPort;
-  dynViewPort.setProcessId(procId);
-  m_rfbClientManager->setDynViewPort(&dynViewPort);
 }
 
 void ControlClient::onGetId(unsigned int id,

@@ -157,24 +157,6 @@ public:
    * Reply body: [empty].
    */
   static const UINT32 UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID = 0x15;
-
-  // Send to server a command that to share only a primary desktop.
-  static const UINT32 SHARE_PRIMARY_MSG_ID = 0x20;
-
-  // Send to server a command to share only the display.
-  static const UINT32 SHARE_DISPLAY_MSG_ID = 0x21;
-
-  // Send to server a command to share rect constrained by a window.
-  static const UINT32 SHARE_WINDOW_MSG_ID = 0x22;
-
-  // Send to server a command to share only the rect.
-  static const UINT32 SHARE_RECT_MSG_ID = 0x23;
-
-  // Send to server a command to share only the rect.
-  static const UINT32 SHARE_FULL_MSG_ID = 0x24;
-
-  // Send to server a command to share only the rect.
-  static const UINT32 SHARE_APP_MSG_ID = 0x25;
 };
 
 #endif

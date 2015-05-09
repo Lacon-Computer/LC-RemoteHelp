@@ -108,57 +108,6 @@ void ControlProxy::makeOutgoingConnection(const TCHAR *connectString, bool viewO
   msg->send();
 }
 
-void ControlProxy::sharePrimary()
-{
-  AutoLock l(m_gate);
-  ControlMessage *msg = createMessage(ControlProto::SHARE_PRIMARY_MSG_ID);
-  msg->send();
-}
-
-void ControlProxy::shareDisplay(unsigned char displayNumber)
-{
-  AutoLock l(m_gate);
-  ControlMessage *msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);
-  msg->writeUInt8(displayNumber);
-  msg->send();
-}
-
-void ControlProxy::shareRect(const Rect *shareRect)
-{
-  AutoLock l(m_gate);
-  ControlMessage *msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);
-
-  msg->writeInt32(shareRect->left);
-  msg->writeInt32(shareRect->top);
-  msg->writeInt32(shareRect->right);
-  msg->writeInt32(shareRect->bottom);
-
-  msg->send();
-}
-
-void ControlProxy::shareWindow(const StringStorage *shareWindowName)
-{
-  AutoLock l(m_gate);
-  ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
-  msg->writeUTF8(shareWindowName->getString());
-  msg->send();
-}
-
-void ControlProxy::shareFull()
-{
-  AutoLock l(m_gate);
-  ControlMessage *msg = createMessage(ControlProto::SHARE_FULL_MSG_ID);
-  msg->send();
-}
-
-void ControlProxy::shareApp(unsigned int procId)
-{
-  AutoLock l(m_gate);
-  ControlMessage *msg = createMessage(ControlProto::SHARE_APP_MSG_ID);
-  msg->writeUInt32(procId);
-  msg->send();
-}
-
 void ControlProxy::setServerConfig(ServerConfig *config)
 {
   AutoLock l(m_gate);

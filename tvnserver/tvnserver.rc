@@ -408,7 +408,7 @@ BEGIN
                             "Polling interval is too small, minimal allowed value is 30 ms."
     IDS_INACTIVITY_TIMEOUT_TOO_SMALL 
                             "Inactivity timeout is too small, minimal allowed value is 1 second."
-    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t{ -install | -reinstall | -remove | -start | -stop }  [ -silent ]\nlcrhserver\t{ -controlservice | -controlapp }\nlcrhserver\t{ -controlservice | -controlapp }\n\t   { -connect HOST | -disconnectall | -reload | -shutdown |\n\t      -sharefull | -shareprimary |\n\t      -sharedisplay DISPLAY_NUMBER  | \n\t      -sharerect WIDTHxHEIGHT+LEFT+TOP |\n\t      -sharewindow CAPTION }\nlcrhserver\t{ -configservice | -configapp }"
+    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t{ -install | -reinstall | -remove | -start | -stop }  [ -silent ]\nlcrhserver\t{ -controlservice | -controlapp }\nlcrhserver\t{ -controlservice | -controlapp }\n\t   { -connect HOST | -disconnectall | -reload | -shutdown }\nlcrhserver\t{ -configservice | -configapp }"
     IDS_SERVER_NOT_LISTENING "not listening"
     IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER 
                             "Failed to connect to LC RemoteHelp Server."

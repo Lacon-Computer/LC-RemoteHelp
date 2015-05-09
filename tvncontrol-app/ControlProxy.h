@@ -31,8 +31,6 @@
 
 #include "server-config-lib/ServerConfig.h"
 
-#include "region/Rect.h"
-
 #include "ControlMessage.h"
 #include "RemoteException.h"
 
@@ -112,25 +110,6 @@ public:
    * @throws IOException on io error.
    */
   void makeOutgoingConnection(const TCHAR *connectString, bool viewOnly) throw(IOException, RemoteException);
-
-  // Share only primary display for all clients.
-  void sharePrimary();
-
-  // Share only the display for all clients.
-  void shareDisplay(unsigned char displayNumber);
-
-  // Share a rect that constrained by a window form.
-  // shareWindowName - is a part of the window header name.
-  void shareWindow(const StringStorage *shareWindowName);
-
-  // Share only a rect.
-  void shareRect(const Rect *shareRect);
-
-  // Share full desktop for all clients.
-  void shareFull();
-
-  // Share only application region for all clients. Other regions must be painted to black.
-  void shareApp(unsigned int procId);
 
   /**
    * Sends new configuration to server.

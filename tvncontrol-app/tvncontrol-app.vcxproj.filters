@@ -86,25 +86,7 @@
     <ClCompile Include="UpdateRemoteConfigCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShareDisplayCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShareFullCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SharePrimaryCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShareRectCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShareWindowCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SetPasswordsDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShareAppCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -190,25 +172,7 @@
     <ClInclude Include="UpdateRemoteConfigCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShareDisplayCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShareFullCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SharePrimaryCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShareRectCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShareWindowCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SetPasswordsDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShareAppCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

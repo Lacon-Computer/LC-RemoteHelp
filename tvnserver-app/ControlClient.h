@@ -157,30 +157,6 @@ private:
    * @throws IOException on io error.
    */
   void updateTvnControlProcessIdMsgRcvd() throw(IOException);
-  /**
-   * Calling when "share primary id" message recieved.
-   */
-  void sharePrimaryIdMsgRcvd();
-  /**
-   * Calling when "share display id" message recieved.
-   */
-  void shareDisplayIdMsgRcvd();
-  /**
-   * Calling when "share window id" message recieved.
-   */
-  void shareWindowIdMsgRcvd();
-  /**
-   * Calling when "share rect id" message recieved.
-   */
-  void shareRectIdMsgRcvd();
-  /**
-   * Calling when "share full id" message recieved.
-   */
-  void shareFullIdMsgRcvd();
-  /**
-   * Calling when "share app id" message recieved.
-   */
-  void shareAppIdMsgRcvd();
 
 private:
   /**

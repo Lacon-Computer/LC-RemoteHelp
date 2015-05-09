@@ -29,12 +29,6 @@
 #include "ControlCommand.h"
 #include "ReloadConfigCommand.h"
 #include "DisconnectAllCommand.h"
-#include "SharePrimaryCommand.h"
-#include "ShareDisplayCommand.h"
-#include "ShareWindowCommand.h"
-#include "ShareRectCommand.h"
-#include "ShareFullCommand.h"
-#include "ShareAppCommand.h"
 #include "ConnectCommand.h"
 #include "ShutdownCommand.h"
 
@@ -180,22 +174,6 @@ int ControlApplication::run()
       command = new ConnectCommand(m_serverControl, hostName.getString());
     } else if (cmdLineParser.hasShutdownFlag()) {
       command = new ShutdownCommand(m_serverControl);
-    } else if (cmdLineParser.hasSharePrimaryFlag()) {
-      command = new SharePrimaryCommand(m_serverControl);
-    } else if (cmdLineParser.hasShareDisplay()) {
-      unsigned char displayNumber = cmdLineParser.getShareDisplayNumber();
-      command = new ShareDisplayCommand(m_serverControl, displayNumber);
-    } else if (cmdLineParser.hasShareWindow()) {
-      StringStorage shareWindowName;
-      cmdLineParser.getShareWindowName(&shareWindowName);
-      command = new ShareWindowCommand(m_serverControl, &shareWindowName);
-    } else if (cmdLineParser.hasShareRect()) {
-      Rect shareRect = cmdLineParser.getShareRect();
-      command = new ShareRectCommand(m_serverControl, &shareRect);
-    } else if (cmdLineParser.hasShareFull()) {
-      command = new ShareFullCommand(m_serverControl);
-    } else if (cmdLineParser.hasShareApp()) {
-      command = new ShareAppCommand(m_serverControl, cmdLineParser.getSharedAppProcessId());
     }
 
     retCode = runControlCommand(command);
