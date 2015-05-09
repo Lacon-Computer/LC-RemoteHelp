@@ -35,25 +35,19 @@
 Configurator *Configurator::s_instance = NULL;
 LocalMutex Configurator::m_instanceMutex;
 
-Configurator::Configurator(bool isConfiguringService)
-: m_isConfiguringService(isConfiguringService), m_isConfigLoadedPartly(false),
-  m_isFirstLoad(true), m_regSA(0)
+Configurator::Configurator()
+: m_isConfigLoadedPartly(false),
+  m_isFirstLoad(true)
 {
   AutoLock al(&m_instanceMutex);
   if (s_instance != 0) {
     throw Exception(_T("Configurator instance already exists"));
   }
   s_instance = this;
-  try {
-    m_regSA = new RegistrySecurityAttributes();
-  } catch (...) {
-    // TODO: Place exception handler here.
-  }
 }
 
 Configurator::~Configurator()
 {
-  if (m_regSA != 0) delete m_regSA;
 }
 
 Configurator *Configurator::getInstance()
@@ -79,25 +73,9 @@ void Configurator::notifyReload()
 
 bool Configurator::load()
 {
-  return load(m_isConfiguringService);
-}
-
-bool Configurator::save()
-{
-  return save(m_isConfiguringService);
-}
-
-bool Configurator::load(bool forService)
-{
   bool isOk = false;
 
-  HKEY rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
-
-  SECURITY_ATTRIBUTES *sa = 0;
-  if (forService && m_regSA != 0) {
-    sa = m_regSA->getServiceSA();
-  }
-  RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+  RegistrySettingsManager sm(HKEY_CURRENT_USER, RegistryPaths::SERVER_PATH, 0);
 
   isOk = load(&sm);
 
@@ -106,17 +84,11 @@ bool Configurator::load(bool forService)
   return isOk;
 }
 
-bool Configurator::save(bool forService)
+bool Configurator::save()
 {
   bool isOk = false;
 
-  HKEY rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
-
-  SECURITY_ATTRIBUTES *sa = 0;
-  if (forService && m_regSA != 0) {
-    sa = m_regSA->getServiceSA();
-  }
-  RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+  RegistrySettingsManager sm(HKEY_CURRENT_USER, RegistryPaths::SERVER_PATH, 0);
 
   isOk = save(&sm);
 
@@ -409,7 +381,7 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
 void Configurator::updateLogDirPath()
 {
   StringStorage pathToLogDirectory;
-  TvnLogFilename::queryLogFileDirectory(m_isConfiguringService,
+  TvnLogFilename::queryLogFileDirectory(
     m_serverConfig.isSaveLogToAllUsersPathFlagEnabled(),
     &pathToLogDirectory);
   m_serverConfig.setLogFileDir(pathToLogDirectory.getString());

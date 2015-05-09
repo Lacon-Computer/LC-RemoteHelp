@@ -258,14 +258,12 @@
   <ItemGroup>
     <ClCompile Include="ConfigReloadListener.cpp" />
     <ClCompile Include="Configurator.cpp" />
-    <ClCompile Include="RegistrySecurityAttributes.cpp" />
     <ClCompile Include="ServerConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfigReloadListener.h" />
     <ClInclude Include="Configurator.h" />
     <ClInclude Include="DesktopConfig.h" />
-    <ClInclude Include="RegistrySecurityAttributes.h" />
     <ClInclude Include="ServerConfig.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

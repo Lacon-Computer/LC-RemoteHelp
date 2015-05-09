@@ -45,7 +45,6 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
   m_cfgServer(0),
   m_gateKickHandler(0),
   m_sessionChangesWatcher(0),
-  m_configurator(true),
   m_clientLogger(LogNames::LOG_PIPE_PUBLIC_NAME,
                 LogNames::SERVER_LOG_FILE_STUB_NAME),
   m_log(&m_clientLogger)

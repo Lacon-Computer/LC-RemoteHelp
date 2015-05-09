@@ -39,7 +39,6 @@
 #include "ClientInputHandler.h"
 #include "ClientTerminationListener.h"
 #include "ClientInputEventListener.h"
-#include "tvnserver-app/NewConnectionEvents.h"
 
 class ClientAuthListener;
 
@@ -57,7 +56,7 @@ enum ClientState
 class RfbClient: public Thread, ClientInputEventListener, private SenderControlInformationInterface
 {
 public:
-  RfbClient(NewConnectionEvents *newConnectionEvents, SocketIPv4 *socket,
+  RfbClient(SocketIPv4 *socket,
             ClientTerminationListener *extTermListener,
             ClientAuthListener *extAuthListener, bool viewOnly,
             bool isOutgoing, unsigned int id,
@@ -144,8 +143,6 @@ private:
 
   // Information
   unsigned int m_id;
-
-  NewConnectionEvents *m_newConnectionEvents;
 };
 
 #endif // __RFBCLIENT_H__

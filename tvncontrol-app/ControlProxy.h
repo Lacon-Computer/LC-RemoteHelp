@@ -56,14 +56,6 @@ public:
    */
   virtual ~ControlProxy();
 
-  // If server requests the authentication then firstly will be used
-  // *passwordFile parameter then getPassFromConfigEnabled. Call this function
-  // to determine this parameters. If this function has not been called then
-  // on server auth request will be used a dialog box.
-  void setPasswordProperties(const TCHAR *passwordFile,
-                             bool getPassFromConfigEnabled,
-                             bool forService);
-
   /**
    * Returns rfb server info status.
    * @return rfb server info status.

@@ -51,8 +51,6 @@ public:
   void endMessageProcessing();
 
 protected:
-  bool m_hasAccess;
-
   Desktop *m_desktop;
 
   LogWriter *m_log;

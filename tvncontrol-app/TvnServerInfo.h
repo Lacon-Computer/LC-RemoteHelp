@@ -41,10 +41,6 @@ struct TvnServerInfo
    */
   bool m_acceptFlag;
   /**
-   * Determinates if TightVNC server runs in context of service or application.
-   */
-  bool m_serviceFlag;
-  /**
    * TightVNC server status text.
    */
   StringStorage m_statusText;

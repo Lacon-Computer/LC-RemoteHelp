@@ -17,9 +17,6 @@
     <ClCompile Include="Configurator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RegistrySecurityAttributes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ServerConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -32,9 +29,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DesktopConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RegistrySecurityAttributes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerConfig.h">

@@ -43,17 +43,13 @@
 class ConfigDialog : public BaseDialog
 {
 public:
-  ConfigDialog(bool forService, ControlCommand *reloadConfigCommand);
-  ConfigDialog(bool forService);
+  ConfigDialog(ControlCommand *reloadConfigCommand);
   ConfigDialog();
   virtual ~ConfigDialog();
 
   void updateApplyButtonState();
 
   void setConfigReloadCommand(ControlCommand *command);
-  void setServiceFlag(bool serviceFlag);
-
-  bool isConfiguringService();
 
 protected:
 
@@ -85,8 +81,6 @@ protected:
   ServerConfigDialog m_serverConfigDialog;
   AdministrationConfigDialog m_administrationConfigDialog;
   // Other members
-  bool m_isConfiguringService;
-
   ControlCommand *m_reloadConfigCommand;
 
   int m_lastSelectedTabIndex;

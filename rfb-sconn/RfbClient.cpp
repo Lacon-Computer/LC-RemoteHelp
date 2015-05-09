@@ -31,8 +31,7 @@
 #include "ClientAuthListener.h"
 #include "server-config-lib/Configurator.h"
 
-RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
-                     SocketIPv4 *socket,
+RfbClient::RfbClient(SocketIPv4 *socket,
                      ClientTerminationListener *extTermListener,
                      ClientAuthListener *extAuthListener, bool viewOnly,
                      bool isOutgoing, unsigned int id,
@@ -40,7 +39,6 @@ RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
                      const ViewPortState *dynViewPort,
                      LogWriter *log)
 : m_socket(socket), // now we own the socket
-  m_newConnectionEvents(newConnectionEvents),
   m_viewOnly(viewOnly),
   m_isOutgoing(isOutgoing),
   m_shared(false),
@@ -271,7 +269,6 @@ void RfbClient::execute()
   }
 
   disconnect();
-  m_newConnectionEvents->onDisconnect(&sysLogMessage);
 
   // After this call, we are guaranteed not to be used by other threads.
   notifyAbStateChanging(IN_PENDING_TO_REMOVE);

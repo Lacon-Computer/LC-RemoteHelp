@@ -34,9 +34,7 @@ class ControlCommandLine : private CommandLine
 {
 public:
   static const TCHAR CONFIG_APPLICATION[];
-  static const TCHAR CONFIG_SERVICE[];
 
-  static const TCHAR CONTROL_SERVICE[];
   static const TCHAR CONTROL_APPLICATION[];
   static const TCHAR CONFIG_RELOAD[];
   static const TCHAR DISCONNECT_ALL[];
@@ -44,10 +42,8 @@ public:
   static const TCHAR SHUTDOWN[];
 
   static const TCHAR SET_PRIMARY_VNC_PASSWORD[];
-  static const TCHAR CHECK_SERVICE_PASSWORDS[];
 
   static const TCHAR SLAVE_MODE[];
-  static const TCHAR DONT_ELEVATE[];
 
 public:
   ControlCommandLine();
@@ -61,12 +57,8 @@ public:
   void getConnectHostName(StringStorage *hostName) const;
   bool hasShutdownFlag();
   bool hasSetVncPasswordFlag();
-  bool hasCheckServicePasswords();
   bool hasConfigAppFlag();
-  bool hasConfigServiceFlag();
-  bool hasControlServiceFlag();
   bool hasControlAppFlag();
-  bool hasDontElevateFlag();
   bool isSlave();
 
   const TCHAR *getPrimaryVncPassword() const;

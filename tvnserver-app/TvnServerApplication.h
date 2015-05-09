@@ -52,8 +52,7 @@ public:
    */
   TvnServerApplication(HINSTANCE hInstance,
                        const TCHAR *windowClassName,
-                       const TCHAR *commandLine,
-                       NewConnectionEvents *newConnectionEvents);
+                       const TCHAR *commandLine);
   /**
    * Deletes TightVNC server application instance.
    */
@@ -100,8 +99,6 @@ private:
    * TvnControl application watcher.
    */
   WsConfigRunner *m_tvnControlRunner;
-
-  NewConnectionEvents *m_newConnectionEvents;
 };
 
 #endif

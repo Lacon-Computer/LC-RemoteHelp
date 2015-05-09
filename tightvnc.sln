@@ -37,9 +37,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rfb", "rfb\rfb.vcxproj", "{CEA92B3A-5467-4CC7-80A6-227891F96C05}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhserver-app", "tvnserver-app\tvnserver-app.vcxproj", "{EBFC3125-72A4-4029-9941-3BE9EE6444D5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62} = {1E316AB4-E681-4F2B-97A7-CD7DE904AF62}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "screenhooks", "screen-hooks\screenhooks.vcxproj", "{E8D778F5-2397-479F-AA43-67F5C067CDC8}"
 EndProject
@@ -58,8 +55,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log-server", "log-server\log-server.vcxproj", "{7D22B0DC-D240-47DB-AC6B-165AE3C0C54D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hookldr", "hookldr\hookldr.vcxproj", "{56582A52-348B-401B-A0FE-EC799AE6D0AC}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win-event-log", "win-event-log\win-event-log.vcxproj", "{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tcp-dispatcher", "tcp-dispatcher\tcp-dispatcher.vcxproj", "{9A7033FA-6263-425D-83BF-A1D9F48BA997}"
 EndProject
@@ -847,34 +842,6 @@ Global
 		{56582A52-348B-401B-A0FE-EC799AE6D0AC}.ReleaseNoUnicode|x64.ActiveCfg = ReleaseNoUnicode|x64
 		{56582A52-348B-401B-A0FE-EC799AE6D0AC}.ReleaseNoUnicode|x64.Build.0 = ReleaseNoUnicode|x64
 		{56582A52-348B-401B-A0FE-EC799AE6D0AC}.ReleaseNoUnicode|x86.ActiveCfg = ReleaseNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|Mixed Platforms.Build.0 = Debug|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|Win32.Build.0 = Debug|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|x64.ActiveCfg = Debug|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|x64.Build.0 = Debug|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Debug|x86.ActiveCfg = Debug|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|Mixed Platforms.ActiveCfg = DebugNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|Mixed Platforms.Build.0 = DebugNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|Win32.ActiveCfg = DebugNoUnicode|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|Win32.Build.0 = DebugNoUnicode|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|x64.ActiveCfg = DebugNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|x64.Build.0 = DebugNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.DebugNoUnicode|x86.ActiveCfg = DebugNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|Mixed Platforms.ActiveCfg = Release|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|Mixed Platforms.Build.0 = Release|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|Win32.ActiveCfg = Release|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|Win32.Build.0 = Release|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|x64.ActiveCfg = Release|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|x64.Build.0 = Release|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.Release|x86.ActiveCfg = Release|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|Mixed Platforms.ActiveCfg = ReleaseNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|Mixed Platforms.Build.0 = ReleaseNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|Win32.ActiveCfg = ReleaseNoUnicode|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|Win32.Build.0 = ReleaseNoUnicode|Win32
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|x64.ActiveCfg = ReleaseNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|x64.Build.0 = ReleaseNoUnicode|x64
-		{1E316AB4-E681-4F2B-97A7-CD7DE904AF62}.ReleaseNoUnicode|x86.ActiveCfg = ReleaseNoUnicode|x64
 		{9A7033FA-6263-425D-83BF-A1D9F48BA997}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
 		{9A7033FA-6263-425D-83BF-A1D9F48BA997}.Debug|Mixed Platforms.Build.0 = Debug|x64
 		{9A7033FA-6263-425D-83BF-A1D9F48BA997}.Debug|Win32.ActiveCfg = Debug|Win32

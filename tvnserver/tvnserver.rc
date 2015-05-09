@@ -202,26 +202,6 @@ BEGIN
     PUSHBUTTON      "&Cancel",IDCANCEL,132,85,50,15
 END
 
-IDD_SET_PASSWORDS DIALOGEX 0, 0, 299, 149
-STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_CAPTION
-CAPTION "LC RemoteHelp Server: Set Passwords"
-FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
-BEGIN
-    LTEXT           "Please protect your LC RemoteHelp Service. Make sure to enter a password for remote access. Also, it might be a good idea to use administrative password on multi-user systems.",IDC_STATIC,7,7,285,25
-    GROUPBOX        "Password for Remote Access",IDC_STATIC,7,37,285,85,WS_GROUP
-    CONTROL         "Do not change",IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO,
-                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,16,49,96,10
-    CONTROL         "Do not use password protection (DANGEROUS!)",IDC_DONT_USE_RFB_AUTH_RADIO,
-                    "Button",BS_AUTORADIOBUTTON,16,62,196,10
-    CONTROL         "Require password-based authentication (make sure this box is always checked!)",IDC_USE_RFB_AUTH_RADIO,
-                    "Button",BS_AUTORADIOBUTTON,16,75,270,10
-    LTEXT           "Enter password:",IDC_STATIC,36,90,61,10
-    LTEXT           "Confirm password:",IDC_STATIC,36,104,61,10
-    EDITTEXT        IDC_ENTER_RFB_PASSWORD,101,88,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
-    EDITTEXT        IDC_CONFIRM_RFB_PASSWORD,101,102,54,12,ES_PASSWORD | ES_AUTOHSCROLL | WS_GROUP
-    DEFPUSHBUTTON   "OK",IDOK,124,128,50,14,WS_GROUP
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -339,20 +319,6 @@ BEGIN
     IDD_OUTGOING_CONN, DIALOG
     BEGIN
     END
-
-    IDD_SET_PASSWORDS, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 292
-        VERTGUIDE, 16
-        VERTGUIDE, 36
-        VERTGUIDE, 101
-        VERTGUIDE, 286
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 142
-        HORZGUIDE, 100
-        HORZGUIDE, 114
-    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -394,7 +360,6 @@ END
 STRINGTABLE
 BEGIN
     IDS_ADMINISTRATION_TAB_CAPTION "Administration"
-    IDS_SERVICE             "Service"
     IDS_SERVER              "Server"
     IDS_OFFLINE_MODE        " (Offline)"
     IDS_SERVER_CONFIG_CAPTION_FORMAT "LC RemoteHelp %s Configuration%s"
@@ -408,7 +373,7 @@ BEGIN
                             "Polling interval is too small, minimal allowed value is 30 ms."
     IDS_INACTIVITY_TIMEOUT_TOO_SMALL 
                             "Inactivity timeout is too small, minimal allowed value is 1 second."
-    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t{ -install | -reinstall | -remove | -start | -stop }  [ -silent ]\nlcrhserver\t{ -controlservice | -controlapp }\nlcrhserver\t{ -controlservice | -controlapp }\n\t   { -connect HOST | -disconnectall | -reload | -shutdown }\nlcrhserver\t{ -configservice | -configapp }"
+    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t-controlapp\nlcrhserver\t-controlapp\n\t   { -connect HOST | -disconnectall | -reload | -shutdown }\nlcrhserver\t-configapp"
     IDS_SERVER_NOT_LISTENING "not listening"
     IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER 
                             "Failed to connect to LC RemoteHelp Server."
@@ -423,47 +388,26 @@ BEGIN
     IDS_PRODUCT_VERSION_FORMAT "Version %s (built on %s)"
     IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION 
                             "Changes to the configuration will not take effect until you restart the LC RemoteHelp Server."
-    IDS_ADMIN_RIGHTS_NEEDED "You need administrator privileges to run the application."
     IDS_URL_PRODUCT_FSA     "https://laconcomputer.com/"
-    IDS_SERVICE_STOP_TIMEOUT "Timed out waiting for service shutdown"
-    IDS_SERVICE_START_TIMEOUT "Timed out waiting for service startup"
-    IDS_SERVICE_ALREADY_RUNNING "Service is already running"
-    IDS_SERVICE_ALREADY_STOPPED "Service is not running"
     IDS_CONTROL_CLIENT_NOT_CONNECTED "Not connected"
-    IDS_FAILED_TO_INSTALL_SERVICE_FORMAT 
-                            "Failed to register LC RemoteHelp service for the following reason:\n%s."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_FAILED_TO_REMOVE_SERVICE_FORMAT 
-                            "Failed to unregister LC RemoteHelp service for the following reason:\n%s."
-    IDS_FAILED_TO_START_SERVICE_FORMAT 
-                            "Failed to start LC RemoteHelp service for the following reason:\n%s."
-    IDS_FAILED_TO_STOP_SERVICE_FORMAT 
-                            "Failed to stop LC RemoteHelp service for the following reason:\n%s."
-    IDS_SERVICE_INSTALLED   "LC RemoteHelp service has been registered."
-    IDS_SERVICE_REMOVED     "LC RemoteHelp service has been unregistered."
-    IDS_SERVICE_REINSTALLED "LC RemoteHelp service has been reinstalled."
     IDS_INVALID_POLLING_INTERVAL 
                             "Polling interval must be a number between 30 and 4294967295."
     IDS_INVALID_INACTIVITY_TIMEOUT 
                             "Inactivity timeout must be a number between 1 and 4294967295."
     IDS_NO_PASSWORDS_SET    "no passwords set"
-    IDS_TVNSERVER_SERVICE   "LC RemoteHelp Service"
-    IDS_1060_ERROR_DESCRIPTION "Service is not registered"
 END
 
 STRINGTABLE
 BEGIN
     IDS_TVNSERVER_APP       "LC RemoteHelp Server"
-    IDS_1073_ERROR_DESCRIPTION "Service is already registered"
     IDS_SHUTDOWN_NOTIFICATION_FORMAT 
                             "This will disconnect all clients and they will not be able to reconnect until the LC RemoteHelp Server is restarted.\n\nAre you sure you want to shutdown the %s?"
     IDS_NO_AUTH_STATUS      " (no auth!)"
     IDS_LICENSING_INFO      "Licensing Terms: GNU General Public License version 2"
-    IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS 
-                            "Unable to update LC RemoteHelp service with the new configuration with reason: %s."
 END
 
 #endif    // English (United States) resources

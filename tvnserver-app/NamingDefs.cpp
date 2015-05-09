@@ -43,23 +43,12 @@ const TCHAR LogNames::SERVER_LOG_FILE_STUB_NAME[] = _T("lcrhserver");
 const TCHAR LogNames::VIEWER_LOG_FILE_STUB_NAME[] = _T("lcrhviewer");
 const TCHAR LogNames::LOG_DIR_NAME[] = _T("LC RemoteHelp");
 const TCHAR LogNames::LOG_PIPE_PUBLIC_NAME[] = _T("LCRH_log_pipe_public_name");
-const TCHAR LogNames::WIN_EVENT_PROVIDER_NAME[] = _T("lcrhserver");
 
 const TCHAR ClipboardNames::CLIPBOARD_WIN_CLASS_NAME[] = 
   _T("Lcrhserver.Clipboard.MessageWindow");
 
-
-const TCHAR ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME[] =
-  _T("lcrhcontrol");
-const TCHAR ServiceNames::SERVICE_NAME[] = _T("lcrhserver");
-const TCHAR ServiceNames::SERVICE_NAME_TO_DISPLAY[] = _T("LC RemoteHelp Server");
-
 const TCHAR ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME[] =
   _T("lcrhserverApplication");
-const TCHAR ServerApplicationNames::CONTROL_APP_INSTANCE_MUTEX_NAME[] =
-  _T("lcrhserverServiceControlSlave");
-const TCHAR ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME[] =
-  _T("LC_RemoteHelp_Service_Control");
 const TCHAR ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME[] =
   _T("LC_RemoteHelp_Application_Control");
 

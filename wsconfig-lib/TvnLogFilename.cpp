@@ -33,8 +33,7 @@ TvnLogFilename::TvnLogFilename()
 {
 }
 
-void TvnLogFilename::queryLogFileDirectory(bool forService,
-                                           bool shareToAll,
+void TvnLogFilename::queryLogFileDirectory(bool shareToAll,
                                            StringStorage *logFileDirectory)
 {
   int specialFolderId = (shareToAll) ? Environment::COMMON_APPLICATION_DATA_SPECIAL_FOLDER : Environment::APPLICATION_DATA_SPECIAL_FOLDER;

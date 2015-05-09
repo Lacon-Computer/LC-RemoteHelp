@@ -118,7 +118,6 @@ public:
    * Request body: [empty].
    * Reply body:
    *   UINT8 connectionAcceptFlag.
-   *   UINT8 isServiceFlag.
    *   StringUTF8 logFilePath.
    *   StringUTF8 serverStatusText.
    */

@@ -276,7 +276,6 @@
     <ClCompile Include="ReloadConfigCommand.cpp" />
     <ClCompile Include="RemoteException.cpp" />
     <ClCompile Include="RfbClientInfo.cpp" />
-    <ClCompile Include="SetPasswordsDialog.cpp" />
     <ClCompile Include="ShutdownCommand.cpp" />
     <ClCompile Include="SocketIPv4Transport.cpp" />
     <ClCompile Include="Transport.cpp" />
@@ -305,7 +304,6 @@
     <ClInclude Include="ReloadConfigCommand.h" />
     <ClInclude Include="RemoteException.h" />
     <ClInclude Include="RfbClientInfo.h" />
-    <ClInclude Include="SetPasswordsDialog.h" />
     <ClInclude Include="ShutdownCommand.h" />
     <ClInclude Include="SocketIPv4Transport.h" />
     <ClInclude Include="Transport.h" />

@@ -28,9 +28,8 @@
 #include "server-config-lib/Configurator.h"
 #include "tvncontrol-app/ControlCommandLine.h"
 
-WsConfigRunner::WsConfigRunner(Logger *logger, bool serviceMode)
-: m_serviceMode(serviceMode),
-  m_log(logger)
+WsConfigRunner::WsConfigRunner(Logger *logger)
+: m_log(logger)
 {
   resume();
 }
@@ -52,9 +51,7 @@ void WsConfigRunner::execute()
     pathToBin.quoteSelf();
     // Prepare arguments.
     StringStorage args;
-    args.format(_T("%s %s"),
-      m_serviceMode ? ControlCommandLine::CONTROL_SERVICE :
-                      ControlCommandLine::CONTROL_APPLICATION,
+    args.format(_T("%s %s"), ControlCommandLine::CONTROL_APPLICATION,
       ControlCommandLine::SLAVE_MODE);
     // Start process.
     process = new Process(pathToBin.getString(), args.getString());

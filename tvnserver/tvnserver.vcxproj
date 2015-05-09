@@ -498,10 +498,6 @@
     <ProjectReference Include="..\tcp-dispatcher\tcp-dispatcher.vcxproj">
       <Project>{9a7033fa-6263-425d-83bf-a1d9f48ba997}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\win-event-log\win-event-log.vcxproj">
-      <Project>{1e316ab4-e681-4f2b-97a7-cd7de904af62}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\thread\thread.vcxproj">
       <Project>{5f629934-ed68-4d38-9ba5-cf3a139a44a1}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

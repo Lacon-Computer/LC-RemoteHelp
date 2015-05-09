@@ -104,9 +104,6 @@
     <ClCompile Include="DesktopWinImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinServiceDesktopFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ApplicationDesktopFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -299,9 +296,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Desktop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WinServiceDesktopFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ApplicationDesktopFactory.h">

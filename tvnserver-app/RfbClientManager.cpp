@@ -27,12 +27,10 @@
 #include "server-config-lib/Configurator.h"
 
 RfbClientManager::RfbClientManager(const TCHAR *serverName,
-                                   NewConnectionEvents *newConnectionEvents,
                                    LogWriter *log,
                                    DesktopFactory *desktopFactory)
 : m_nextClientId(0),
   m_desktop(0),
-  m_newConnectionEvents(newConnectionEvents),
   m_log(log),
   m_desktopFactory(desktopFactory)
 {
@@ -58,8 +56,6 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
   StringStorage ip;
   client->getPeerHost(&ip);
   updateIpInBan(&ip, true);
-
-  m_newConnectionEvents->onSuccAuth(&ip);
 
   AutoLock al(&m_clientListLocker);
 
@@ -132,8 +128,6 @@ void RfbClientManager::onAuthFailed(RfbClient *client)
   client->getPeerHost(&ip);
 
   updateIpInBan(&ip, false);
-
-  m_newConnectionEvents->onAuthFailed(&ip);
 }
 
 void RfbClientManager::onClipboardUpdate(const StringStorage *newClipboard)
@@ -332,8 +326,7 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
   AutoLock al(&m_clientListLocker);
 
   _ASSERT(constViewPort != 0);
-  m_nonAuthClientList.push_back(new RfbClient(m_newConnectionEvents,
-                                              socket, this, this, viewOnly,
+  m_nonAuthClientList.push_back(new RfbClient(socket, this, this, viewOnly,
                                               isOutgoing,
                                               m_nextClientId,
                                               constViewPort,

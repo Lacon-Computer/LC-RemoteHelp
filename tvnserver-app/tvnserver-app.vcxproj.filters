@@ -44,12 +44,6 @@
     <ClCompile Include="ServerCommandLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ServiceControlApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ServiceControlCommandLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SessionChangesWatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -65,19 +59,10 @@
     <ClCompile Include="TvnServerListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnService.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WsConfigRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinEventLogWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NamingDefs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CrashHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,12 +100,6 @@
     <ClInclude Include="ServerCommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServiceControlApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ServiceControlCommandLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SessionChangesWatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -136,19 +115,10 @@
     <ClInclude Include="TvnServerListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WsConfigRunner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinEventLogWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="NamingDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CrashHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

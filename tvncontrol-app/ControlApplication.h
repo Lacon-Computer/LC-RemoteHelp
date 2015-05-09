@@ -91,21 +91,14 @@ public:
 
 protected:
   /**
-   * Connect to the control interface of the server. If both -controlservice
-   * and -slave keys were specified, this function makes several tries to
-   * connect, with a pause between tries. That should recover the case when
-   * the control interface starts before the service is fully started.
+   * Connect to the control interface of the server.
    *
-   * @param controlService true if -controlservice was specified in the
-   *   command line, false otherwise. This flag is used to determine the name
-   *   of the pipe to connect to, and affects error handling on connection
-   *   failures (together with the slave flag).
    * @param slave true if -slave option was specified in the command line,
    *   false otherwise. This flag affects error handling on connection
-   *   failures (together with the connectService flag).
+   *   failures.
    * @throws Exception on errors.
    */
-  void connect(bool controlService, bool slave) throw(Exception);
+  void connect(bool slave) throw(Exception);
 
   /**
    * Inherited from Thread class.
@@ -127,21 +120,11 @@ protected:
   int runControlCommand(Command *command);
   /**
    * Runs configuration dialog (mode of tvncontrol).
-   * @param configService determinates if we gonna to configure service.
-   * @param isRunAsRequested determinates if admin rights for tvncontrol was already requested
-   * by parent process, ignored when configService is false.
-   * @remark if configService is true and application don't have admin rights, then it
-   * will start new process requesting admin rights.
    * @return application exit code.
    * @remark Call this function only to config in offline mode because it uses
    * the registry.
    */
-  int runConfigurator(bool configService, bool isRunAsRequested);
-
-  // Checks the rfb and administrator authentications. If one of them is empty
-  // the function runs a dialog to prompt to enable the both authentication and
-  // to set or to add passwords.
-  int checkServicePasswords(bool isRunAsRequested);
+  int runConfigurator();
 
 private:
   /**
@@ -149,12 +132,6 @@ private:
    * @fixme move in to tvnserver application as additional application.
    */
   static void getCryptedPassword(UINT8 cryptedPass[8], const TCHAR *plainTextPass);
-
-  // Auxiliary function to the same name function. It does real work.
-  void checkServicePasswords();
-
-  // Auxiliary function that forces the current run service to reload configuration.
-  void reloadConfig();
 
 private:
   LogWriter m_log;

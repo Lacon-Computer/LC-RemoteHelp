@@ -36,12 +36,10 @@ public:
   /**
    * Queries full path to directory where server log files are located.
    *
-   * @param forService determinates if it must create log directory path for service, or for application.
    * @param shareToAll determinates if log directory must be shared to all users.
    * @param logFileDirectory [out] output variable that will contain path to log directory.
    */
-  static void queryLogFileDirectory(bool forService,
-                                    bool shareToAll,
+  static void queryLogFileDirectory(bool shareToAll,
                                     StringStorage *logFileDirectory);
 private:
   /**

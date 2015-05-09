@@ -33,15 +33,13 @@
 class WsConfigRunner : private Thread
 {
 public:
-  WsConfigRunner(Logger *logger, bool serviceMode = false);
+  WsConfigRunner(Logger *logger);
   virtual ~WsConfigRunner();
 
 protected:
   virtual void execute();
 
 private:
-  bool m_serviceMode;
-
   LogWriter m_log;
 };
 

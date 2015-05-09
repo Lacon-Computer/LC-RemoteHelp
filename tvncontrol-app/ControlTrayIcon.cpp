@@ -190,16 +190,6 @@ void ControlTrayIcon::onConfigurationMenuItemClick()
 {
   ControlApplication::removeModelessDialog(m_configDialog->getControl()->getWindow());
 
-  bool isConnectedToService = false;
-
-  try {
-    isConnectedToService = m_serverControl->getServerInfo().m_serviceFlag;
-  } catch (...) {
-    return;
-  }
-
-  Configurator::getInstance()->setServiceFlag(isConnectedToService);
-
   // Copy running tightvnc config to our global server config.
   if (!m_configDialog->isCreated()) {
     UpdateLocalConfigCommand updateLocalConfigCommand(m_serverControl);
@@ -214,7 +204,6 @@ void ControlTrayIcon::onConfigurationMenuItemClick()
   }
 
   // Show dialog.
-  m_configDialog->setServiceFlag(isConnectedToService);
   m_configDialog->show();
 
   ControlApplication::addModelessDialog(m_configDialog->getControl()->getWindow());
@@ -247,11 +236,9 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
 
     StringStorage userMessage;
 
-    UINT stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
-
     userMessage.format(
       StringTable::getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
-      StringTable::getString(stringId));
+      StringTable::getString(IDS_TVNSERVER_APP));
 
     if (MessageBox(
       getWindow(),

@@ -29,20 +29,16 @@
 
 #include "ServerConfig.h"
 #include "ConfigReloadListener.h"
-#include "RegistrySecurityAttributes.h"
 
 #include "util/ListenerContainer.h"
 
 class Configurator : public ListenerContainer<ConfigReloadListener *>
 {
 public:
-  Configurator(bool isConfiguringService);
+  Configurator();
   virtual ~Configurator();
 
 public:
-
-  bool getServiceFlag() { return m_isConfiguringService; }
-  void setServiceFlag(bool asService) { m_isConfiguringService = asService; }
 
   bool load();
   bool save();
@@ -80,8 +76,6 @@ private:
   bool save(SettingsManager *sm);
   bool load(SettingsManager *sm);
 
-  bool load(bool forService);
-  bool save(bool forService);
 protected:
 
   //
@@ -90,18 +84,7 @@ protected:
 
   ServerConfig m_serverConfig;
 
-  //
-  // Is this flag is set configurator think than application run as service
-  //
-
-  bool m_isConfiguringService;
   bool m_isConfigLoadedPartly;
-
-  //
-  // Registry security attributes.
-  //
-
-  RegistrySecurityAttributes *m_regSA;
 
   //
   // Helper members

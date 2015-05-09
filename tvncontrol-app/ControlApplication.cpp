@@ -57,7 +57,6 @@
 #include "wsconfig-lib/ConfigDialog.h"
 #include "util/AnsiStringStorage.h"
 #include "tvnserver-app/NamingDefs.h"
-#include "SetPasswordsDialog.h"
 
 ControlApplication::ControlApplication(HINSTANCE hinst,
                                        const TCHAR *windowClassName,
@@ -68,7 +67,7 @@ ControlApplication::ControlApplication(HINSTANCE hinst,
    m_transport(0),
    m_trayIcon(0),
    m_slaveModeEnabled(false),
-   m_configurator(false),
+   m_configurator(),
    m_log(0)
 {
   m_commandLine.setString(commandLine);
@@ -109,17 +108,12 @@ int ControlApplication::run()
   }
 
   // Run configuration dialog and exit.
-  if (cmdLineParser.hasConfigAppFlag() || cmdLineParser.hasConfigServiceFlag()) {
-    return runConfigurator(cmdLineParser.hasConfigServiceFlag(), cmdLineParser.hasDontElevateFlag());
-  }
-
-  if (cmdLineParser.hasCheckServicePasswords()) {
-    return checkServicePasswords(cmdLineParser.hasDontElevateFlag());
+  if (cmdLineParser.hasConfigAppFlag()) {
+    return runConfigurator();
   }
 
   // Change passwords and exit.
   if (cmdLineParser.hasSetVncPasswordFlag()) {
-    Configurator::getInstance()->setServiceFlag(true);
     Configurator::getInstance()->load();
     ServerConfig *config = Configurator::getInstance()->getServerConfig();
     UINT8 cryptedPass[8];
@@ -132,27 +126,13 @@ int ControlApplication::run()
 
   int retCode = 0;
 
-  // If we are in the "-controlservice -slave" mode, make sure there are no
-  // other "service slaves" in this session, exit if there is one already.
-
-  GlobalMutex *appGlobalMutex = 0;
-
-  if (cmdLineParser.hasControlServiceFlag() && cmdLineParser.isSlave()) {
-    try {
-      appGlobalMutex = new GlobalMutex(
-        ServerApplicationNames::CONTROL_APP_INSTANCE_MUTEX_NAME, false, true);
-    } catch (...) {
-      return 1;
-    }
-  }
-
   ZombieKiller zombieKiller;
 
   // Connect to server.
   try {
-    connect(cmdLineParser.hasControlServiceFlag(), cmdLineParser.isSlave());
+    connect(cmdLineParser.isSlave());
   } catch (Exception &) {
-    if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
+    if (!cmdLineParser.isSlave()) {
       const TCHAR *msg = StringTable::getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
       const TCHAR *caption = StringTable::getString(IDS_MBC_TVNCONTROL);
       MessageBox(0, msg, caption, MB_OK | MB_ICONERROR);
@@ -208,18 +188,14 @@ int ControlApplication::run()
     retCode = runControlInterface(showIcon);
   }
 
-  if (appGlobalMutex != 0) {
-    delete appGlobalMutex;
-  }
-
   return retCode;
 }
 
-void ControlApplication::connect(bool controlService, bool slave)
+void ControlApplication::connect(bool slave)
 {
   // Determine the name of pipe to connect to.
   StringStorage pipeName;
-  ControlPipeName::createPipeName(controlService, &pipeName, &m_log);
+  ControlPipeName::createPipeName(&pipeName, &m_log);
 
   int numTriesRemaining = slave ? 10 : 1;
   int msDelayBetweenTries = 2000;
@@ -312,51 +288,13 @@ int ControlApplication::runControlCommand(Command *command)
   return errorCode;
 }
 
-int ControlApplication::runConfigurator(bool configService, bool isRunAsRequested)
+int ControlApplication::runConfigurator()
 {
-  // If not enough rights to configurate service, then restart application requesting
-  // admin access rights.
-  if (configService && (IsUserAnAdmin() == FALSE)) {
-    // If admin rights already requested and application still don't have them,
-    // then show error message and exit.
-    if (isRunAsRequested) {
-      MessageBox(0,
-        StringTable::getString(IDS_ADMIN_RIGHTS_NEEDED),
-        StringTable::getString(IDS_MBC_TVNCONTROL),
-        MB_OK | MB_ICONERROR);
-      return 0;
-    }
-    // Path to tvnserver binary.
-    StringStorage pathToBinary;
-    // Command line for child process.
-    StringStorage childCommandLine;
-
-    // Get path to tvnserver binary.
-    Environment::getCurrentModulePath(&pathToBinary);
-    // Set -dontelevate flag to tvncontrol know that admin rights already requested.
-    childCommandLine.format(_T("%s -dontelevate"), m_commandLine.getString());
-
-    // Start child.
-    try {
-      Shell::runAsAdmin(pathToBinary.getString(), childCommandLine.getString());
-    } catch (SystemException &sysEx) {
-      if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        MessageBox(0,
-          sysEx.getMessage(),
-          StringTable::getString(IDS_MBC_TVNCONTROL),
-          MB_OK | MB_ICONERROR);
-      }
-      return 1;
-    } // try / catch.
-    return 0;
-  }
-
   Configurator *configurator = Configurator::getInstance();
 
-  configurator->setServiceFlag(configService);
   configurator->load();
 
-  ConfigDialog confDialog(configService, 0);
+  ConfigDialog confDialog;
 
   return confDialog.showModal();
 }
@@ -376,94 +314,4 @@ void ControlApplication::getCryptedPassword(UINT8 cryptedPass[8], const TCHAR *p
 
   // Encrypt with a fixed key.
   VncPassCrypt::getEncryptedPass(cryptedPass, byteArray);
-}
-
-int ControlApplication::checkServicePasswords(bool isRunAsRequested)
-{
-  // FIXME: code duplication.
-  if (IsUserAnAdmin() == FALSE) {
-    // If admin rights already requested and application still don't have them,
-    // then show error message and exit.
-    if (isRunAsRequested) {
-      MessageBox(0,
-        StringTable::getString(IDS_ADMIN_RIGHTS_NEEDED),
-        StringTable::getString(IDS_MBC_TVNCONTROL),
-        MB_OK | MB_ICONERROR);
-      return 1;
-    }
-    // Path to tvnserver binary.
-    StringStorage pathToBinary;
-    // Command line for child process.
-    StringStorage childCommandLine;
-
-    // Get path to tvnserver binary.
-    Environment::getCurrentModulePath(&pathToBinary);
-    // Set -dontelevate flag to tvncontrol know that admin rights already requested.
-    childCommandLine.format(_T("%s -dontelevate"), m_commandLine.getString());
-
-    // Start child.
-    try {
-      Shell::runAsAdmin(pathToBinary.getString(), childCommandLine.getString());
-      return 0;
-    } catch (SystemException &sysEx) {
-      if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        MessageBox(0,
-          sysEx.getMessage(),
-          StringTable::getString(IDS_MBC_TVNCONTROL),
-          MB_OK | MB_ICONERROR);
-      }
-      return 1;
-    } // try / catch.
-    return 0;
-  }
-  checkServicePasswords();
-  return 0;
-}
-
-void ControlApplication::checkServicePasswords()
-{
-  Configurator::getInstance()->setServiceFlag(true);
-  Configurator::getInstance()->load();
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
-
-  bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
-  SetPasswordsDialog dialog(askToChangeRfbAuth);
-  if (dialog.showModal() == IDOK) {
-    UINT8 cryptedPass[8];
-    bool useRfbAuth = dialog.getUseRfbPass();
-    bool dontUseRfbAuth = dialog.getRfbPassForClear();
-    // Note: The state !useRfbAuth && !dontUseRfbAuth is valid and means "do not change
-    // the auth settings".
-    if (useRfbAuth) {
-      StringStorage pass;
-      dialog.getRfbPass(&pass);
-      getCryptedPassword(cryptedPass, pass.getString());
-      config->setPrimaryPassword(cryptedPass);
-      config->useAuthentication(true);
-    } else if (dontUseRfbAuth) {
-      config->deletePrimaryPassword();
-      config->deleteReadOnlyPassword();
-      config->useAuthentication(false);
-    }
-    Configurator::getInstance()->save();
-    reloadConfig();
-  }
-}
-
-void ControlApplication::reloadConfig()
-{
-  StringStorage pathToBinary;
-  try {
-    // Get path to tvnserver binary.
-    Environment::getCurrentModulePath(&pathToBinary);
-    Process processToReloadConfig(pathToBinary.getString(), _T("-controlservice -reload"));
-    processToReloadConfig.start();
-  } catch (Exception &e) {
-    StringStorage errMess;
-    errMess.format(StringTable::getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.getMessage());
-    MessageBox(0,
-      errMess.getString(),
-      StringTable::getString(IDS_MBC_TVNCONTROL),
-      MB_OK | MB_ICONERROR);
-  }
 }

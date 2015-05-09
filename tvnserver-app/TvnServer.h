@@ -27,7 +27,6 @@
 
 #include "util/CommonHeader.h"
 
-#include "desktop/WinServiceDesktopFactory.h"
 #include "desktop/ApplicationDesktopFactory.h"
 #include "RfbClientManager.h"
 #include "RfbServer.h"
@@ -39,7 +38,6 @@
 #include "log-writer/LogWriter.h"
 #include "util/Singleton.h"
 #include "util/ListenerContainer.h"
-#include "NewConnectionEvents.h"
 
 #include "server-config-lib/Configurator.h"
 
@@ -71,16 +69,10 @@ public:
    *  3) Instanizes log.
    *  4) Starts all servers.
    *
-   * @param runsInServiceContext must be set to true if TvnServer is running in service context,
-   * false, if in context of single application. Parameter determinates control client behavour and
-   * initial place for loading TightVNC configuration.
-   *
    * @remark doesn't block calling thread execution cause all servers runs in it's own threads.
    * To know when need to shutdown TightVNC server you need to use addListener method.
    */
-  TvnServer(bool runsInServiceContext,
-            NewConnectionEvents *newConnectionEvents,
-            LogInitListener *logInitListener,
+  TvnServer(LogInitListener *logInitListener,
             Logger *logger);
   /**
    * Stops and destroys TightVNC server.
@@ -113,13 +105,6 @@ public:
    * @fixme rename this method.
    */
   void generateExternalShutdownSignal();
-
-  /**
-   * Checks if TightVNC server runs in service context.
-   * @returns true if runs in service context.
-   * @deprecated use getServerInfo() instead or move to private.
-   */
-  bool isRunningAsService() const;
 
   /**
    * Implemented from RfbClientManagerEventListener.
@@ -161,13 +146,6 @@ protected:
    */
   LocalMutex m_mutex;
 
-  /**
-   * Flag that determitates if we run in server context.
-   * true if service, false if application.
-   */
-  const bool m_runAsService;
-
-  WinServiceDesktopFactory m_serviceDesktopFactory;
   ApplicationDesktopFactory m_applicationDesktopFactory;
   /**
    * Rfb client manager (for all rfb servers), used by rfb servers

@@ -32,9 +32,7 @@
 #include "ConnectStringParser.h"
 
 const TCHAR ControlCommandLine::SET_PRIMARY_VNC_PASSWORD[] = _T("-setservicevncpass");
-const TCHAR ControlCommandLine::CHECK_SERVICE_PASSWORDS[] = _T("-checkservicepasswords");
 
-const TCHAR ControlCommandLine::CONTROL_SERVICE[] = _T("-controlservice");
 const TCHAR ControlCommandLine::CONTROL_APPLICATION[] = _T("-controlapp");
 const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = _T("-reload");
 const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
@@ -42,11 +40,8 @@ const TCHAR ControlCommandLine::CONNECT[] = _T("-connect");
 const TCHAR ControlCommandLine::SHUTDOWN[] = _T("-shutdown");
 
 const TCHAR ControlCommandLine::CONFIG_APPLICATION[] = _T("-configapp");
-const TCHAR ControlCommandLine::CONFIG_SERVICE[] = _T("-configservice");
 
 const TCHAR ControlCommandLine::SLAVE_MODE[] = _T("-slave");
-
-const TCHAR ControlCommandLine::DONT_ELEVATE[] = _T("-dontelevate");
 
 ControlCommandLine::ControlCommandLine()
 {
@@ -64,20 +59,12 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
     { CONNECT, NEEDS_ARG },
     { SHUTDOWN, NO_ARG },
     { SET_PRIMARY_VNC_PASSWORD, NEEDS_ARG },
-    { CHECK_SERVICE_PASSWORDS, NO_ARG },
-    { CONTROL_SERVICE, NO_ARG },
     { CONTROL_APPLICATION, NO_ARG },
     { CONFIG_APPLICATION, NO_ARG },
-    { CONFIG_SERVICE, NO_ARG },
     { SLAVE_MODE, NO_ARG },
-    { DONT_ELEVATE, NO_ARG }
   };
 
   if (!CommandLine::parse(fmt, sizeof(fmt) / sizeof(CommandLineFormat), cmdArgs)) {
-    throw CommandLineFormatException();
-  }
-
-  if (hasConfigServiceFlag() && ((int)m_foundKeys.size() > (optionSpecified(DONT_ELEVATE) ? 2 : 1))) {
     throw CommandLineFormatException();
   }
 
@@ -99,11 +86,11 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
     optionSpecified(SET_PRIMARY_VNC_PASSWORD, &m_vncPassword);
   }
 
-  if ((hasControlServiceFlag() || hasControlAppFlag()) && (isSlave()) && (m_foundKeys.size() > 2)) {
+  if (hasControlAppFlag() && (isSlave()) && (m_foundKeys.size() > 2)) {
     throw CommandLineFormatException();
   }
 
-  bool hasNotSlaveControl = (hasControlServiceFlag() || hasControlAppFlag()) && !isSlave();
+  bool hasNotSlaveControl = hasControlAppFlag() && !isSlave();
   if ((hasNotSlaveControl && m_foundKeys.size() > 2)) {
     throw CommandLineFormatException();
   }
@@ -148,21 +135,6 @@ bool ControlCommandLine::hasConfigAppFlag()
   return optionSpecified(CONFIG_APPLICATION);
 }
 
-bool ControlCommandLine::hasConfigServiceFlag()
-{
-  return optionSpecified(CONFIG_SERVICE);
-}
-
-bool ControlCommandLine::hasDontElevateFlag()
-{
-  return optionSpecified(DONT_ELEVATE);
-}
-
-bool ControlCommandLine::hasControlServiceFlag()
-{
-  return optionSpecified(CONTROL_SERVICE);
-}
-
 bool ControlCommandLine::hasControlAppFlag()
 {
   return optionSpecified(CONTROL_APPLICATION);
@@ -171,11 +143,6 @@ bool ControlCommandLine::hasControlAppFlag()
 bool ControlCommandLine::isSlave()
 {
   return optionSpecified(SLAVE_MODE);
-}
-
-bool ControlCommandLine::hasCheckServicePasswords()
-{
-  return optionSpecified(CHECK_SERVICE_PASSWORDS);
 }
 
 const TCHAR *ControlCommandLine::getPrimaryVncPassword() const

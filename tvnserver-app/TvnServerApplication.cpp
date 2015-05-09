@@ -37,13 +37,11 @@
 
 TvnServerApplication::TvnServerApplication(HINSTANCE hInstance,
                                            const TCHAR *windowClassName,
-                                           const TCHAR *commandLine,
-                                           NewConnectionEvents *newConnectionEvents)
+                                           const TCHAR *commandLine)
 : WindowsApplication(hInstance, windowClassName),
   m_fileLogger(true),
   m_tvnServer(0),
-  m_commandLine(commandLine),
-  m_newConnectionEvents(newConnectionEvents)
+  m_commandLine(commandLine)
 {
 }
 
@@ -83,7 +81,7 @@ int TvnServerApplication::run()
 
   // Start TightVNC server and TightVNC control application.
   try {
-    m_tvnServer = new TvnServer(false, m_newConnectionEvents, this, &m_fileLogger);
+    m_tvnServer = new TvnServer(this, &m_fileLogger);
     m_tvnServer->addListener(this);
     m_tvnControlRunner = new WsConfigRunner(&m_fileLogger);
 

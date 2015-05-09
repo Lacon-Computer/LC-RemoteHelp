@@ -26,25 +26,15 @@
 #include "tvnserver/resource.h"
 #include "util/CommonHeader.h"
 
-ConfigDialog::ConfigDialog(bool forService, ControlCommand *reloadConfigCommand)
+ConfigDialog::ConfigDialog(ControlCommand *reloadConfigCommand)
 : BaseDialog(IDD_CONFIG),
-  m_isConfiguringService(forService),
   m_reloadConfigCommand(reloadConfigCommand),
-  m_lastSelectedTabIndex(0)
-{
-}
-
-ConfigDialog::ConfigDialog(bool forService)
-: BaseDialog(IDD_CONFIG),
-  m_isConfiguringService(forService),
-  m_reloadConfigCommand(NULL),
   m_lastSelectedTabIndex(0)
 {
 }
 
 ConfigDialog::ConfigDialog()
 : BaseDialog(IDD_CONFIG),
-  m_isConfiguringService(false),
   m_reloadConfigCommand(NULL),
   m_lastSelectedTabIndex(0)
 {
@@ -65,18 +55,6 @@ void ConfigDialog::setConfigReloadCommand(ControlCommand *command)
   m_reloadConfigCommand = command;
 
   updateCaption();
-}
-
-void ConfigDialog::setServiceFlag(bool serviceFlag)
-{
-  m_isConfiguringService = serviceFlag;
-
-  updateCaption();
-}
-
-bool ConfigDialog::isConfiguringService()
-{
-  return m_isConfiguringService;
 }
 
 void ConfigDialog::initControls()
@@ -134,7 +112,6 @@ BOOL ConfigDialog::onNotify(UINT controlID, LPARAM data)
 BOOL ConfigDialog::onInitDialog()
 {
   m_config = Configurator::getInstance();
-  m_config->setServiceFlag(m_isConfiguringService);
 
   initControls();
 
@@ -284,7 +261,7 @@ void ConfigDialog::updateCaption()
   StringStorage caption;
 
   caption.format(StringTable::getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
-                 StringTable::getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
+                 StringTable::getString(IDS_SERVER),
                  m_reloadConfigCommand == 0 ? StringTable::getString(IDS_OFFLINE_MODE) : _T(""));
 
   m_ctrlThis.setText(caption.getString());

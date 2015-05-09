@@ -86,9 +86,6 @@
     <ClCompile Include="UpdateRemoteConfigCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SetPasswordsDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutDialog.h">
@@ -170,9 +167,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UpdateRemoteConfigCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SetPasswordsDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

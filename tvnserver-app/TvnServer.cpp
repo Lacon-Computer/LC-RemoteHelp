@@ -53,17 +53,13 @@
 #include <crtdbg.h>
 #include <time.h>
 
-TvnServer::TvnServer(bool runsInServiceContext,
-                     NewConnectionEvents *newConnectionEvents,
-                     LogInitListener *logInitListener,
+TvnServer::TvnServer(LogInitListener *logInitListener,
                      Logger *logger)
 : Singleton<TvnServer>(),
   ListenerContainer<TvnServerListener *>(),
-  m_runAsService(runsInServiceContext),
   m_logInitListener(logInitListener),
   m_rfbClientManager(0),
   m_controlServer(0), m_rfbServer(0),
-  m_config(runsInServiceContext),
   m_log(logger)
 {
   m_log.message(_T("%s Build on %s"),
@@ -97,16 +93,9 @@ TvnServer::TvnServer(bool runsInServiceContext,
     m_log.interror(_T("%s"), ex.getMessage());
   }
 
-  DesktopFactory *desktopFactory = 0;
-  if (runsInServiceContext) {
-    desktopFactory = &m_serviceDesktopFactory;
-  } else {
-    desktopFactory = &m_applicationDesktopFactory;
-  }
-
    // Instanize zombie killer singleton.
    // FIXME: may be need to do it in another place or use "lazy" initialization.
-  m_rfbClientManager = new RfbClientManager(0, newConnectionEvents, &m_log, desktopFactory);
+  m_rfbClientManager = new RfbClientManager(0, &m_log, &m_applicationDesktopFactory);
 
   m_rfbClientManager->addListener(this);
 
@@ -212,13 +201,10 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
     statusString = StringTable::getString(IDS_SERVER_NOT_LISTENING);
   } // not accepting connections.
 
-  UINT stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
-
   info->m_statusText.format(_T("%s - %s"),
-                            StringTable::getString(stringId),
+                            StringTable::getString(IDS_TVNSERVER_APP),
                             statusString.getString());
   info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
-  info->m_serviceFlag = m_runAsService;
 }
 
 void TvnServer::generateExternalShutdownSignal()
@@ -231,11 +217,6 @@ void TvnServer::generateExternalShutdownSignal()
 
     each->onTvnServerShutdown();
   } // for all listeners.
-}
-
-bool TvnServer::isRunningAsService() const
-{
-  return m_runAsService;
 }
 
 void TvnServer::afterFirstClientConnect()
@@ -268,12 +249,7 @@ void TvnServer::afterLastClientDisconnect()
   StringStorage thisModulePath;
   Environment::getCurrentModulePath(&thisModulePath);
   thisModulePath.quoteSelf();
-  if (isRunningAsService()) {
-    process = new CurrentConsoleProcess(&m_log, thisModulePath.getString(),
-                                        keys.getString());
-  } else {
-    process = new Process(thisModulePath.getString(), keys.getString());
-  }
+  process = new Process(thisModulePath.getString(), keys.getString());
 
   m_log.message(_T("Execute disconnect action in separate process"));
 
@@ -297,7 +273,7 @@ void TvnServer::restartControlServer()
 
   try {
     StringStorage pipeName;
-    ControlPipeName::createPipeName(isRunningAsService(), &pipeName, &m_log);
+    ControlPipeName::createPipeName(&pipeName, &m_log);
 
     // FIXME: Memory leak
     SecurityAttributes *pipeSecurity = new SecurityAttributes();
@@ -326,7 +302,7 @@ void TvnServer::restartMainRfbServer()
   m_log.message(_T("Starting main RFB server"));
 
   try {
-    m_rfbServer = new RfbServer(_T("0.0.0.0"), bindPort, m_rfbClientManager, m_runAsService, &m_log);
+    m_rfbServer = new RfbServer(_T("0.0.0.0"), bindPort, m_rfbClientManager, false, &m_log);
   } catch (Exception &ex) {
     m_log.error(_T("Failed to start main RFB server: \"%s\""), ex.getMessage());
   }

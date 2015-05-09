@@ -44,7 +44,6 @@
 #include "desktop/UpdateSendingListener.h"
 #include "rfb-sconn/ClientAuthListener.h"
 #include "tvncontrol-app/RfbClientInfo.h"
-#include "NewConnectionEvents.h"
 
 typedef std::list<RfbClient *> ClientList;
 typedef std::list<RfbClient *>::iterator ClientListIter;
@@ -72,7 +71,6 @@ class RfbClientManager: public ClientTerminationListener,
 public:
   // FIXME: parameter is not used.
   RfbClientManager(const TCHAR *serverName,
-                   NewConnectionEvents *newConnectionEvents,
                    LogWriter *log,
                    DesktopFactory *desktopFactory);
   virtual ~RfbClientManager();
@@ -149,8 +147,6 @@ private:
 
   // Inforamtion
   unsigned int m_nextClientId;
-
-  NewConnectionEvents *m_newConnectionEvents;
 
   LogWriter *m_log;
 };
