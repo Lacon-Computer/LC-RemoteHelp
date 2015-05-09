@@ -107,7 +107,6 @@ protected:
   void onDisconnectAllClientsMenuItemClick();
   void onShutdownServerMenuItemClick();
   void onOutgoingConnectionMenuItemClick();
-  void onAttachToDispatcher();
   void onAboutMenuItemClick();
   void onCloseControlInterfaceMenuItemClick();
 

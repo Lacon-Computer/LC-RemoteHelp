@@ -95,12 +95,6 @@
     <ClCompile Include="UpdateRemoteConfigCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TcpDispatcherConnectionDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MakeTcpDispatcherConnCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShareDisplayCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -212,12 +206,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UpdateRemoteConfigCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TcpDispatcherConnectionDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MakeTcpDispatcherConnCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShareDisplayCommand.h">

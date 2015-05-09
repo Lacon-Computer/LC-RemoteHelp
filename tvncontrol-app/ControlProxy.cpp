@@ -119,23 +119,6 @@ void ControlProxy::makeOutgoingConnection(const TCHAR *connectString, bool viewO
   msg->send();
 }
 
-void ControlProxy::makeTcpDispatcherConnection(const TCHAR *connectString,
-                                               const TCHAR *dispatcherName,
-                                               const TCHAR *keyword,
-                                               UINT32 connectionId)
-{
-  AutoLock l(m_gate);
-
-  ControlMessage *msg = createMessage(ControlProto::CONNECT_TO_TCPDISP_MSG_ID);
-
-  msg->writeUTF8(connectString);
-  msg->writeUTF8(dispatcherName);
-  msg->writeUTF8(keyword);
-  msg->writeUInt32(connectionId);
-
-  msg->send();
-}
-
 void ControlProxy::sharePrimary()
 {
   AutoLock l(m_gate);

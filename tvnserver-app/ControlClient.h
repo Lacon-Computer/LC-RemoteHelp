@@ -147,11 +147,6 @@ private:
    */
   void addClientMsgRcvd() throw(IOException);
   /**
-   * Called when Connect to a tcp dispatcher message recieved.
-   * @throws IOException on io error.
-   */
-  void connectToTcpDispatcher() throw(IOException);
-  /**
    * Called when set server config message recieved.
    * @throws IOException on io error.
    */

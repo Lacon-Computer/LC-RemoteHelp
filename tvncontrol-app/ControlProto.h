@@ -112,14 +112,6 @@ public:
   static const UINT32 ADD_CLIENT_MSG_ID = 0x8;
 
   /**
-   * Make connection to a TcpDispatcher from server.
-   * Request body:
-   *   StringUTF8 connectString.
-   * Reply body: [empty].
-   */
-  static const UINT32 CONNECT_TO_TCPDISP_MSG_ID = 0x9;
-
-  /**
    * Send new configuration to TightVNC server.
    * Request body:
    *   serialized ServerConfig.

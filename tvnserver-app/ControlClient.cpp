@@ -25,7 +25,6 @@
 #include "ControlClient.h"
 #include "TvnServer.h"
 #include "OutgoingRfbConnectionThread.h"
-#include "ConnectToTcpDispatcherThread.h"
 
 #include "tvncontrol-app/ControlProto.h"
 
@@ -54,8 +53,7 @@ const UINT32 ControlClient::REQUIRES_AUTH[] = { ControlProto::ADD_CLIENT_MSG_ID,
                                                 ControlProto::SHARE_WINDOW_MSG_ID,
                                                 ControlProto::SHARE_RECT_MSG_ID,
                                                 ControlProto::SHARE_APP_MSG_ID,
-                                                ControlProto::SHARE_FULL_MSG_ID,
-                                                ControlProto::CONNECT_TO_TCPDISP_MSG_ID };
+                                                ControlProto::SHARE_FULL_MSG_ID };
 
 const UINT32 ControlClient::WITHOUT_AUTH[] = {
   ControlProto::AUTH_MSG_ID,
@@ -161,10 +159,6 @@ void ControlClient::execute()
         case ControlProto::ADD_CLIENT_MSG_ID:
           m_log->detail(_T("Command requested: Attach listening viewer"));
           addClientMsgRcvd();
-          break;
-        case ControlProto::CONNECT_TO_TCPDISP_MSG_ID:
-          m_log->message(_T("Connect to a tcp dispatcher command requested"));
-          connectToTcpDispatcher();
           break;
         case ControlProto::GET_SERVER_INFO_MSG_ID:
           m_log->detail(_T("Control client requests server info"));
@@ -391,50 +385,6 @@ void ControlClient::addClientMsgRcvd()
   newConnectionThread->resume();
 
   ZombieKiller::getInstance()->addZombie(newConnectionThread);
-}
-
-void ControlClient::connectToTcpDispatcher()
-{
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  // Read a hostname.
-  StringStorage connectString;
-  m_gate->readUTF8(&connectString);
-
-  // Read a dispatcher name.
-  StringStorage dispatcherName;
-  m_gate->readUTF8(&dispatcherName);
-  // Read a keyword.
-  StringStorage keyword;
-  m_gate->readUTF8(&keyword);
-  // Read a connection id.
-  UINT32 connectionId = m_gate->readUInt32();
-
-  // Parse host and port from connection string.
-  AnsiStringStorage connectStringAnsi(&connectString);
-  HostPath hp(connectStringAnsi.getString(), 5900);
-  if (!hp.isValid()) {
-    return;
-  }
-  StringStorage host;
-  AnsiStringStorage ansiHost(hp.getVncHost());
-  ansiHost.toStringStorage(&host);
-
-  // Converting got TCHAR strings to AnsiStringStorage format
-  AnsiStringStorage ansiDispName(&dispatcherName);
-  AnsiStringStorage ansiKeyword(&keyword);
-
-  // Make connection in separate thread.
-  ConnectToTcpDispatcherThread *newConnectionThread =
-    new ConnectToTcpDispatcherThread(host.getString(),
-                                     hp.getVncPort(),
-                                     &ansiDispName,
-                                     connectionId,
-                                     &ansiKeyword,
-                                     m_rfbClientManager,
-                                     this, m_log);
-
-  m_connectingSocketThreadCollector.addThread(newConnectionThread);
 }
 
 void ControlClient::setServerConfigMsgRcvd()

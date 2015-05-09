@@ -113,15 +113,6 @@ public:
    */
   void makeOutgoingConnection(const TCHAR *connectString, bool viewOnly) throw(IOException, RemoteException);
 
-  /**
-   * Initialized connection to a TcpDispatcher.
-   * @param connectString connect string in host[:(port|diplay)] format.
-   */
-  void makeTcpDispatcherConnection(const TCHAR *connectString,
-                                   const TCHAR *dispatcherName,
-                                   const TCHAR *keyword,
-                                   UINT32 connectionId);
-
   // Share only primary display for all clients.
   void sharePrimary();
 

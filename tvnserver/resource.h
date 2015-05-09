@@ -13,18 +13,15 @@
 #define IDD_CONTROL_AUTH                123
 #define IDD_ABOUT_DIALOG                125
 #define IDB_LOGO_BIG                    127
-#define IDD_DISPATCHER_CONN             130
 #define IDD_SET_PASSWORDS               134
 #define IDC_SHOW_TVNCONTROL_ICON_CHECKBOX 1001
 #define IDC_STATIC_VERSION              1002
 #define IDC_CONFIG_TAB                  1003
-#define IDC_DISPATCH_ID                 1004
 #define IDC_LOG_LEVEL_SPIN              1006
 #define IDC_PASSWORD_EDIT               1007
 #define IDC_RFB_PORT_SPIN               1008
 #define IDC_VIEW_ONLY_CHECKBOX          1010
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
-#define IDC_DISPATCH_NAME               1013
 #define IDC_LOG_FILEPATH_EDIT           1014
 #define IDC_STATIC_LICENSING            1016
 #define IDC_UNSET_READONLY_PASSWORD_BUTTON 1017
@@ -32,7 +29,6 @@
 #define IDC_LOG_FOR_ALL_USERS           1020
 #define IDC_UNSET_PRIMARY_PASSWORD_BUTTON 1022
 #define IDC_BLOCK_REMOTE_INPUT          1023
-#define IDC_DISPATCH_KEYWORD            1024
 #define IDC_GRAB_TRANSPARENT            1025
 #define IDC_USE_CONTROL_AUTH_CHECKBOX   1027
 #define IDC_CONTROL_PASSWORD_BUTTON     1028
@@ -81,7 +77,6 @@
 #define ID_CLOSE_CONTROL_INTERFACE      40004
 #define IDS_INVALID_LOG_LEVEL           40005
 #define ID_CONFIGURATION                40006
-#define IDM_ATTACH_TO_DISPATCHER        40007
 #define IDS_CONTROL_SERVER_RAISE_EXCEPTION 40008
 #define IDS_CONTROL_CONNECTION_LOST     40009
 #define ID_OUTGOING_CONN                40010
