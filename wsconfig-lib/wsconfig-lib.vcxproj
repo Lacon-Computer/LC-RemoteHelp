@@ -282,7 +282,6 @@
     <ClCompile Include="ServerConfigDialog.cpp" />
     <ClCompile Include="TvnLogFilename.cpp" />
     <ClCompile Include="UIDataAccess.cpp" />
-    <ClCompile Include="VideoRegionsConfigDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdministrationConfigDialog.h" />
@@ -295,7 +294,6 @@
     <ClInclude Include="ServerConfigDialog.h" />
     <ClInclude Include="TvnLogFilename.h" />
     <ClInclude Include="UIDataAccess.h" />
-    <ClInclude Include="VideoRegionsConfigDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -37,7 +37,6 @@ void UpdateContainer::clear()
 {
   copiedRegion.clear();
   changedRegion.clear();
-  videoRegion.clear();
   screenSizeChanged = false;
   cursorPosChanged = false;
   cursorShapeChanged = false;
@@ -49,7 +48,6 @@ UpdateContainer& UpdateContainer::operator=(const UpdateContainer& src)
 {
   copiedRegion        = src.copiedRegion;
   changedRegion       = src.changedRegion;
-  videoRegion         = src.videoRegion;
   screenSizeChanged   = src.screenSizeChanged;
   cursorPosChanged    = src.cursorPosChanged;
   cursorShapeChanged  = src.cursorShapeChanged;
@@ -63,7 +61,6 @@ bool UpdateContainer::isEmpty() const
 {
   return copiedRegion.isEmpty() &&
          changedRegion.isEmpty() &&
-         videoRegion.isEmpty() &&
          !screenSizeChanged &&
          !cursorPosChanged &&
          !cursorShapeChanged;

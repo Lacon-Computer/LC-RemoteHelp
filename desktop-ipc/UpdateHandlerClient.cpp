@@ -110,8 +110,6 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
       readFrameBuffer(&m_backupFrameBuffer, &fbRect, m_forwGate);
     }
 
-    // Get video region
-    readRegion(&updCont.videoRegion, m_forwGate);
     // Get changed region
     unsigned int countChangedRect = m_forwGate->readUInt32();
     m_log->info(_T("UpdateHandlerClient: count changed rectangles = %u"), countChangedRect);

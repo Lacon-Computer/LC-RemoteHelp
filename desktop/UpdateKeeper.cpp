@@ -179,9 +179,6 @@ void UpdateKeeper::addUpdateContainer(const UpdateContainer *updateContainer)
   // Add changed region
   addChangedRegion(&updateContainer->changedRegion);
 
-  // Add video region
-  m_updateContainer.videoRegion.add(&updateContainer->videoRegion);
-
   // Set other properties
   if (updateContainer->screenSizeChanged) {
     setScreenSizeChanged();

@@ -41,9 +41,6 @@
     <ClCompile Include="UIDataAccess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VideoRegionsConfigDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdministrationConfigDialog.h">
@@ -74,9 +71,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UIDataAccess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VideoRegionsConfigDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

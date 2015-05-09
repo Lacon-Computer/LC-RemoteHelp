@@ -292,18 +292,6 @@ void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
   gate->writeUInt32(srvConf->getLocalInputPriorityTimeout());
 
   gate->writeUInt8(srvConf->isRemovingDesktopWallpaperEnabled());
-
-  // Send video class names
-  AutoLock al(srvConf);
-  StringVector *wndClassNames = srvConf->getVideoClassNames();
-  StringVector::iterator iter = wndClassNames->begin();
-  size_t stringCount = wndClassNames->size();
-  gate->writeUInt32((UINT32)stringCount);
-  for (; iter < wndClassNames->end(); iter++) {
-    gate->writeUTF8((*iter).getString());
-  }
-  // Send video recognition interval
-  gate->writeUInt32(srvConf->getVideoRecognitionInterval());
 }
 
 void DesktopServerProto::readConfigSettings(BlockingGate *gate)
@@ -322,16 +310,4 @@ void DesktopServerProto::readConfigSettings(BlockingGate *gate)
   srvConf->setLocalInputPriorityTimeout(gate->readUInt32());
 
   srvConf->enableRemovingDesktopWallpaper(gate->readUInt8() != 0);
-
-  // Receive video class names
-  AutoLock al(srvConf);
-  size_t stringCount = gate->readUInt32();
-
-  StringStorage tmpString;
-  for (size_t i = 0; i < stringCount; i++) {
-    gate->readUTF8(&tmpString);
-    srvConf->getVideoClassNames()->push_back(tmpString);
-  }
-  // Receive video recognition interval
-  srvConf->setVideoRecognitionInterval(gate->readUInt32());
 }

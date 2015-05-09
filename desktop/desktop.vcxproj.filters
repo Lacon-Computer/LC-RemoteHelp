@@ -194,9 +194,6 @@
     <ClCompile Include="WinCursorShapeUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinVideoRegionFounderImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbnormDeskTermListener.h">
@@ -398,9 +395,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WinCursorShapeUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WinVideoRegionFounderImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

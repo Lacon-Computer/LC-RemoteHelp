@@ -201,21 +201,8 @@ public:
   PortMappingContainer *getPortMappingContainer();
 
   //
-  // Video regions
-  //
-
-  // FIXME: Deprecated?
-  // Remark: not-thread safe method, use lock / unlock methods of this class
-  // to lock and unlock server configuration.
-  StringVector *getVideoClassNames();
-
-  //
   // Other
   //
-
-  unsigned int getVideoRecognitionInterval();
-
-  void setVideoRecognitionInterval(unsigned int interval);
 
   void saveLogToAllUsersPath(bool enabled);
   bool isSaveLogToAllUsersPathFlagEnabled();
@@ -315,16 +302,9 @@ protected:
   PortMappingContainer m_portMappings;
 
   //
-  // Video regions
-  //
-
-  StringVector m_videoClassNames;
-  
-  //
   // Other
   //
 
-  unsigned int m_videoRecognitionInterval;
   bool m_grabTransparentWindows;
 
   // Flag that determiates where log file directory will be.

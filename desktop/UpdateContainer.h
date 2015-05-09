@@ -39,7 +39,6 @@ public:
 
   Region copiedRegion;
   Region changedRegion;
-  Region videoRegion;
   bool screenSizeChanged;
   bool cursorPosChanged;
   bool cursorShapeChanged;

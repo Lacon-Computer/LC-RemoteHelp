@@ -213,24 +213,6 @@ BEGIN
     LTEXT           "ms",IDC_STATIC,282,175,13,10
 END
 
-IDD_CONFIG_VIDEO_CLASSES_PAGE DIALOGEX 0, 0, 306, 199
-STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
-EXSTYLE WS_EX_CONTROLPARENT
-FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
-BEGIN
-    GROUPBOX        "Video Detection",IDC_STATIC,6,4,293,96
-    LTEXT           "Class names of video windows (enter one class name per line, without quotes):",IDC_STATIC,16,16,273,10
-    EDITTEXT        IDC_VIDEO_CLASS_NAMES,16,28,273,50,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN | WS_GROUP
-    LTEXT           "Video recognition interval:",IDC_STATIC,16,85,86,10
-    EDITTEXT        IDC_VIDEO_RECOGNITION_INTERVAL,107,83,38,12,ES_AUTOHSCROLL | ES_NUMBER | WS_GROUP
-    LTEXT           "ms",IDC_STATIC,149,85,18,10
-    CONTROL         "",IDC_VIDEO_RECOGNITION_INTERVAL_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS,162,81,11,14
-    GROUPBOX        "Help",IDC_STATIC,6,104,293,89
-    LTEXT           "LC RemoteHelp cannot detect video windows on the screen automatically (that cannot be done reliably). However, you can help it by providing a list of window class names to be recognized as video windows.",IDC_STATIC,16,117,273,26
-    LTEXT           "Class name is a special string assigned to each window (e.g. certain versions of Windows Media Player show video in windows with ""WMPlayerApp"" class name).",IDC_STATIC,16,169,273,18
-    LTEXT           "Once such a video window is found, its contents will be encoded with JPEG and sent to the viewer continuously with minimum delays.",IDC_STATIC,16,147,273,18
-END
-
 IDD_CONTROL_AUTH DIALOGEX 0, 0, 186, 78
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "LC RemoteHelp Control Authentication"
@@ -448,17 +430,6 @@ BEGIN
         HORZGUIDE, 176
     END
 
-    IDD_CONFIG_VIDEO_CLASSES_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 6
-        RIGHTMARGIN, 299
-        VERTGUIDE, 16
-        VERTGUIDE, 289
-        TOPMARGIN, 4
-        BOTTOMMARGIN, 193
-        HORZGUIDE, 95
-    END
-
     IDD_CONTROL_AUTH, DIALOG
     BEGIN
     END
@@ -532,7 +503,6 @@ BEGIN
     IDS_CHANGE_PASSWORD     "Change Password"
     IDS_SERVER_TAB_CAPTION  "Server"
     IDS_EXTRA_PORTS_TAB_CAPTION "Extra Ports"
-    IDS_VIDEO_WINDOWS_TAB_CAPTION "Video"
 END
 
 STRINGTABLE
@@ -597,8 +567,6 @@ BEGIN
     IDS_INVALID_INACTIVITY_TIMEOUT 
                             "Inactivity timeout must be a number between 1 and 4294967295."
     IDS_NO_PASSWORDS_SET    "no passwords set"
-    IDS_INVALID_VIDEO_RECOGNITION_INTERVAL 
-                            "Video recognition interval must be a number between 1 and 4294967295."
     IDS_TVNSERVER_SERVICE   "LC RemoteHelp Service"
     IDS_1060_ERROR_DESCRIPTION "Service is not registered"
 END

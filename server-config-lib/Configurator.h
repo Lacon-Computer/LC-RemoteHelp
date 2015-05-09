@@ -81,9 +81,6 @@ private:
   bool saveInputHandlingConfig(SettingsManager *sm);
   bool loadInputHandlingConfig(SettingsManager *sm, ServerConfig *config);
 
-  bool saveVideoRegionConfig(SettingsManager *sm);
-  bool loadVideoRegionConfig(SettingsManager *sm, ServerConfig *config);
-
   bool save(SettingsManager *sm);
   bool load(SettingsManager *sm);
 

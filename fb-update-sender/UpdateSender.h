@@ -88,7 +88,6 @@ protected:
   void readUpdateRequest(RfbInputGate *io);
   void readSetPixelFormat(RfbInputGate *io);
   void readSetEncodings(RfbInputGate *io);
-  void readVideoFreeze(RfbInputGate *io);
 
   // The addUpdateContainer() function adds all updates from the first
   // updateContainer parameter to the own UpdateContainer object.
@@ -103,10 +102,6 @@ protected:
   // Return true value if cursor position has been changed.
   void checkCursorPos(UpdateContainer *updCont,
                       const Rect *viewPort);
-
-  // Thread safed get and set of the m_videFrozen flag.
-  void setVideoFrozen(bool value);
-  bool getVideoFrozen();
 
   // The sendUpdate() function sends all stored updates to the client.
   // Access to a FrameBuffer data passes through the frameBuffer pointer
@@ -234,12 +229,6 @@ protected:
   // then before send the updates updateSender must to send the color map
   // entries
   bool m_setColorMapEntr;
-
-  // This flag indicates that video is frozen or not.
-  bool m_videoFrozen;
-  // This region constains a video region which was sent at previous time.
-  Region m_prevVideoRegion;
-  LocalMutex m_vidFreezeLocMut;
 
   // Output stream.
   RfbOutputGate *m_output;

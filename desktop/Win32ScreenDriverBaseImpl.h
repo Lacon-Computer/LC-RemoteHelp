@@ -26,14 +26,13 @@
 #define __WIN32SCREENDRIVERBASEIMPL_H__
 
 #include "ScreenDriver.h"
-#include "WinVideoRegionFounderImpl.h"
 #include "CursorPositionDetector.h"
 #include "CursorShapeDetector.h"
 #include "WindowsCursorShapeGrabber.h"
 #include "CopyRectDetector.h"
 
 // This class implements "grabbers" and "detectors" which is not coupleâ with screen frame buffer.
-class Win32ScreenDriverBaseImpl : public WinVideoRegionFounderImpl
+class Win32ScreenDriverBaseImpl : public ScreenDriver
 {
 public:
   Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,

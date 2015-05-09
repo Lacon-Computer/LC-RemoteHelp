@@ -373,7 +373,6 @@
     <ClCompile Include="WinDxgiSurface.cpp" />
     <ClCompile Include="WinD3D11Texture2D.cpp" />
     <ClCompile Include="WinServiceDesktopFactory.cpp" />
-    <ClCompile Include="WinVideoRegionFounderImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbnormDeskTermListener.h" />
@@ -443,7 +442,6 @@
     <ClInclude Include="WinDxgiSurface.h" />
     <ClInclude Include="WinD3D11Texture2D.h" />
     <ClInclude Include="WinServiceDesktopFactory.h" />
-    <ClInclude Include="WinVideoRegionFounderImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

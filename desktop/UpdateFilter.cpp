@@ -56,7 +56,6 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
 
   Region toCheck = updateContainer->changedRegion;
   toCheck.add(&updateContainer->copiedRegion);
-  toCheck.add(&updateContainer->videoRegion);
 
   std::vector<Rect> rects;
   std::vector<Rect>::iterator iRect;

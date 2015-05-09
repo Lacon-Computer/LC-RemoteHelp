@@ -112,8 +112,6 @@ void UpdateHandlerServer::extractReply(BlockingGate *backGate)
     sendFrameBuffer(fb, &fbRect, backGate);
   }
 
-  // Send video region
-  sendRegion(&updCont.videoRegion, backGate);
   // Send changed region
   std::vector<Rect> rects;
   std::vector<Rect>::iterator iRect;

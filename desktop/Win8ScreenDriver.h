@@ -31,13 +31,12 @@
 #include "WindowsCursorShapeGrabber.h"
 
 #include "ScreenDriver.h"
-#include "WinVideoRegionFounderImpl.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
 #include "log-writer/LogWriter.h"
 #include "Win8ScreenDriverImpl.h"
 
-class Win8ScreenDriver : public WinVideoRegionFounderImpl
+class Win8ScreenDriver : public ScreenDriver
 {
 public:
   // (Note: This class has no link to an external backup frame buffer and then it does not have

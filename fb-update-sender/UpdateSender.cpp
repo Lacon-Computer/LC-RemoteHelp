@@ -47,7 +47,6 @@ UpdateSender::UpdateSender(RfbCodeRegistrator *codeRegtor,
   m_output(output),
   m_enbox(&m_pixelConverter, m_output),
   m_id(id),
-  m_videoFrozen(false),
   m_shareOnlyApp(false),
   m_log(log),
   m_cursorUpdates(log)
@@ -110,9 +109,6 @@ void UpdateSender::onRequest(UINT32 reqCode, RfbInputGate *input)
   case ClientMsgDefs::SET_ENCODINGS:
     readSetEncodings(input);
     break;
-  case UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE:
-    readVideoFreeze(input);
-    break;
   default:
     StringStorage errMess;
     errMess.format(_T("Unknown %d protocol code received"), (int)reqCode);
@@ -153,7 +149,6 @@ void UpdateSender::addUpdateContainer(const UpdateContainer *updateContainer)
 
   Rect viewPort = getViewPort();
 
-  updCont.videoRegion.translate(-viewPort.left, -viewPort.top);
   updCont.changedRegion.translate(-viewPort.left, -viewPort.top);
   updCont.copiedRegion.translate(-viewPort.left, -viewPort.top);
   updCont.copySrc.move(-viewPort.left, -viewPort.top);
@@ -419,40 +414,21 @@ void UpdateSender::sendUpdate()
                            frameBuffer,
                            &cursorShape);
 
-    if (!encodeOptions.copyRectEnabled() || getVideoFrozen()) {
+    if (!encodeOptions.copyRectEnabled()) {
       m_log->debug(_T("CopyRect is disabled, converting to normal updates"));
       updCont.changedRegion.add(&updCont.copiedRegion);
       updCont.copiedRegion.clear();
     }
 
-    updCont.changedRegion.add(&m_prevVideoRegion); // This line updates rid video places when
-                                                   // video is frozen.
-    updCont.videoRegion.subtract(&requestedFullReg);
-    updCont.changedRegion.subtract(&updCont.videoRegion);
-    m_prevVideoRegion = updCont.videoRegion;
-    if (getVideoFrozen()) {
-      updCont.videoRegion.clear();
-    }
-    updCont.changedRegion.add(&requestedFullReg);
-
     // FIXME: Are these two lines really needed? Check that carefully.
     Rect frameBufferRect = frameBuffer->getDimension().getRect();
-    updCont.videoRegion.crop(&frameBufferRect);
     updCont.changedRegion.crop(&frameBufferRect);
     shareAppRegion.crop(&frameBufferRect);
     prevShareAppRegion.crop(&frameBufferRect);
 
-    // If Tight encoding is not supported by the client, convert video updates
-    // to normal updates so that the preferred encoding will be used.
-    if (!encodeOptions.encodingEnabled(EncodingDefs::TIGHT)) {
-      updCont.changedRegion.add(&updCont.videoRegion);
-      updCont.videoRegion.clear();
-    }
-
     // Crop changed and video region by requested regions.
     cropUpdContForReqRegions(&updCont, &requestedIncrReg, &requestedFullReg);
 
-    Region videoRegion = updCont.videoRegion;
     Region changedRegion = updCont.changedRegion;
 
     if (shareOnlyApp) {
@@ -460,7 +436,6 @@ void UpdateSender::sendUpdate()
       newOpeningAppRegion.subtract(&prevShareAppRegion);
 
       Region blackRegion = changedRegion;
-      blackRegion.add(&videoRegion);
       blackRegion.add(&prevShareAppRegion);
       blackRegion.subtract(&shareAppRegion);
       changedRegion.add(&blackRegion);
@@ -480,25 +455,15 @@ void UpdateSender::sendUpdate()
     splitRegion(m_enbox.getEncoder(), &changedRegion, &normalRects,
                 frameBuffer, &encodeOptions);
 
-    // Do the same for the videoRegion.
-    std::vector<Rect> videoRects;
-    if (!videoRegion.isEmpty()) {
-      m_log->debug(_T("Video region is not empty"));
-      m_enbox.validateJpegEncoder(); // make sure JpegEncoder is allocated
-      splitRegion(m_enbox.getJpegEncoder(), &videoRegion, &videoRects,
-                  frameBuffer, &encodeOptions);
-    }
-
     // Get the final list of CopyRect rectangles.
     std::vector<Rect> copyRects;
     updCont.copiedRegion.getRectVector(&copyRects);
 
     // Calculate the total number of rectangles and pseudo-rectangles.
     m_log->debug(_T("Number of normal rectangles: %d"), normalRects.size());
-    m_log->debug(_T("Number of video rectangles: %d"), videoRects.size());
     m_log->debug(_T("Number of CopyRect rectangles: %d"), copyRects.size());
     size_t numTotalRects =
-      normalRects.size() + videoRects.size() + copyRects.size();
+      normalRects.size() + copyRects.size();
 
     if (updCont.cursorPosChanged) {
       numTotalRects++;
@@ -537,8 +502,6 @@ void UpdateSender::sendUpdate()
 
       m_log->debug(_T("Time between request and a point before send and coding (in milliseconds): %u"),
                  (unsigned int)(DateTime::now() - reqTimePoint).getTime());
-      m_log->debug(_T("Sending video rectangles"));
-      sendRectangles(m_enbox.getJpegEncoder(), &videoRects, frameBuffer, &encodeOptions);
       m_log->debug(_T("Sending normal rectangles"));
       sendRectangles(m_enbox.getEncoder(), &normalRects, frameBuffer, &encodeOptions);
       m_log->debug(_T("Time between request and answer is (in milliseconds): %u"),
@@ -729,23 +692,6 @@ void UpdateSender::readSetEncodings(RfbInputGate *io)
   m_newEncodeOptions.setEncodings(&list);
 }
 
-void UpdateSender::setVideoFrozen(bool value)
-{
-  AutoLock al(&m_vidFreezeLocMut);
-  m_videoFrozen = value;
-}
-
-bool UpdateSender::getVideoFrozen()
-{
-  AutoLock al(&m_vidFreezeLocMut);
-  return m_videoFrozen;
-}
-
-void UpdateSender::readVideoFreeze(RfbInputGate *io)
-{
-  setVideoFrozen(io->readUInt8() != 0);
-}
-
 bool UpdateSender::extractReqRegions(Region *incrReqReg,
                                      Region *fullReqReg,
                                      bool *incrUpdIsReq,
@@ -780,7 +726,6 @@ void UpdateSender::cropUpdContForReqRegions(UpdateContainer *updCont,
 {
   // Crop by requested region
   Region backRegion = updCont->changedRegion;
-  backRegion.add(&updCont->videoRegion);
 
   Region combinedReqRegion = *incrReqReg;
   combinedReqRegion.add(fullReqReg);
@@ -789,7 +734,6 @@ void UpdateSender::cropUpdContForReqRegions(UpdateContainer *updCont,
 
   backRegion.subtract(&combinedReqRegion);
   updCont->changedRegion.intersect(&combinedReqRegion);
-  updCont->videoRegion.intersect(&combinedReqRegion);
 
   // Return back the out region to the update keeper.
   m_updateKeeper->addChangedRegion(&backRegion);
@@ -860,7 +804,6 @@ void UpdateSender::updateFrameBuffer(UpdateContainer *updCont,
   // Frame buffers synchronizing
   Region changedAndCopyRgns = updCont->changedRegion;
   changedAndCopyRgns.add(&updCont->copiedRegion);
-  changedAndCopyRgns.add(&updCont->videoRegion);
   changedAndCopyRgns.addRect(&m_cursorUpdates.getBackgroundRect());
   {
     AutoLock al(&m_reqRectLocMut);

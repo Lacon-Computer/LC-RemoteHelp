@@ -89,11 +89,6 @@ public:
   // Returns a region as known "copy region".
   // Implementions will ensure that this function is thread safety.
   virtual void getCopiedRegion(Rect *copyRect, Point *source) = 0;
-
-  // Returns a region which associates with some video data. The region will define
-  // by concrete implementation.
-  // Implementions will not ensure that this function is thread safety.
-  virtual void getVideoRegion(Region *dstVidRegion) = 0;
 };
 
 #endif // __SCREENDRIVER_H__

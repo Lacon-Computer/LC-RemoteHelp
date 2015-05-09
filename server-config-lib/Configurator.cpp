@@ -135,9 +135,6 @@ bool Configurator::save(SettingsManager *sm)
   if (!saveServerConfig(sm)) {
     saveResult = false;
   }
-  if (!saveVideoRegionConfig(sm)) {
-    saveResult = false;
-  }
   return saveResult;
 }
 
@@ -158,9 +155,6 @@ bool Configurator::load(SettingsManager *sm)
   }
 
   if (!loadServerConfig(sm, &m_serverConfig)) {
-    loadResult = false;
-  }
-  if (!loadVideoRegionConfig(sm, &m_serverConfig)) {
     loadResult = false;
   }
 
@@ -300,74 +294,6 @@ bool Configurator::loadInputHandlingConfig(SettingsManager *sm, ServerConfig *co
   return loadResult;
 }
 
-bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
-{
-  bool saveResult = true;
-
-  StringStorage buffer;
-  StringVector *videoClasses = m_serverConfig.getVideoClassNames();
-  size_t size = videoClasses->size();
-
-  AutoLock al(&m_serverConfig);
-  buffer.setString(_T(""));
-  for (size_t i = 0; i < size; i++) {
-    buffer.appendString(videoClasses->at(i).getString());
-    if (i != size - 1) {
-      buffer.appendString(_T("\n"));
-    }
-  }
-  if (!sm->setString(_T("VideoClasses"), buffer.getString())) {
-    saveResult = false;
-  }
-  return saveResult;
-}
-
-bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *config)
-{
-  bool loadResult = true;
-
-  StringVector *videoClasses = m_serverConfig.getVideoClassNames();
-
-  // Lock configuration
-  AutoLock al(&m_serverConfig);
-
-  //
-  // Delete old video classes entries
-  //
-
-  videoClasses->clear();
-
-  //
-  // Try to load.
-  //
-
-  StringStorage storage;
-
-  if (!sm->getString(_T("VideoClasses"), &storage)) {
-    loadResult = false;
-  }
-
-  //
-  // Split.
-  //
-
-  size_t count = 0;
-
-  storage.split(_T("\n"), NULL, &count);
-  if (count != 0) {
-    std::vector<StringStorage> chunks(count);
-    storage.split(_T("\n"), &chunks.front(), &count);
-
-    for (size_t i = 0; i < count; i++) {
-      if (!chunks[i].isEmpty()) {
-        videoClasses->push_back(chunks[i]);
-      }
-    }
-  }
-
-  return loadResult;
-}
-
 bool Configurator::saveServerConfig(SettingsManager *sm)
 {
   bool saveResult = true;
@@ -444,9 +370,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
     saveResult = false;
   }
   if (!sm->setUINT(_T("PollingInterval"), m_serverConfig.getPollingInterval())) {
-    saveResult = false;
-  }
-  if (!sm->setUINT(_T("VideoRecognitionInterval"), m_serverConfig.getVideoRecognitionInterval())) {
     saveResult = false;
   }
   if (!sm->setBoolean(_T("GrabTransparentWindows"), m_serverConfig.getGrabTransparentWindowsFlag())) {
@@ -582,12 +505,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setPollingInterval(uintVal);
-  }
-  if (!sm->getUINT(_T("VideoRecognitionInterval"), &uintVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setVideoRecognitionInterval(uintVal);
   }
   if (!sm->getBoolean(_T("GrabTransparentWindows"), &boolVal)) {
     loadResult = false;
