@@ -31,6 +31,8 @@
 
 #include "server-config-lib/ServerConfig.h"
 
+#include "region/Rect.h"
+
 #include "ControlMessage.h"
 #include "RemoteException.h"
 

@@ -31,7 +31,6 @@
 #include "desktop/ApplicationDesktopFactory.h"
 #include "RfbClientManager.h"
 #include "RfbServer.h"
-#include "ExtraRfbServers.h"
 #include "ControlServer.h"
 #include "TvnServerListener.h"
 
@@ -183,17 +182,6 @@ protected:
    * Main rfb server.
    */
   RfbServer *m_rfbServer;
-  /**
-   * Extra servers for extra ports. This object is not protected by any mutex
-   * and it does not implement any internal locking, so it should be used with
-   * caution. Here we change its state on owner creation, on owner deletion
-   * and on each configuration change (via a listener function called from
-   * other threads). The listener function is registered after the object
-   * creation and unregistered before the owner destruction, and its calls are
-   * properly synchronized. Thus, we can be sure that m_extraRfbServers is not
-   * used by different threads simultaneously.
-   */
-  ExtraRfbServers m_extraRfbServers;
 
   LogInitListener *m_logInitListener;
 };

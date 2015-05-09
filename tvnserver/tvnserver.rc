@@ -151,23 +151,6 @@ BEGIN
     PUSHBUTTON      "Open folder",IDC_OPEN_LOG_FOLDER_BUTTON,242,173,50,15,WS_GROUP
 END
 
-IDD_CONFIG_PORT_MAPPING_PAGE DIALOGEX 0, 0, 306, 199
-STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
-EXSTYLE WS_EX_CONTROLPARENT
-FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
-BEGIN
-    GROUPBOX        "Extra Ports",IDC_STATIC,6,4,293,86
-    LTEXT           "Mapping of additional listening TCP ports to screen areas:",IDC_STATIC,16,16,214,10
-    LISTBOX         IDC_MAPPINGS,16,29,214,52,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
-    PUSHBUTTON      "Add...",IDC_ADD_PORT,240,29,50,15,WS_GROUP
-    PUSHBUTTON      "Edit...",IDC_EDIT_PORT,240,47,50,15,WS_DISABLED
-    PUSHBUTTON      "Remove",IDC_REMOVE_PORT,240,66,50,15,WS_DISABLED
-    GROUPBOX        "Help",IDC_STATIC,6,95,293,98,WS_GROUP
-    LTEXT           "By default, LC RemoteHelp Server listens for incoming connections on just one main TCP port, and shows the complete desktop to its clients.",IDC_STATIC,16,108,274,24
-    LTEXT           "However, it's possible to make it listen on a number of extra ports, where each port has a specific area of the screen associated with it. If a client then connects to an extra port, only that part of the screen will be shown.",IDC_STATIC,16,132,274,32
-    LTEXT           "Screen areas are represented by patterns like 640x480+120+240 (in this example, width is 640, height is 480, horizontal offset is 120 and vertical offset is 240 pixels).",IDC_STATIC,16,164,274,24
-END
-
 IDD_CONFIG_SERVER_PAGE DIALOGEX 0, 0, 306, 199
 STYLE DS_SETFONT | WS_CHILD
 EXSTYLE WS_EX_CONTROLPARENT
@@ -242,19 +225,6 @@ BEGIN
     EDITTEXT        IDC_DISPATCH_KEYWORD,152,98,71,12,ES_AUTOHSCROLL | WS_GROUP
     DEFPUSHBUTTON   "&Attach",IDOK,75,122,50,15,WS_GROUP
     PUSHBUTTON      "&Cancel",IDCANCEL,132,122,50,15
-END
-
-IDD_EDIT_PORT_MAPPING DIALOGEX 0, 0, 138, 57
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "Port Mapping"
-FONT 8, "Ms Shell Dlg", 0, 0, 0x1
-BEGIN
-    LTEXT           "Port:",IDC_STATIC,5,5,33,10
-    EDITTEXT        IDC_PORT_EDIT,5,17,33,12,ES_AUTOHSCROLL | ES_NUMBER | WS_GROUP
-    LTEXT           "Geometry specification:",IDC_STATIC,43,5,74,10
-    EDITTEXT        IDC_GEOMETRY_EDIT,43,17,90,12,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,15,37,50,15,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,72,37,50,15
 END
 
 IDD_OUTGOING_CONN DIALOGEX 0, 0, 257, 107
@@ -397,19 +367,6 @@ BEGIN
         HORZGUIDE, 56
     END
 
-    IDD_CONFIG_PORT_MAPPING_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 6
-        RIGHTMARGIN, 299
-        VERTGUIDE, 16
-        VERTGUIDE, 230
-        VERTGUIDE, 240
-        VERTGUIDE, 290
-        TOPMARGIN, 4
-        BOTTOMMARGIN, 193
-        HORZGUIDE, 29
-    END
-
     IDD_CONFIG_SERVER_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 6
@@ -435,10 +392,6 @@ BEGIN
     END
 
     IDD_DISPATCHER_CONN, DIALOG
-    BEGIN
-    END
-
-    IDD_EDIT_PORT_MAPPING, DIALOG
     BEGIN
     END
 
@@ -488,10 +441,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_INVALID_PORT_MAPPING_STRING 
-                            "Format of the geometry string is incorrect."
     IDS_PORT_RANGE_ERROR    "Port must be a number between 1 and 65535."
-    IDS_PORT_ALREADY_IN_USE "An entry with the specified port already exists.\nPlease choose a different port number."
     IDS_SET_PASSWORD_NOTIFICATION 
                             "You have chosen to use password-based authentication but have not set the passwords.\n\nPlease either set at least one of the passwords (press the corresponding ""Set..."" button) or uncheck ""Require VNC authentication""."
     IDS_MBC_TVNSERVER       "LC RemoteHelp Server"
@@ -502,7 +452,6 @@ BEGIN
     IDS_NEW_PASSWORD        "New Password"
     IDS_CHANGE_PASSWORD     "Change Password"
     IDS_SERVER_TAB_CAPTION  "Server"
-    IDS_EXTRA_PORTS_TAB_CAPTION "Extra Ports"
 END
 
 STRINGTABLE

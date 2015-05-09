@@ -64,8 +64,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
   m_rfbClientManager(0),
   m_controlServer(0), m_rfbServer(0),
   m_config(runsInServiceContext),
-  m_log(logger),
-  m_extraRfbServers(&m_log)
+  m_log(logger)
 {
   m_log.message(_T("%s Build on %s"),
                  ProductNames::SERVER_PRODUCT_NAME,
@@ -121,7 +120,6 @@ TvnServer::TvnServer(bool runsInServiceContext,
     AutoLock l(&m_mutex);
 
     restartMainRfbServer();
-    (void)m_extraRfbServers.reload(m_runAsService, m_rfbClientManager);
     restartControlServer();
   }
 }
@@ -131,7 +129,6 @@ TvnServer::~TvnServer()
   Configurator::getInstance()->removeListener(this);
 
   stopControlServer();
-  m_extraRfbServers.shutDown();
   stopMainRfbServer();
 
   ZombieKiller *zombieKiller = ZombieKiller::getInstance();
@@ -175,11 +172,6 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
         changeBindHost) {
       restartMainRfbServer();
     }
-
-    // NOTE: ExtraRfbServers::reload() does not throw exceptions if some
-    //       servers did not start. However, it returns false in that case.
-    //       Here we ignore all errors.
-    (void)m_extraRfbServers.reload(m_runAsService, m_rfbClientManager);
   }
 
   changeLogProps();

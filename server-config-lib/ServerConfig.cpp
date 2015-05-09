@@ -78,8 +78,6 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_localInputPriority ? 1 : 0);
   output->writeUInt32(m_localInputPriorityTimeout);
 
-  m_portMappings.serialize(output);
-
   output->writeInt8(m_grabTransparentWindows ? 1 : 0);
 
   output->writeInt8(m_saveLogToAllUsersPath ? 1 : 0);
@@ -116,8 +114,6 @@ void ServerConfig::deserialize(DataInputStream *input)
   m_blockLocalInput = input->readInt8() == 1;
   m_localInputPriority = input->readInt8() == 1;
   m_localInputPriorityTimeout = input->readUInt32();
-
-  m_portMappings.deserialize(input);
 
   m_grabTransparentWindows = input->readInt8() == 1;
 
@@ -486,11 +482,6 @@ bool ServerConfig::isBlockingLocalInput()
 {
   AutoLock lock(&m_objectCS);
   return m_blockLocalInput;
-}
-
-PortMappingContainer *ServerConfig::getPortMappingContainer()
-{
-  return &m_portMappings;
 }
 
 void ServerConfig::saveLogToAllUsersPath(bool enabled)

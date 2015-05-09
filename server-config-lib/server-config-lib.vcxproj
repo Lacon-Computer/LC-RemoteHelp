@@ -258,9 +258,6 @@
   <ItemGroup>
     <ClCompile Include="ConfigReloadListener.cpp" />
     <ClCompile Include="Configurator.cpp" />
-    <ClCompile Include="PortMapping.cpp" />
-    <ClCompile Include="PortMappingContainer.cpp" />
-    <ClCompile Include="PortMappingRect.cpp" />
     <ClCompile Include="RegistrySecurityAttributes.cpp" />
     <ClCompile Include="ServerConfig.cpp" />
   </ItemGroup>
@@ -268,9 +265,6 @@
     <ClInclude Include="ConfigReloadListener.h" />
     <ClInclude Include="Configurator.h" />
     <ClInclude Include="DesktopConfig.h" />
-    <ClInclude Include="PortMapping.h" />
-    <ClInclude Include="PortMappingContainer.h" />
-    <ClInclude Include="PortMappingRect.h" />
     <ClInclude Include="RegistrySecurityAttributes.h" />
     <ClInclude Include="ServerConfig.h" />
   </ItemGroup>

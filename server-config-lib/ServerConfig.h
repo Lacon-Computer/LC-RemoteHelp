@@ -27,7 +27,6 @@
 
 #include "util/StringVector.h"
 #include "util/Exception.h"
-#include "PortMappingContainer.h"
 #include "thread/AutoLock.h"
 #include "thread/LocalMutex.h"
 #include "io-lib/DataInputStream.h"
@@ -193,14 +192,6 @@ public:
   bool isBlockingLocalInput();
 
   //
-  // Port mapping config
-  //
-
-  // Remark: not-thread safe method, use lock / unlock methods of this class
-  // to lock and unlock server configuration.
-  PortMappingContainer *getPortMappingContainer();
-
-  //
   // Other
   //
 
@@ -294,12 +285,6 @@ protected:
   //
 
   unsigned int m_localInputPriorityTimeout;
-
-  //
-  // Port mapping config
-  //
-
-  PortMappingContainer m_portMappings;
 
   //
   // Other

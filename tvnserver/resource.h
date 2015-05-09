@@ -4,9 +4,7 @@
 //
 #define IDD_CONFIG_ADMINISTRATION_PAGE  102
 #define IDD_CONFIG_SERVER_PAGE          103
-#define IDD_CONFIG_PORT_MAPPING_PAGE    106
 #define IDD_CONFIG                      107
-#define IDD_EDIT_PORT_MAPPING           108
 #define IDD_CHANGE_PASSWORD             111
 #define IDD_OUTGOING_CONN               113
 #define IDI_IDLE                        115
@@ -28,7 +26,6 @@
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
 #define IDC_DISPATCH_NAME               1013
 #define IDC_LOG_FILEPATH_EDIT           1014
-#define IDC_PORT_EDIT                   1015
 #define IDC_STATIC_LICENSING            1016
 #define IDC_UNSET_READONLY_PASSWORD_BUTTON 1017
 #define IDC_APPLY                       1019
@@ -41,12 +38,7 @@
 #define IDC_CONTROL_PASSWORD_BUTTON     1028
 #define IDC_REPEAT_CONTROL_AUTH_CHECKBOX 1029
 #define IDC_UNSET_CONTROL_PASWORD_BUTTON 1031
-#define IDC_GEOMETRY_EDIT               1032
-#define IDC_ADD_PORT                    1035
-#define IDC_EDIT_PORT                   1036
-#define IDC_REMOVE_PORT                 1037
 #define IDC_BLOCK_LOCAL_INPUT           1038
-#define IDC_MAPPINGS                    1039
 #define IDC_LOCAL_INPUT_PRIORITY_TIMEOUT 1040
 #define IDC_LOCAL_INPUT_PRIORITY        1041
 #define IDC_ACCEPT_RFB_CONNECTIONS      1045
@@ -98,9 +90,7 @@
 #define IDS_MBC_ERROR                   40013
 #define ID_SHUTDOWN_SERVICE             40014
 #define IDS_CANNOT_SAVE_CONFIG          40015
-#define IDS_INVALID_PORT_MAPPING_STRING 40016
 #define IDS_PORT_RANGE_ERROR            40017
-#define IDS_PORT_ALREADY_IN_USE         40018
 #define IDS_SET_PASSWORD_NOTIFICATION   40019
 #define IDS_MBC_TVNSERVER               40020
 #define IDS_MBC_TVNCONTROL              40021
@@ -111,7 +101,6 @@
 #define IDS_CHANGE_PASSWORD             40026
 #define IDS_SERVER_TAB_CAPTION          40027
 #define IDC_HOSTNAME_COMBO              40028
-#define IDS_EXTRA_PORTS_TAB_CAPTION     40030
 #define IDS_ADMINISTRATION_TAB_CAPTION  40032
 #define IDS_SERVICE                     40033
 #define IDS_SERVER                      40034

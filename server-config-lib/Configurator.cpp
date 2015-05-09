@@ -126,9 +126,6 @@ bool Configurator::save(bool forService)
 bool Configurator::save(SettingsManager *sm)
 {
   bool saveResult = true;
-  if (!savePortMappingContainer(sm)) {
-    saveResult = false;
-  }
   if (!saveInputHandlingConfig(sm)) {
     saveResult = false;
   }
@@ -142,14 +139,6 @@ bool Configurator::load(SettingsManager *sm)
 {
   bool loadResult = true;
 
-  {
-    AutoLock l(&m_serverConfig);
-
-    if (!loadPortMappingContainer(sm, m_serverConfig.getPortMappingContainer())) {
-      loadResult = false;
-    }
-  }
-
   if (!loadInputHandlingConfig(sm, &m_serverConfig)) {
     loadResult = false;
   }
@@ -161,80 +150,6 @@ bool Configurator::load(SettingsManager *sm)
   m_isFirstLoad = false;
 
   return loadResult;
-}
-
-bool Configurator::savePortMappingContainer(SettingsManager *sm)
-{
-  bool saveResult = true;
-
-  //
-  // Get port mappings from server config
-  //
-
-  AutoLock l(&m_serverConfig);
-
-  PortMappingContainer *portMappings = m_serverConfig.getPortMappingContainer();
-
-  size_t count = portMappings->count();
-  StringStorage portMappingsString;
-  StringStorage portMappingString;
-
-  //
-  // Create string to serialize
-  //
-
-  portMappingsString.setString(_T(""));
-  for (size_t i = 0; i < count; i++) {
-    const PortMapping *portMapping = portMappings->at(i);
-    portMapping->toString(&portMappingString);
-    portMappingsString.appendString(portMappingString.getString());
-    if (i != count - 1) {
-      portMappingsString.appendString(_T(","));
-    }
-  }
-
-  //
-  // Save port mappings
-  //
-
-  if (!sm->setString(_T("ExtraPorts"), portMappingsString.getString())) {
-    saveResult = false;
-  }
-  return saveResult;
-}
-
-bool Configurator::loadPortMappingContainer(SettingsManager *sm,
-                                            PortMappingContainer *portMapping)
-{
-  bool wasError = false;
-
-  portMapping->removeAll();
-
-  StringStorage extraPorts;
-
-  if (!sm->getString(_T("ExtraPorts"), &extraPorts)) {
-    return false;
-  }
-
-  size_t count = 0;
-
-  extraPorts.split(_T(","), NULL, &count);
-  if (count != 0) {
-    std::vector<StringStorage> chunks(count);
-    extraPorts.split(_T(","), &chunks.front(), &count);
-
-    PortMapping mapping;
-
-    for (size_t i = 0; i < count; i++) {
-      if (PortMapping::parse(chunks[i].getString(), &mapping)) {
-        portMapping->pushBack(mapping);
-      } else {
-        wasError = true;
-      }
-    }
-  }
-
-  return !wasError;
 }
 
 bool Configurator::saveInputHandlingConfig(SettingsManager *sm)

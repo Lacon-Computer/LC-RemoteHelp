@@ -37,7 +37,6 @@
 
 #include "ServerConfigDialog.h"
 #include "AdministrationConfigDialog.h"
-#include "PortMappingDialog.h"
 
 #include "tvncontrol-app/ControlCommand.h"
 
@@ -84,7 +83,6 @@ protected:
   Configurator *m_config;
   // Dialogs for tab control
   ServerConfigDialog m_serverConfigDialog;
-  PortMappingDialog m_portMappingDialog;
   AdministrationConfigDialog m_administrationConfigDialog;
   // Other members
   bool m_isConfiguringService;
