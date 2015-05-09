@@ -29,12 +29,10 @@
 
 #include "tvnserver-app/TvnService.h"
 #include "tvnserver-app/TvnServerApplication.h"
-#include "tvnserver-app/QueryConnectionApplication.h"
 #include "tvnserver-app/DesktopServerApplication.h"
 #include "tvnserver-app/AdditionalActionApplication.h"
 #include "tvnserver-app/ServiceControlApplication.h"
 #include "tvnserver-app/ServiceControlCommandLine.h"
-#include "tvnserver-app/QueryConnectionCommandLine.h"
 #include "tvnserver-app/DesktopServerCommandLine.h"
 
 #include "tvncontrol-app/ControlApplication.h"
@@ -71,7 +69,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     { ControlCommandLine::CONTROL_APPLICATION, NO_ARG },
 
     { DesktopServerCommandLine::DESKTOP_SERVER_KEY, NO_ARG },
-    { QueryConnectionCommandLine::QUERY_CONNECTION, NO_ARG },
 
     { AdditionalActionApplication::LOCK_WORKSTATION_KEY, NO_ARG },
     { AdditionalActionApplication::LOGOUT_KEY, NO_ARG },
@@ -149,16 +146,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
       int retCode = desktopServerApp.run();
       return retCode;
-    } catch (...) {
-      return 1;
-    }
-  } else if (firstKey.isEqualTo(QueryConnectionCommandLine::QUERY_CONNECTION)) {
-    crashHook.setGuiEnabled();
-    try {
-      QueryConnectionApplication app(hInstance,
-        WindowNames::WINDOW_CLASS_NAME,
-        lpCmdLine);
-      return app.run();
     } catch (...) {
       return 1;
     }

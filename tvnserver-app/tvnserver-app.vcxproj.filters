@@ -38,15 +38,6 @@
     <ClCompile Include="OutgoingRfbConnectionThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QueryConnectionApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QueryConnectionCommandLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QueryConnectionDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RfbClientManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -125,15 +116,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OutgoingRfbConnectionThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QueryConnectionApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QueryConnectionCommandLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QueryConnectionDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RfbClientManager.h">

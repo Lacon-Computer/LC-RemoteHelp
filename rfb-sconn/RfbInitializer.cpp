@@ -89,7 +89,6 @@ void RfbInitializer::initVersion()
   m_minorVerNum = getProtocolMinorVersion(clientVersionMsg);
 
   try {
-    checkForLoopback();
     // Checking for a ban before auth and then after.
     checkForBan();
   } catch (Exception &e) {
@@ -106,23 +105,6 @@ void RfbInitializer::initVersion()
     m_output->writeFully(reason.getString(), reasonLen);
 
     throw;
-  }
-}
-
-void RfbInitializer::checkForLoopback()
-{
-  SocketAddressIPv4 sockAddr;
-  m_client->getSocketAddr(&sockAddr);
-  struct sockaddr_in addrIn = sockAddr.getSockAddr();
-
-  bool isLoopback = (unsigned long)addrIn.sin_addr.S_un.S_addr == 16777343;
-
-  ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
-  if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {
-    throw Exception(_T("Sorry, loopback connections are not enabled"));
-  }
-  if (srvConf->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
-    throw Exception(_T("Your connection has been rejected"));
   }
 }
 
@@ -159,8 +141,6 @@ void RfbInitializer::doAuth(UINT32 authType)
   } else {
     throw Exception(_T(""));
   }
-  // Perform additional work via a listener.
-  m_extAuthListener->onCheckAccessControl(m_client);
   // Send authentication result.
   if (m_minorVerNum >= 8 || authType != AuthDefs::NONE) {
     m_output->writeUInt32(0); // FIXME: Use a named constant instead of 0.

@@ -28,10 +28,8 @@
 #include "util/StringVector.h"
 #include "util/Exception.h"
 #include "PortMappingContainer.h"
-#include "IpAccessControl.h"
 #include "thread/AutoLock.h"
 #include "thread/LocalMutex.h"
-#include "IpAccessRule.h"
 #include "io-lib/DataInputStream.h"
 #include "io-lib/DataOutputStream.h"
 #include "io-lib/IOException.h"
@@ -45,7 +43,6 @@ class ServerConfig : public Lockable
 public:
   static const unsigned int MINIMAL_POLLING_INTERVAL = 30;
   static const unsigned int MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT = 1;
-  static const unsigned int MINIMAL_QUERY_TIMEOUT = 1;
 
   //
   // Enum defines server action when last client disconnects
@@ -151,10 +148,6 @@ public:
 
   void useAuthentication(bool enabled);
 
-  bool isOnlyLoopbackConnectionsAllowed();
-
-  void acceptOnlyLoopbackConnections(bool enabled);
-
   int getLogLevel();
 
   void setLogLevel(int logLevel);
@@ -200,37 +193,12 @@ public:
   bool isBlockingLocalInput();
 
   //
-  // Query config
-  //
-
-  unsigned int getQueryTimeout();
-
-  void setQueryTimeout(unsigned int timeout);
-
-  bool isDefaultActionAccept();
-  void setDefaultActionToAccept(bool accept);
-
-  //
   // Port mapping config
   //
 
   // Remark: not-thread safe method, use lock / unlock methods of this class
   // to lock and unlock server configuration.
   PortMappingContainer *getPortMappingContainer();
-
-  //
-  // Ip access control config
-  //
-
-  // Remark: not-thread safe method, use lock / unlock methods of this class
-  // to lock and unlock server configuration.
-  IpAccessControl *getAccessControl();
-
-  IpAccessRule::ActionType getActionByAddress(unsigned long ip);
-
-  void allowLoopbackConnections(bool allow);
-
-  bool isLoopbackConnectionsAllowed();
 
   //
   // Video regions
@@ -296,7 +264,6 @@ protected:
   //
 
   bool m_useAuthentication;
-  bool m_onlyLoopbackConnections;
   int m_logLevel;
   bool m_useControlAuth;
   bool m_controlAuthAlwaysChecking;
@@ -341,26 +308,11 @@ protected:
 
   unsigned int m_localInputPriorityTimeout;
 
-  bool m_defaultActionAccept;
-
-  //
-  // Timeout for Query IpAccessControl record
-  //
-
-  unsigned int m_queryTimeout;
-
   //
   // Port mapping config
   //
 
   PortMappingContainer m_portMappings;
-
-  //
-  // Ip access control config
-  //
-
-  IpAccessControl m_accessControlContainer;
-  bool m_allowLoopbackConnections;
 
   //
   // Video regions

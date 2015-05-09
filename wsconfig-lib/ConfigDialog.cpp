@@ -156,11 +156,6 @@ BOOL ConfigDialog::onInitDialog()
   m_administrationConfigDialog.create();
   moveDialogToTabControl(&m_administrationConfigDialog);
 
-  m_ipAccessControlDialog.setParent(&m_ctrlThis);
-  m_ipAccessControlDialog.setParentDialog(this);
-  m_ipAccessControlDialog.create();
-  moveDialogToTabControl(&m_ipAccessControlDialog);
-
   m_videoRegionsConfigDialog.setParent(&m_ctrlThis);
   m_videoRegionsConfigDialog.setParentDialog(this);
   m_videoRegionsConfigDialog.create();
@@ -168,7 +163,6 @@ BOOL ConfigDialog::onInitDialog()
 
   m_tabControl.addTab(&m_serverConfigDialog, StringTable::getString(IDS_SERVER_TAB_CAPTION));
   m_tabControl.addTab(&m_portMappingDialog, StringTable::getString(IDS_EXTRA_PORTS_TAB_CAPTION));
-  m_tabControl.addTab(&m_ipAccessControlDialog, StringTable::getString(IDS_ACCESS_CONTROL_TAB_CAPTION));
   m_tabControl.addTab(&m_videoRegionsConfigDialog, StringTable::getString(IDS_VIDEO_WINDOWS_TAB_CAPTION));
   m_tabControl.addTab(&m_administrationConfigDialog, StringTable::getString(IDS_ADMINISTRATION_TAB_CAPTION));
 
@@ -212,7 +206,6 @@ void ConfigDialog::onApplyButtonClick()
   if (canApply) {
     m_administrationConfigDialog.apply();
     m_serverConfigDialog.apply();
-    m_ipAccessControlDialog.apply();
     m_videoRegionsConfigDialog.apply();
   } else {
     return ;
@@ -225,7 +218,6 @@ void ConfigDialog::onApplyButtonClick()
 
     if (m_reloadConfigCommand->executionResultOk()) {
       m_administrationConfigDialog.updateUI();
-      m_ipAccessControlDialog.updateUI();
       m_ctrlApplyButton.setEnabled(false);
     }
   } else {
@@ -285,10 +277,6 @@ bool ConfigDialog::validateInput()
 {
   if (!m_serverConfigDialog.validateInput()) {
     m_tabControl.showTab(&m_serverConfigDialog);
-    return false;
-  }
-  if (!m_ipAccessControlDialog.validateInput()) {
-    m_tabControl.showTab(&m_ipAccessControlDialog);
     return false;
   }
 #ifdef USE_EXTRA_TABS

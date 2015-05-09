@@ -43,7 +43,6 @@ public:
   virtual bool onCheckForBan(RfbClient *client) = 0;
   // This function notifies about auth failed of the client.
   virtual void onAuthFailed(RfbClient *client) = 0;
-  virtual void onCheckAccessControl(RfbClient *client) throw(AuthException) = 0;
 };
 
 #endif // __CLIENTAUTHLISTENER_H__

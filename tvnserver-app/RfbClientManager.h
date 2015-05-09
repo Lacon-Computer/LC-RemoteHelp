@@ -101,7 +101,6 @@ protected:
   virtual bool onCheckForBan(RfbClient *client);
   // This function only adds the client to the ban list.
   virtual void onAuthFailed(RfbClient *client);
-  virtual void onCheckAccessControl(RfbClient *client) throw(AuthException);
   virtual void onClipboardUpdate(const StringStorage *newClipboard);
   virtual void onSendUpdate(const UpdateContainer *updateContainer,
                             const CursorShape *cursorShape);

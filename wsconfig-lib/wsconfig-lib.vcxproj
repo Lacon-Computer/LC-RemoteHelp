@@ -276,9 +276,7 @@
     <ClCompile Include="ChangePasswordDialog.cpp" />
     <ClCompile Include="CommonInputValidation.cpp" />
     <ClCompile Include="ConfigDialog.cpp" />
-    <ClCompile Include="EditIpAccessRuleDialog.cpp" />
     <ClCompile Include="EditPortMappingDialog.cpp" />
-    <ClCompile Include="IpAccessControlDialog.cpp" />
     <ClCompile Include="PasswordControl.cpp" />
     <ClCompile Include="PortMappingDialog.cpp" />
     <ClCompile Include="ServerConfigDialog.cpp" />
@@ -291,9 +289,7 @@
     <ClInclude Include="ChangePasswordDialog.h" />
     <ClInclude Include="CommonInputValidation.h" />
     <ClInclude Include="ConfigDialog.h" />
-    <ClInclude Include="EditIpAccessRuleDialog.h" />
     <ClInclude Include="EditPortMappingDialog.h" />
-    <ClInclude Include="IpAccessControlDialog.h" />
     <ClInclude Include="PasswordControl.h" />
     <ClInclude Include="PortMappingDialog.h" />
     <ClInclude Include="ServerConfigDialog.h" />

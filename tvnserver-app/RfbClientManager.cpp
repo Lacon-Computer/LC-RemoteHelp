@@ -24,7 +24,6 @@
 
 #include "RfbClientManager.h"
 #include "thread/ZombieKiller.h"
-#include "QueryConnectionApplication.h"
 #include "server-config-lib/Configurator.h"
 
 RfbClientManager::RfbClientManager(const TCHAR *serverName,
@@ -135,44 +134,6 @@ void RfbClientManager::onAuthFailed(RfbClient *client)
   updateIpInBan(&ip, false);
 
   m_newConnectionEvents->onAuthFailed(&ip);
-}
-
-void RfbClientManager::onCheckAccessControl(RfbClient *client)
-{
-  SocketAddressIPv4 peerAddr;
-
-  try {
-    client->getSocketAddr(&peerAddr);
-  } catch (...) {
-    throw AuthException(_T("Failed to get IP address of the RFB client"));
-  }
-
-  struct sockaddr_in addr_in = peerAddr.getSockAddr();
-
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
-
-  IpAccessRule::ActionType action;
-
-  if (!client->isOutgoing()) {
-    action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
-  } else {
-    action = IpAccessRule::ACTION_TYPE_ALLOW;
-  }
-
-  // Promt user to know what to do with incmoing connection.
-
-  if (action == IpAccessRule::ACTION_TYPE_QUERY) {
-    StringStorage peerHost;
-
-    peerAddr.toString(&peerHost);
-
-    int queryRetVal = QueryConnectionApplication::execute(peerHost.getString(),
-                                                          config->isDefaultActionAccept(),
-                                                          config->getQueryTimeout());
-    if (queryRetVal == 1) {
-      throw AuthException(_T("Connection has been rejected"));
-    }
-  }
 }
 
 void RfbClientManager::onClipboardUpdate(const StringStorage *newClipboard)

@@ -59,7 +59,6 @@ public:
 protected:
   void initVersion();
   // @throw Exception if loopback isn't allowed.
-  void checkForLoopback();
   void initAuthenticate();
   void readClientInit();
   void sendServerInit(const Dimension *dim,

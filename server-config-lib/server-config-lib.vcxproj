@@ -258,8 +258,6 @@
   <ItemGroup>
     <ClCompile Include="ConfigReloadListener.cpp" />
     <ClCompile Include="Configurator.cpp" />
-    <ClCompile Include="IpAccessControl.cpp" />
-    <ClCompile Include="IpAccessRule.cpp" />
     <ClCompile Include="PortMapping.cpp" />
     <ClCompile Include="PortMappingContainer.cpp" />
     <ClCompile Include="PortMappingRect.cpp" />
@@ -270,8 +268,6 @@
     <ClInclude Include="ConfigReloadListener.h" />
     <ClInclude Include="Configurator.h" />
     <ClInclude Include="DesktopConfig.h" />
-    <ClInclude Include="IpAccessControl.h" />
-    <ClInclude Include="IpAccessRule.h" />
     <ClInclude Include="PortMapping.h" />
     <ClInclude Include="PortMappingContainer.h" />
     <ClInclude Include="PortMappingRect.h" />

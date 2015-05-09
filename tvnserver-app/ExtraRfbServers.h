@@ -34,7 +34,6 @@ class ExtraRfbServers
   struct Conf
   {
     bool acceptConnections;
-    bool loopbackOnly;
     PortMappingContainer extraPorts;
 
     Conf();

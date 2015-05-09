@@ -167,10 +167,8 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
     bool changeMainRfbPort = m_rfbServer != 0 &&
       (m_srvConfig->getRfbPort() != (int)m_rfbServer->getBindPort());
 
-    const TCHAR *bindHost =
-      m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
     bool changeBindHost =  m_rfbServer != 0 &&
-      _tcscmp(m_rfbServer->getBindHost(), bindHost) != 0;
+      _tcscmp(m_rfbServer->getBindHost(), _T("0.0.0.0")) != 0;
 
     if (toggleMainRfbServer ||
         changeMainRfbPort ||
@@ -331,13 +329,12 @@ void TvnServer::restartMainRfbServer()
     return;
   }
 
-  const TCHAR *bindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
   unsigned short bindPort = m_srvConfig->getRfbPort();
 
   m_log.message(_T("Starting main RFB server"));
 
   try {
-    m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_log);
+    m_rfbServer = new RfbServer(_T("0.0.0.0"), bindPort, m_rfbClientManager, m_runAsService, &m_log);
   } catch (Exception &ex) {
     m_log.error(_T("Failed to start main RFB server: \"%s\""), ex.getMessage());
   }

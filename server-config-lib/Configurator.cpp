@@ -129,13 +129,7 @@ bool Configurator::save(SettingsManager *sm)
   if (!savePortMappingContainer(sm)) {
     saveResult = false;
   }
-  if (!saveQueryConfig(sm)) {
-    saveResult = false;
-  }
   if (!saveInputHandlingConfig(sm)) {
-    saveResult = false;
-  }
-  if (!saveIpAccessControlContainer(sm)) {
     saveResult = false;
   }
   if (!saveServerConfig(sm)) {
@@ -159,19 +153,8 @@ bool Configurator::load(SettingsManager *sm)
     }
   }
 
-  if (!loadQueryConfig(sm, &m_serverConfig)) {
-    loadResult = false;
-  }
   if (!loadInputHandlingConfig(sm, &m_serverConfig)) {
     loadResult = false;
-  }
-
-  {
-    AutoLock l(&m_serverConfig);
-
-    if (!loadIpAccessControlContainer(sm, m_serverConfig.getAccessControl())) {
-      loadResult = false;
-    }
   }
 
   if (!loadServerConfig(sm, &m_serverConfig)) {
@@ -258,38 +241,6 @@ bool Configurator::loadPortMappingContainer(SettingsManager *sm,
   }
 
   return !wasError;
-}
-
-bool Configurator::saveQueryConfig(SettingsManager *sm)
-{
-  bool saveResult = true;
-  if (!sm->setUINT(_T("QueryTimeout"), m_serverConfig.getQueryTimeout())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("QueryAcceptOnTimeout"), m_serverConfig.isDefaultActionAccept())) {
-    saveResult = false;
-  }
-  return saveResult;
-}
-
-bool Configurator::loadQueryConfig(SettingsManager *sm, ServerConfig *config)
-{
-  bool loadResult = true;
-  unsigned int uintValue;
-  bool boolValue;
-  if (!sm->getUINT(_T("QueryTimeout"), &uintValue)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setQueryTimeout(uintValue);
-  }
-  if (!sm->getBoolean(_T("QueryAcceptOnTimeout"), &boolValue)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setDefaultActionToAccept(boolValue);
-  }
-  return loadResult;
 }
 
 bool Configurator::saveInputHandlingConfig(SettingsManager *sm)
@@ -417,66 +368,6 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   return loadResult;
 }
 
-bool Configurator::saveIpAccessControlContainer(SettingsManager *storage)
-{
-  AutoLock l(&m_serverConfig);
-
-  // Get rules container
-  IpAccessControl *rules = m_serverConfig.getAccessControl();
-  // Remember rules count
-  size_t rulesCount = rules->size();
-  // 1 rule can contain 34 character max
-  size_t maxStringBufferLength = 34 * 2 * rulesCount;
-  // Buffer that we need to write to storage
-  StringStorage buffer(_T(""));
-  // Variable to save temporary result from toString method
-  StringStorage ruleString;
-
-  // Generate rules string
-  for (size_t i = 0; i < rulesCount; i++) {
-    IpAccessRule *rule = rules->at(i);
-    // Get rule as string
-    rule->toString(&ruleString);
-    // Add it to result buffer
-    buffer.appendString(ruleString.getString());
-    // Add delimiter if we need it
-    if (i != rulesCount - 1)
-      buffer.appendString(_T(","));
-  }
-  if (!storage->setString(_T("IpAccessControl"), buffer.getString())) {
-    return false;
-  }
-  return true;
-}
-
-bool
-Configurator::loadIpAccessControlContainer(SettingsManager *sm, IpAccessControl *rules)
-{
-  bool wasError = false;
-  rules->clear();
-
-  StringStorage storage;
-  if (!sm->getString(_T("IpAccessControl"), &storage)) {
-    return false;
-  } else {
-    size_t maxBufSize = storage.getLength() + 1;
-    std::vector<TCHAR> ipacStringBuffer(maxBufSize + 1);
-    _tcscpy_s(&ipacStringBuffer.front(), maxBufSize, storage.getString());
-    TCHAR *pch = _tcstok(&ipacStringBuffer[0], _T(","));
-    while (pch != NULL) {
-      if (IpAccessRule::parse(pch, NULL)) {
-        IpAccessRule *rule = new IpAccessRule();
-        IpAccessRule::parse(pch, rule);
-        rules->push_back(rule);
-      } else {
-        wasError = true;
-      }
-      pch = _tcstok(NULL, _T(","));
-    } // while
-  } // else
-  return !wasError;
-}
-
 bool Configurator::saveServerConfig(SettingsManager *sm)
 {
   bool saveResult = true;
@@ -496,9 +387,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
     saveResult = false;
   }
   if (!sm->setBoolean(_T("RepeatControlAuthentication"), m_serverConfig.getControlAuthAlwaysChecking())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("LoopbackOnly"), m_serverConfig.isOnlyLoopbackConnectionsAllowed())) {
     saveResult = false;
   }
   if (!sm->setUINT(_T("LogLevel"), (UINT)m_serverConfig.getLogLevel())) {
@@ -556,9 +444,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
     saveResult = false;
   }
   if (!sm->setUINT(_T("PollingInterval"), m_serverConfig.getPollingInterval())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("AllowLoopback"), m_serverConfig.isLoopbackConnectionsAllowed())) {
     saveResult = false;
   }
   if (!sm->setUINT(_T("VideoRecognitionInterval"), m_serverConfig.getVideoRecognitionInterval())) {
@@ -621,12 +506,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setControlAuthAlwaysChecking(boolVal);
-  }
-  if (!sm->getBoolean(_T("LoopbackOnly"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.acceptOnlyLoopbackConnections(boolVal);
   }
   if (!sm->getUINT(_T("LogLevel"), &uintVal)) {
     loadResult = false;
@@ -703,12 +582,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setPollingInterval(uintVal);
-  }
-  if (!sm->getBoolean(_T("AllowLoopback"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.allowLoopbackConnections(boolVal);
   }
   if (!sm->getUINT(_T("VideoRecognitionInterval"), &uintVal)) {
     loadResult = false;
