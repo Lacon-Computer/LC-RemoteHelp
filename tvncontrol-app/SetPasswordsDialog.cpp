@@ -31,13 +31,10 @@
 
 #include "tvnserver/resource.h"
 
-SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
-                                       bool initStateOfUseAdminAuth)
+SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth)
 : BaseDialog(IDD_SET_PASSWORDS),
   m_dontChangeRfbAuth(!initStateOfUseRfbAuth),
-  m_useRfbAuth(initStateOfUseRfbAuth),
-  m_dontChangeAdmAuth(!initStateOfUseAdminAuth),
-  m_protectControlInterface(initStateOfUseAdminAuth)
+  m_useRfbAuth(initStateOfUseRfbAuth)
 {
   m_passwordEmptyTooltip.setText(StringTable::getString(IDS_PASSWORD_IS_EMPTY));
   m_passwordEmptyTooltip.setTitle(StringTable::getString(IDS_MBC_TVNCONTROL));
@@ -65,21 +62,6 @@ bool SetPasswordsDialog::getRfbPassForClear()
   return !m_useRfbAuth && !m_dontChangeRfbAuth;
 }
 
-bool SetPasswordsDialog::getUseAdmPass()
-{
-  return m_protectControlInterface;
-}
-
-bool SetPasswordsDialog::getAdmPassForClear()
-{
-  return !m_protectControlInterface && !m_dontChangeAdmAuth;
-}
-
-void SetPasswordsDialog::getAdmPass(StringStorage *pass)
-{
-  *pass = m_admPass;
-}
-
 void SetPasswordsDialog::initControls()
 {
   HWND window = m_ctrlThis.getWindow();
@@ -91,17 +73,8 @@ void SetPasswordsDialog::initControls()
   m_rfbPassEdit1.setWindow(GetDlgItem(window, IDC_ENTER_RFB_PASSWORD));
   m_rfbPassEdit2.setWindow(GetDlgItem(window, IDC_CONFIRM_RFB_PASSWORD));
 
-  m_dontChangeAdminAuthSettingsRadio.setWindow(GetDlgItem(window,
-    IDC_DONT_CHANGE_CONTROL_PROTECTION_SETTINGS_RADIO));
-  m_dontUseAdminAuthRadio.setWindow(GetDlgItem(window, IDC_DONT_USE_CONTROL_PROTECTION_RADIO));
-  m_useAdminAuthRadio.setWindow(GetDlgItem(window, IDC_PROTECT_CONTROL_INTERFACE_RADIO));
-  m_admPassEdit1.setWindow(GetDlgItem(window, IDC_ENTER_ADMIN_PASSWORD));
-  m_admPassEdit2.setWindow(GetDlgItem(window, IDC_CONFIRM_ADMIN_PASSWORD));
-
   m_rfbPassEdit1.setTextLengthLimit(8);
   m_rfbPassEdit2.setTextLengthLimit(8);
-  m_admPassEdit1.setTextLengthLimit(8);
-  m_admPassEdit2.setTextLengthLimit(8);
 }
 
 BOOL SetPasswordsDialog::onInitDialog()
@@ -112,11 +85,6 @@ BOOL SetPasswordsDialog::onInitDialog()
     m_useRfbAuthRadio.check(true);
   } else if (m_dontChangeRfbAuth) {
     m_dontChangeRfbAuthSettingsRadio.check(true);
-  }
-  if (m_protectControlInterface) {
-    m_useAdminAuthRadio.check(true);
-  } else if (m_dontChangeAdmAuth) {
-    m_dontChangeAdminAuthSettingsRadio.check(true);
   }
 
   updateEditControls();
@@ -155,8 +123,6 @@ void SetPasswordsDialog::onOkButtonClick()
 
   m_rfbPassEdit1.getText(&rfbPass1);
   m_rfbPassEdit2.getText(&rfbPass2);
-  m_admPassEdit1.getText(&admPass1);
-  m_admPassEdit2.getText(&admPass2);
 
   if (m_useRfbAuth) {
     if (rfbPass1.isEmpty()) {
@@ -171,19 +137,6 @@ void SetPasswordsDialog::onOkButtonClick()
     }
     m_rfbPass.setString(rfbPass1.getString());
   }
-  if (m_protectControlInterface) {
-    if (admPass1.isEmpty()) {
-      m_admPassEdit1.showBalloonTip(&m_passwordEmptyTooltip);
-      m_admPassEdit1.setFocus();
-      return;
-    }
-    if (!admPass1.isEqualTo(&admPass2)) {
-      m_admPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
-      m_admPassEdit2.setFocus();
-      return;
-    }
-    m_admPass.setString(admPass1.getString());
-  }
   kill(IDOK);
 }
 
@@ -191,14 +144,10 @@ void SetPasswordsDialog::readRadio()
 {
   m_dontChangeRfbAuth = m_dontChangeRfbAuthSettingsRadio.isChecked();
   m_useRfbAuth = m_useRfbAuthRadio.isChecked();
-  m_dontChangeAdmAuth = m_dontChangeAdminAuthSettingsRadio.isChecked();
-  m_protectControlInterface = m_useAdminAuthRadio.isChecked();
 }
 
 void SetPasswordsDialog::updateEditControls()
 {
   m_rfbPassEdit1.setEnabled(m_useRfbAuth);
   m_rfbPassEdit2.setEnabled(m_useRfbAuth);
-  m_admPassEdit1.setEnabled(m_protectControlInterface);
-  m_admPassEdit2.setEnabled(m_protectControlInterface);
 }

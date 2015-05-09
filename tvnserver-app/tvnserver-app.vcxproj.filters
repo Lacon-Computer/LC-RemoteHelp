@@ -17,9 +17,6 @@
     <ClCompile Include="AuthTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControlAppAuthenticator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ControlClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -89,9 +86,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AuthTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlAppAuthenticator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControlClient.h">

@@ -23,15 +23,6 @@
     <ClCompile Include="ControlApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControlAuth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlAuthDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlAuthException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ControlCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -128,15 +119,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControlApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlAuth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlAuthDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlAuthException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControlCommand.h">

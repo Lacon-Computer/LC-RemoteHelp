@@ -60,16 +60,8 @@ public:
    * Creates new control message.
    * @param messageId control message id described in ControlProto.
    * @param gate control gate.
-   * @param *password. If this param != 0 then it will be uses on auth needed
-   * instead of the dialog box.
-   * @param getPassFromConfigEnabled. If this param is true then it will be
-   * uses on auth needed instead of the dialog box. This parameter ignores if
-   * *password parameter is presented.
    */
-  ControlMessage(UINT32 messageId, ControlGate *gate,
-                 const TCHAR *passwordFile = 0,
-                 bool getPassFromConfigEnabled = false,
-                 bool forService = false);
+  ControlMessage(UINT32 messageId, ControlGate *gate);
   /**
    * Destroys control message without sending it.
    */
@@ -94,12 +86,6 @@ private:
    */
   void checkRetCode() throw(IOException, RemoteException);
 
-  // Perform auth with a specified password file.
-  void authFromFile();
-
-  // Perform auth with a specified password file.
-  void authFromRegistry();
-
 private:
   /**
    * Control gate.
@@ -113,10 +99,6 @@ private:
    * Control message id.
    */
   UINT32 m_messageId;
-
-  StringStorage m_passwordFile;
-  bool m_getPassFromConfigEnabled;
-  bool m_forService;
 };
 
 #endif

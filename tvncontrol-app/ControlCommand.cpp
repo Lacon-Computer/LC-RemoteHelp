@@ -24,7 +24,6 @@
 
 #include "ControlCommand.h"
 #include "RemoteException.h"
-#include "ControlAuthException.h"
 
 #include "util/CommonHeader.h"
 #include "util/Exception.h"
@@ -53,11 +52,6 @@ void ControlCommand::execute()
       } catch (IOException &) {
         if (m_notificator != 0) {
           m_notificator->notifyConnectionLost();
-        }
-        throw;
-      } catch (ControlAuthException &authEx) {
-        if ((m_notificator != 0) && !authEx.isSilent()) {
-          m_notificator->notifyServerSideException(authEx.getMessage());
         }
         throw;
       } catch (RemoteException &someEx) {

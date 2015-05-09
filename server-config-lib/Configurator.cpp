@@ -224,12 +224,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   if (!sm->setBoolean(_T("UseVncAuthentication"), m_serverConfig.isUsingAuthentication())) {
     saveResult = false;
   }
-  if (!sm->setBoolean(_T("UseControlAuthentication"), m_serverConfig.isControlAuthEnabled())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("RepeatControlAuthentication"), m_serverConfig.getControlAuthAlwaysChecking())) {
-    saveResult = false;
-  }
   if (!sm->setUINT(_T("LogLevel"), (UINT)m_serverConfig.getLogLevel())) {
     saveResult = false;
   }
@@ -263,17 +257,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
     }
   } else {
     sm->deleteKey(_T("PasswordViewOnly"));
-  }
-  if (m_serverConfig.hasControlPassword()) {
-    unsigned char password[VNC_PASSWORD_SIZE];
-
-    m_serverConfig.getControlPassword(&password[0]);
-
-    if (!sm->setBinaryData(_T("ControlPassword"), &password[0], VNC_PASSWORD_SIZE)) {
-      saveResult = false;
-    }
-  } else {
-    sm->deleteKey(_T("ControlPassword"));
   }
   if (!sm->setBoolean(_T("AlwaysShared"), m_serverConfig.isAlwaysShared())) {
     saveResult = false;
@@ -333,18 +316,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
     m_isConfigLoadedPartly = true;
     m_serverConfig.useAuthentication(boolVal);
   }
-  if (!sm->getBoolean(_T("UseControlAuthentication"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.useControlAuth(boolVal);
-  }
-  if (!sm->getBoolean(_T("RepeatControlAuthentication"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setControlAuthAlwaysChecking(boolVal);
-  }
   if (!sm->getUINT(_T("LogLevel"), &uintVal)) {
     loadResult = false;
   } else {
@@ -387,14 +358,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setReadOnlyPassword(&buffer[0]);
-  }
-  passSize = 8;
-  if (!sm->getBinaryData(_T("ControlPassword"), (void *)&buffer, &passSize)) {
-    loadResult = false;
-    m_serverConfig.deleteControlPassword();
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setControlPassword(&buffer[0]);
   }
 
   if (!sm->getBoolean(_T("AlwaysShared"), &boolVal)) {

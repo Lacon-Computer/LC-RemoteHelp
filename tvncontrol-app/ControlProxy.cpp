@@ -29,24 +29,13 @@
 #include <crtdbg.h>
 
 ControlProxy::ControlProxy(ControlGate *gate)
-: m_gate(gate), m_message(0),
-  m_getPassFromConfigEnabled(false),
-  m_forService(false)
+: m_gate(gate), m_message(0)
 {
 }
 
 ControlProxy::~ControlProxy()
 {
   releaseMessage();
-}
-
-void ControlProxy::setPasswordProperties(const TCHAR *passwordFile,
-                                         bool getPassFromConfigEnabled,
-                                         bool forService)
-{
-  m_passwordFile.setString(passwordFile);
-  m_getPassFromConfigEnabled = getPassFromConfigEnabled;
-  m_forService = forService;
 }
 
 TvnServerInfo ControlProxy::getServerInfo()
@@ -214,8 +203,7 @@ ControlMessage *ControlProxy::createMessage(DWORD messageId)
 {
   releaseMessage();
 
-  m_message = new ControlMessage(messageId, m_gate, m_passwordFile.getString(),
-                                 m_getPassFromConfigEnabled, m_forService);
+  m_message = new ControlMessage(messageId, m_gate);
 
   return m_message;
 }

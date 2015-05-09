@@ -38,7 +38,6 @@ public:
 
   static const TCHAR CONTROL_SERVICE[];
   static const TCHAR CONTROL_APPLICATION[];
-  static const TCHAR PASSWORD_FILE[];
   static const TCHAR CONFIG_RELOAD[];
   static const TCHAR DISCONNECT_ALL[];
   static const TCHAR CONNECT[];
@@ -50,7 +49,6 @@ public:
   static const TCHAR SHARE_FULL[];
   static const TCHAR SHARE_APP[];
 
-  static const TCHAR SET_CONTROL_PASSWORD[];
   static const TCHAR SET_PRIMARY_VNC_PASSWORD[];
   static const TCHAR CHECK_SERVICE_PASSWORDS[];
 
@@ -63,15 +61,12 @@ public:
 
   void parse(const CommandLineArgs *cmdArgs) throw(CommandLineFormatException);
 
-  void getPasswordFile(StringStorage *passwordFile) const;
-  bool hasPasswordFile();
   bool hasReloadFlag();
   bool hasKillAllFlag();
   bool hasConnectFlag();
   void getConnectHostName(StringStorage *hostName) const;
   bool hasShutdownFlag();
   bool hasSetVncPasswordFlag();
-  bool hasSetControlPasswordFlag();
   bool hasCheckServicePasswords();
   bool hasConfigAppFlag();
   bool hasConfigServiceFlag();
@@ -92,7 +87,6 @@ public:
   unsigned int getSharedAppProcessId();
 
   const TCHAR *getPrimaryVncPassword() const;
-  const TCHAR *getControlPassword() const;
 
   bool isCommandSpecified();
 
@@ -102,10 +96,8 @@ private:
   void parseProcessId(const StringStorage *str);
 
   StringStorage m_vncPassword;
-  StringStorage m_controlPassword;
 
   StringStorage m_connectHostName;
-  StringStorage m_passwordFile;
 
   Rect m_shareRect;
   unsigned char m_displayNumber;

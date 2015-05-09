@@ -41,7 +41,6 @@
  * @section Server replies.
  * Server to client messages (eq replies to client requests) have following format:
  * UINT32 reply code (REPLY_OK - no error, REPLY_ERROR - error during request processing,
- * REPLY_AUTH_NEEDED - authorization needed for this request).
  * UINT8[] body (reply body with unknown length (i mean body is individual for every reply,
  * some replies can have no body).
  */
@@ -58,12 +57,6 @@ public:
    * in UTF8).
    */
   static const UINT32 REPLY_ERROR = 0x1;
-
-  /**
-   * Reply code ERROR AUTH NEEDED (your requested wasn't processed and you
-   * need to authorize before you can execute your request).
-   */
-  static const UINT32 REPLY_AUTH_NEEDED = 0x2;
 
   /**
    * Get list of clients of rfb server.
@@ -142,12 +135,6 @@ public:
   /**
    * Client to server messages.
    */
-
-  /**
-   * Special message to make to authorize client using VNC-style auth.
-   * After server recieves this message VNC-style auth must be done.
-   */
-  static const UINT32 AUTH_MSG_ID = 0x13;
 
   /**
    * Gets flag for autowork mode of TvnControl.

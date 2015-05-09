@@ -90,12 +90,6 @@ public:
   // Display (or port numbers) group.
   //
 
-  bool isControlAuthEnabled();
-  void useControlAuth(bool useAuth);
-
-  bool getControlAuthAlwaysChecking();
-  void setControlAuthAlwaysChecking(bool value);
-
   void setRfbPort(int port);
   int getRfbPort();
 
@@ -128,16 +122,11 @@ public:
   void getReadOnlyPassword(unsigned char *password);
   void setReadOnlyPassword(const unsigned char *value);
 
-  void getControlPassword(unsigned char *password);
-  void setControlPassword(const unsigned char *password);
-
   bool hasPrimaryPassword();
   bool hasReadOnlyPassword();
-  bool hasControlPassword();
 
   void deletePrimaryPassword();
   void deleteReadOnlyPassword();
-  void deleteControlPassword();
 
   //
   // Configurator from Administration tab
@@ -235,7 +224,6 @@ protected:
 
   unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
   unsigned char m_readonlyPassword[VNC_PASSWORD_SIZE];
-  unsigned char m_controlPassword[VNC_PASSWORD_SIZE];
 
   //
   // Configurator from Administration tab
@@ -243,8 +231,6 @@ protected:
 
   bool m_useAuthentication;
   int m_logLevel;
-  bool m_useControlAuth;
-  bool m_controlAuthAlwaysChecking;
 
   //
   // Sharing configuration
@@ -306,7 +292,6 @@ private:
 
   bool m_hasPrimaryPassword;
   bool m_hasReadOnlyPassword;
-  bool m_hasControlPassword;
 
   //
   // Critical section

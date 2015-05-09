@@ -184,10 +184,6 @@ private:
    * if it's exists.
    */
   void releaseMessage();
-
-  StringStorage m_passwordFile;
-  bool m_getPassFromConfigEnabled;
-  bool m_forService;
 };
 
 #endif

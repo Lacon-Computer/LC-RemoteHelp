@@ -38,7 +38,6 @@
 #include "thread/LocalMutex.h"
 
 #include "tvncontrol-app/ControlGate.h"
-#include "tvncontrol-app/ControlAuthException.h"
 
 #include "ControlProxy.h"
 #include "Notificator.h"

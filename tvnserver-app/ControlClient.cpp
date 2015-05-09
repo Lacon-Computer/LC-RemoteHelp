@@ -43,44 +43,17 @@
 #include <time.h>
 #include "util/AnsiStringStorage.h"
 
-const UINT32 ControlClient::REQUIRES_AUTH[] = { ControlProto::ADD_CLIENT_MSG_ID,
-                                                ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID,
-                                                ControlProto::GET_CONFIG_MSG_ID,
-                                                ControlProto::SET_CONFIG_MSG_ID,
-                                                ControlProto::SHUTDOWN_SERVER_MSG_ID,
-                                                ControlProto::SHARE_PRIMARY_MSG_ID,
-                                                ControlProto::SHARE_DISPLAY_MSG_ID,
-                                                ControlProto::SHARE_WINDOW_MSG_ID,
-                                                ControlProto::SHARE_RECT_MSG_ID,
-                                                ControlProto::SHARE_APP_MSG_ID,
-                                                ControlProto::SHARE_FULL_MSG_ID };
-
-const UINT32 ControlClient::WITHOUT_AUTH[] = {
-  ControlProto::AUTH_MSG_ID,
-  ControlProto::RELOAD_CONFIG_MSG_ID,
-  ControlProto::GET_SERVER_INFO_MSG_ID,
-  ControlProto::GET_CLIENT_LIST_MSG_ID,
-  ControlProto::GET_SHOW_TRAY_ICON_FLAG,
-  ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID
-};
-
 ControlClient::ControlClient(Transport *transport,
                              RfbClientManager *rfbClientManager,
-                             ControlAppAuthenticator *authenticator,
                              HANDLE pipeHandle, LogWriter *log)
 : m_transport(transport), m_rfbClientManager(rfbClientManager),
-  m_authenticator(authenticator),
   m_tcpDispId(0),
   m_pipeHandle(pipeHandle),
-  m_authReqMessageId(0),
-  m_log(log),
-  m_repeatAuthPassed(false)
+  m_log(log)
 {
   m_stream = m_transport->getIOStream();
 
   m_gate = new ControlGate(m_stream);
-
-  m_authPassed = false;
 }
 
 ControlClient::~ControlClient()
@@ -94,11 +67,6 @@ ControlClient::~ControlClient()
 
 void ControlClient::execute()
 {
-  // Client passes authentication by default if server does not uses control authentication.
-  if (!Configurator::getInstance()->getServerConfig()->isControlAuthEnabled()) {
-    m_authPassed = true;
-  }
-
   try {
     while (!isTerminating()) {
       UINT32 messageId = m_gate->readUInt32();
@@ -107,43 +75,8 @@ void ControlClient::execute()
       m_log->detail(_T("Recieved control message ID %u, size %u"),
                   (unsigned int)messageId, (unsigned int)messageSize);
 
-      bool requiresControlAuth = Configurator::getInstance()->getServerConfig()->isControlAuthEnabled();
-      bool repeatAuthEnabled = Configurator::getInstance()->getServerConfig()->getControlAuthAlwaysChecking();
-
-       // Check if message requires TightVNC admin privilegies.
-      if (requiresControlAuth) {
-        for (size_t i = 0; i < sizeof(WITHOUT_AUTH) / sizeof(UINT32); i++) {
-          if (messageId == WITHOUT_AUTH[i]) {
-            requiresControlAuth = false;
-            break;
-          }
-        }
-      }
-
       try {
-        // Message requires control auth: skip message body and sent reply.
-        if (requiresControlAuth) {
-          bool authPassed = m_authPassed;
-          if (repeatAuthEnabled) {
-            authPassed = authPassed && m_authReqMessageId == messageId && m_repeatAuthPassed;
-          }
-          m_repeatAuthPassed = false;
-          if (!authPassed) {
-            m_log->detail(_T("Message requires control authentication"));
-
-            m_gate->skipBytes(messageSize);
-            m_gate->writeUInt32(ControlProto::REPLY_AUTH_NEEDED);
-            m_authReqMessageId = messageId;
-
-            continue;
-          }
-        }
-
         switch (messageId) {
-        case ControlProto::AUTH_MSG_ID:
-          m_log->detail(_T("Control authentication requested"));
-          authMsgRcdv();
-          break;
         case ControlProto::RELOAD_CONFIG_MSG_ID:
           m_log->detail(_T("Command requested: Reload configuration"));
           reloadConfigMsgRcvd();
@@ -234,44 +167,6 @@ void ControlClient::sendError(const TCHAR *message)
 {
   m_gate->writeUInt32(ControlProto::REPLY_ERROR);
   m_gate->writeUTF8(message);
-}
-
-//
-// FIXME: Code duplicate (see RfbInitializer class).
-//
-
-void ControlClient::authMsgRcdv()
-{
-  UINT8 challenge[16];
-  UINT8 response[16];
-
-  srand((unsigned)time(0));
-  for (int i = 0; i < sizeof(challenge); i++) {
-    challenge[i] = rand() & 0xff;
-  }
-
-  m_gate->writeFully(challenge, sizeof(challenge));
-  m_gate->readFully(response, sizeof(response));
-
-  //
-  // FIXME: Is it right to check if password is set after client
-  // sent password to us.
-  //
-
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
-  UINT8 cryptPassword[8];
-  config->getControlPassword(cryptPassword);
-
-  bool isAuthSucceed = m_authenticator->authenticate(cryptPassword,
-                                                     challenge,
-                                                     response);
-  if (!isAuthSucceed) {
-    sendError(StringTable::getString(IDS_INVALID_CONTROL_PASSWORD));
-  } else {
-    m_gate->writeUInt32(ControlProto::REPLY_OK);
-    m_authPassed = true;
-    m_repeatAuthPassed = true;
-  }
 }
 
 void ControlClient::getClientsListMsgRcvd()

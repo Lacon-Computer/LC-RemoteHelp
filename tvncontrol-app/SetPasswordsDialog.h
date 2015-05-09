@@ -41,8 +41,7 @@
 class SetPasswordsDialog : public BaseDialog
 {
 public:
-  SetPasswordsDialog(bool initStateOfUseRfbAuth,
-                     bool initStateOfUseAdminAuth);
+  SetPasswordsDialog(bool initStateOfUseRfbAuth);
   virtual ~SetPasswordsDialog();
 
   // Returns true if the checkbox has been checked
@@ -50,12 +49,6 @@ public:
   // Returns true if no rfb authentication is needed.
   bool getRfbPassForClear();
   void getRfbPass(StringStorage *pass);
-
-  // Returns true if the checkbox has been checked
-  bool getUseAdmPass();
-  // Returns true if no admin authentication is needed.
-  bool getAdmPassForClear();
-  void getAdmPass(StringStorage *pass);
 
 protected:
   void initControls();
@@ -67,7 +60,6 @@ protected:
 
   void onOkButtonClick();
   void onUseRfbAuthCheckBoxClick();
-  void onProtectControlInterfaceCheckBoxClick();
 
 protected:
   // UPdates internal state by the radio buttons.
@@ -81,12 +73,6 @@ protected:
   TextBox m_rfbPassEdit1;
   TextBox m_rfbPassEdit2;
 
-  CheckBox m_dontChangeAdminAuthSettingsRadio;
-  CheckBox m_dontUseAdminAuthRadio;
-  CheckBox m_useAdminAuthRadio;
-  TextBox m_admPassEdit1;
-  TextBox m_admPassEdit2;
-
   // Tooltip
   BalloonTip m_passwordEmptyTooltip;
   BalloonTip m_passwordsNotMatchTooltip;
@@ -94,10 +80,6 @@ protected:
   bool m_dontChangeRfbAuth;
   bool m_useRfbAuth;
   StringStorage m_rfbPass;
-
-  bool m_dontChangeAdmAuth;
-  bool m_protectControlInterface;
-  StringStorage m_admPass;
 };
 
 #endif // _SETPASSWORDSDIALOG_H_

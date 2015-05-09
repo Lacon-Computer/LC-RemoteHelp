@@ -29,8 +29,7 @@
 ControlServer::ControlServer(PipeServer *pipeServer,
                              RfbClientManager *rfbClientManager,
                              LogWriter *log)
-: m_authenticator(30000, 3),
-  m_pipeServer(pipeServer),
+: m_pipeServer(pipeServer),
   m_rfbClientManager(rfbClientManager),
   m_log(log)
 {
@@ -54,9 +53,6 @@ ControlServer::~ControlServer()
 
   delete m_pipeServer;
 
-  // Unblock all client if it has been blocked by authenticator
-  m_authenticator.breakAndDisableAuthentications();
-
   m_log->message(_T("%s"), _T("Control server stopped"));
 }
 
@@ -69,7 +65,6 @@ void ControlServer::execute()
 
       ControlClient *clientThread = new ControlClient(transport,
                                                       m_rfbClientManager,
-                                                      &m_authenticator,
                                                       pipe->getHandle(),
                                                       m_log);
 

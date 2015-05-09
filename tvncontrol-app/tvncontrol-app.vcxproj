@@ -261,9 +261,6 @@
     <ClCompile Include="ConnectCommand.cpp" />
     <ClCompile Include="ConnectStringParser.cpp" />
     <ClCompile Include="ControlApplication.cpp" />
-    <ClCompile Include="ControlAuth.cpp" />
-    <ClCompile Include="ControlAuthDialog.cpp" />
-    <ClCompile Include="ControlAuthException.cpp" />
     <ClCompile Include="ControlCommand.cpp" />
     <ClCompile Include="ControlCommandLine.cpp" />
     <ClCompile Include="ControlGate.cpp" />
@@ -298,9 +295,6 @@
     <ClInclude Include="ConnectCommand.h" />
     <ClInclude Include="ConnectStringParser.h" />
     <ClInclude Include="ControlApplication.h" />
-    <ClInclude Include="ControlAuth.h" />
-    <ClInclude Include="ControlAuthDialog.h" />
-    <ClInclude Include="ControlAuthException.h" />
     <ClInclude Include="ControlCommand.h" />
     <ClInclude Include="ControlCommandLine.h" />
     <ClInclude Include="ControlGate.h" />

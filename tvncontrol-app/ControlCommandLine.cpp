@@ -31,13 +31,11 @@
 
 #include "ConnectStringParser.h"
 
-const TCHAR ControlCommandLine::SET_CONTROL_PASSWORD[] = _T("-setservicecontrolpass");
 const TCHAR ControlCommandLine::SET_PRIMARY_VNC_PASSWORD[] = _T("-setservicevncpass");
 const TCHAR ControlCommandLine::CHECK_SERVICE_PASSWORDS[] = _T("-checkservicepasswords");
 
 const TCHAR ControlCommandLine::CONTROL_SERVICE[] = _T("-controlservice");
 const TCHAR ControlCommandLine::CONTROL_APPLICATION[] = _T("-controlapp");
-const TCHAR ControlCommandLine::PASSWORD_FILE[] = _T("-passfile");
 const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = _T("-reload");
 const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
 const TCHAR ControlCommandLine::CONNECT[] = _T("-connect");
@@ -69,13 +67,11 @@ ControlCommandLine::~ControlCommandLine()
 void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 {
   CommandLineFormat fmt[] = {
-    { PASSWORD_FILE, NEEDS_ARG },
     { CONFIG_RELOAD, NO_ARG },
     { DISCONNECT_ALL, NO_ARG },
     { CONNECT, NEEDS_ARG },
     { SHUTDOWN, NO_ARG },
     { SET_PRIMARY_VNC_PASSWORD, NEEDS_ARG },
-    { SET_CONTROL_PASSWORD, NEEDS_ARG },
     { CHECK_SERVICE_PASSWORDS, NO_ARG },
     { SHARE_PRIMARY, NO_ARG },
     { SHARE_RECT, NEEDS_ARG },
@@ -101,11 +97,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 
   if (hasConfigAppFlag() && m_foundKeys.size() > 1) {
     throw CommandLineFormatException();
-  }
-
-  bool hasPassFile = hasPasswordFile();
-  if (hasPassFile) {
-    optionSpecified(PASSWORD_FILE, &m_passwordFile);
   }
 
   if (hasShareRect()) {
@@ -138,10 +129,9 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
     optionSpecified(CONNECT, &m_connectHostName);
   }
 
-  if ((hasSetVncPasswordFlag() || hasSetControlPasswordFlag()) && m_foundKeys.size() > 1) {
+  if (hasSetVncPasswordFlag() && m_foundKeys.size() > 1) {
     throw CommandLineFormatException();
   } else {
-    optionSpecified(SET_CONTROL_PASSWORD, &m_controlPassword);
     optionSpecified(SET_PRIMARY_VNC_PASSWORD, &m_vncPassword);
   }
 
@@ -150,24 +140,13 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   }
 
   bool hasNotSlaveControl = (hasControlServiceFlag() || hasControlAppFlag()) && !isSlave();
-  if ((hasNotSlaveControl && !hasPassFile && m_foundKeys.size() > 2) ||
-      (hasNotSlaveControl && hasPassFile && m_foundKeys.size() != 3)) {
+  if ((hasNotSlaveControl && m_foundKeys.size() > 2)) {
     throw CommandLineFormatException();
   }
 
   if (m_foundKeys.size() == 0) {
     throw CommandLineFormatException();
   }
-}
-
-void ControlCommandLine::getPasswordFile(StringStorage *passwordFile) const
-{
-  *passwordFile = m_passwordFile;
-}
-
-bool ControlCommandLine::hasPasswordFile()
-{
-  return optionSpecified(PASSWORD_FILE);
 }
 
 bool ControlCommandLine::hasReloadFlag()
@@ -198,11 +177,6 @@ bool ControlCommandLine::hasShutdownFlag()
 bool ControlCommandLine::hasSetVncPasswordFlag()
 {
   return optionSpecified(SET_PRIMARY_VNC_PASSWORD);
-}
-
-bool ControlCommandLine::hasSetControlPasswordFlag()
-{
-  return optionSpecified(SET_CONTROL_PASSWORD);
 }
 
 bool ControlCommandLine::hasConfigAppFlag()
@@ -295,14 +269,9 @@ const TCHAR *ControlCommandLine::getPrimaryVncPassword() const
   return m_vncPassword.getString();
 }
 
-const TCHAR *ControlCommandLine::getControlPassword() const
-{
-  return m_controlPassword.getString();
-}
-
 bool ControlCommandLine::isCommandSpecified()
 {
-  return hasKillAllFlag() || hasReloadFlag() || hasSetControlPasswordFlag() ||
+  return hasKillAllFlag() || hasReloadFlag() ||
          hasSetVncPasswordFlag() || hasConnectFlag() || hasShutdownFlag() ||
          hasSharePrimaryFlag() || hasShareDisplay() || hasShareWindow() ||
          hasShareRect() || hasShareFull() || hasShareApp();

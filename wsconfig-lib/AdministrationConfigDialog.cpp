@@ -84,14 +84,6 @@ BOOL AdministrationConfigDialog::onCommand(UINT controlID, UINT notificationID)
       onDARadioButtonClick(2);
     } else if (controlID == IDC_LOG_FOR_ALL_USERS) {
       onLogForAllUsersClick();
-    } else if (controlID == IDC_USE_CONTROL_AUTH_CHECKBOX) {
-      onUseControlAuthClick();
-    } else if (controlID == IDC_REPEAT_CONTROL_AUTH_CHECKBOX) {
-      onRepeatControlAuthClick();
-    } else if (controlID == IDC_CONTROL_PASSWORD_BUTTON) {
-      onChangeControlPasswordClick();
-    } else if (controlID == IDC_UNSET_CONTROL_PASWORD_BUTTON) {
-      onUnsetControlPasswordClick();
     }
 
   } else if (notificationID == EN_UPDATE) {
@@ -121,24 +113,12 @@ bool AdministrationConfigDialog::validateInput()
     return false;
   }
 
-  // FIXME: Code duplicate (see ServerConfigDialog class).
-  if (!m_cpControl->hasPassword() && m_useControlAuth.isChecked()) {
-    MessageBox(m_ctrlThis.getWindow(),
-               StringTable::getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
-               StringTable::getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | MB_OK);
-    return false;
-  }
-
   return true;
 }
 
 void AdministrationConfigDialog::updateUI()
 {
   m_logLevel.setSignedInt(m_config->getLogLevel());
-
-  m_useControlAuth.check(m_config->isControlAuthEnabled());
-  m_repeatControlAuth.check(m_config->getControlAuthAlwaysChecking());
-  m_repeatControlAuth.setEnabled(m_useControlAuth.isChecked());
 
   ConfigDialog *configDialog = (ConfigDialog *)m_parentDialog;
 
@@ -205,16 +185,6 @@ void AdministrationConfigDialog::updateUI()
   }
 
   m_logForAllUsers.check(m_config->isSaveLogToAllUsersPathFlagEnabled());
-
-  if (m_config->hasControlPassword()) {
-    unsigned char cryptedPassword[8];
-
-    m_config->getControlPassword(cryptedPassword);
-
-    m_cpControl->setCryptedPassword((char *)cryptedPassword);
-  }
-
-  m_cpControl->setEnabled(m_config->isControlAuthEnabled());
 }
 
 void AdministrationConfigDialog::apply()
@@ -254,15 +224,6 @@ void AdministrationConfigDialog::apply()
     disconnectClients = true;
   }
 
-  m_config->useControlAuth(m_useControlAuth.isChecked());
-  m_config->setControlAuthAlwaysChecking(m_repeatControlAuth.isChecked());
-
-  if (m_cpControl->hasPassword()) {
-    m_config->setControlPassword((const unsigned char *)m_cpControl->getCryptedPassword());
-  } else {
-    m_config->deleteControlPassword();
-  }
-
   if (m_disconnectAction[0].isChecked()) {
     m_config->setDisconnectAction(ServerConfig::DA_DO_NOTHING);
   } else if (m_disconnectAction[1].isChecked()) {
@@ -284,10 +245,6 @@ void AdministrationConfigDialog::initControls()
   m_logPathTB.setWindow(GetDlgItem(hwnd, IDC_LOG_FILEPATH_EDIT));
 
   m_openLogPathButton.setWindow(GetDlgItem(hwnd, IDC_OPEN_LOG_FOLDER_BUTTON));
-  m_setControlPasswordButton.setWindow(GetDlgItem(hwnd, IDC_CONTROL_PASSWORD_BUTTON));
-  m_unsetControlPasswordButton.setWindow(GetDlgItem(hwnd, IDC_UNSET_CONTROL_PASWORD_BUTTON));
-  m_useControlAuth.setWindow(GetDlgItem(hwnd, IDC_USE_CONTROL_AUTH_CHECKBOX));
-  m_repeatControlAuth.setWindow(GetDlgItem(hwnd, IDC_REPEAT_CONTROL_AUTH_CHECKBOX));
 
   m_shared[0].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO1));
   m_shared[1].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO2));
@@ -306,8 +263,6 @@ void AdministrationConfigDialog::initControls()
   m_logSpin.setBuddy(&m_logLevel);
   m_logSpin.setRange(0, 9);
   m_logSpin.setAccel(0, 1);
-
-  m_cpControl = new PasswordControl(&m_setControlPasswordButton, &m_unsetControlPasswordButton);
 }
 
 void AdministrationConfigDialog::onShareRadioButtonClick(int number)
@@ -358,33 +313,6 @@ void AdministrationConfigDialog::onDARadioButtonClick(int number)
 
 void AdministrationConfigDialog::onLogForAllUsersClick()
 {
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void AdministrationConfigDialog::onUseControlAuthClick()
-{
-  m_cpControl->setEnabled(m_useControlAuth.isChecked());
-  m_repeatControlAuth.setEnabled(m_useControlAuth.isChecked());
-
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void AdministrationConfigDialog::onRepeatControlAuthClick()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void AdministrationConfigDialog::onChangeControlPasswordClick()
-{
-  if (m_cpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  }
-}
-
-void AdministrationConfigDialog::onUnsetControlPasswordClick()
-{
-  m_cpControl->unsetPassword(true, m_ctrlThis.getWindow());
-
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
 

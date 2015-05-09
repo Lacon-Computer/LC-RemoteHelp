@@ -26,7 +26,6 @@
 #define _CONTROL_SERVER_H_
 
 #include "RfbClientManager.h"
-#include "ControlAppAuthenticator.h"
 #include "thread/ThreadCollector.h"
 
 #include "network/TcpServer.h"
@@ -73,7 +72,6 @@ protected:
   virtual void onTerminate();
 
 private:
-  ControlAppAuthenticator m_authenticator;
   ThreadCollector m_threadCollector;
 
   PipeServer *m_pipeServer;
