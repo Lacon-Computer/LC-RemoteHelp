@@ -121,22 +121,6 @@ public:
 
   void setLogLevel(int logLevel);
 
-  //
-  // Sharing configuration
-  //
-
-  bool isAlwaysShared();
-
-  bool isNeverShared();
-
-  bool isDisconnectingExistingClients();
-
-  void setAlwaysShared(bool enabled);
-
-  void setNeverShared(bool enabled);
-
-  void disconnectExistingClients(bool disconnectExisting);
-
   void setPollingInterval(unsigned int interval);
 
   unsigned int getPollingInterval();
@@ -206,14 +190,6 @@ protected:
 
   bool m_useAuthentication;
   int m_logLevel;
-
-  //
-  // Sharing configuration
-  //
-
-  bool m_alwaysShared;
-  bool m_neverShared;
-  bool m_disconnectClients;
 
   //
   // Polling configuration

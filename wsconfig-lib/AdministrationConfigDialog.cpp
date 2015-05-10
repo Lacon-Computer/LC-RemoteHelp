@@ -64,17 +64,7 @@ BOOL AdministrationConfigDialog::onInitDialog()
 BOOL AdministrationConfigDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (notificationID == BN_CLICKED) {
-    if (controlID == IDC_SHARED_RADIO1) {
-      onShareRadioButtonClick(0);
-    } else if (controlID == IDC_SHARED_RADIO2) {
-      onShareRadioButtonClick(1);
-    } else if (controlID == IDC_SHARED_RADIO3) {
-      onShareRadioButtonClick(2);
-    } else if (controlID == IDC_SHARED_RADIO4) {
-      onShareRadioButtonClick(3);
-    } else if (controlID == IDC_SHARED_RADIO5) {
-      onShareRadioButtonClick(4);
-    } else if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
+    if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
       onOpenFolderButtonClick();
     } else if (controlID == IDC_LOG_FOR_ALL_USERS) {
       onLogForAllUsersClick();
@@ -139,26 +129,6 @@ void AdministrationConfigDialog::updateUI()
     m_openLogPathButton.setEnabled(false);
   }
 
-  for (int i = 0; i < 5; i++) {
-    m_shared[0].check(false);
-  }
-
-  if (m_config->isAlwaysShared() && !m_config->isNeverShared() && !m_config->isDisconnectingExistingClients()) {
-    m_shared[0].check(true);
-  }
-  if (!m_config->isAlwaysShared() && m_config->isNeverShared() && !m_config->isDisconnectingExistingClients()) {
-    m_shared[1].check(true);
-  }
-  if (!m_config->isAlwaysShared() && m_config->isNeverShared() && m_config->isDisconnectingExistingClients()) {
-    m_shared[2].check(true);
-  }
-  if (!m_config->isAlwaysShared() && !m_config->isNeverShared() && !m_config->isDisconnectingExistingClients()) {
-    m_shared[3].check(true);
-  }
-  if (!m_config->isAlwaysShared() && !m_config->isNeverShared() && m_config->isDisconnectingExistingClients()) {
-    m_shared[4].check(true);
-  }
-
   m_logForAllUsers.check(m_config->isSaveLogToAllUsersPathFlagEnabled());
 }
 
@@ -173,35 +143,6 @@ void AdministrationConfigDialog::apply()
 
   m_config->setLogLevel(logLevel);
 
-  bool alwaysShared = false;
-  bool neverShared = false;
-  bool disconnectClients = false;
-
-  if (m_shared[0].isChecked()) {
-    alwaysShared = true;
-    neverShared = false;
-    disconnectClients = false;
-  } else if (m_shared[1].isChecked()) {
-    alwaysShared = false;
-    neverShared = true;
-    disconnectClients = false;
-  } else if (m_shared[2].isChecked()) {
-    alwaysShared = false;
-    neverShared = true;
-    disconnectClients = true;
-  } else if (m_shared[3].isChecked()) {
-    alwaysShared = false;
-    neverShared = false;
-    disconnectClients = false;
-  } else if (m_shared[4].isChecked()) {
-    alwaysShared = false;
-    neverShared = false;
-    disconnectClients = true;
-  }
-
-  m_config->setAlwaysShared(alwaysShared);
-  m_config->setNeverShared(neverShared);
-  m_config->disconnectExistingClients(disconnectClients);
   m_config->saveLogToAllUsersPath(m_logForAllUsers.isChecked());
 }
 
@@ -213,12 +154,6 @@ void AdministrationConfigDialog::initControls()
 
   m_openLogPathButton.setWindow(GetDlgItem(hwnd, IDC_OPEN_LOG_FOLDER_BUTTON));
 
-  m_shared[0].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO1));
-  m_shared[1].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO2));
-  m_shared[2].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO3));
-  m_shared[3].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO4));
-  m_shared[4].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO5));
-
   m_logForAllUsers.setWindow(GetDlgItem(hwnd, IDC_LOG_FOR_ALL_USERS));
 
   m_logSpin.setWindow(GetDlgItem(hwnd, IDC_LOG_LEVEL_SPIN));
@@ -226,19 +161,6 @@ void AdministrationConfigDialog::initControls()
   m_logSpin.setBuddy(&m_logLevel);
   m_logSpin.setRange(0, 9);
   m_logSpin.setAccel(0, 1);
-}
-
-void AdministrationConfigDialog::onShareRadioButtonClick(int number)
-{
-  if (!m_shared[number].isChecked()) {
-    m_shared[number].check(true);
-    for (int i = 0; i < 5; i++) {
-      if (i != number) {
-        m_shared[i].check(false);
-      } // if
-    } // for
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  } // if
 }
 
 void AdministrationConfigDialog::onOpenFolderButtonClick()

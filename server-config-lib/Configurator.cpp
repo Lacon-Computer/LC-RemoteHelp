@@ -216,15 +216,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   } else {
     sm->deleteKey(_T("Password"));
   }
-  if (!sm->setBoolean(_T("AlwaysShared"), m_serverConfig.isAlwaysShared())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("NeverShared"), m_serverConfig.isNeverShared())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("DisconnectClients"), m_serverConfig.isDisconnectingExistingClients())) {
-    saveResult = false;
-  }
   if (!sm->setUINT(_T("PollingInterval"), m_serverConfig.getPollingInterval())) {
     saveResult = false;
   }
@@ -304,24 +295,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
     m_serverConfig.setPrimaryPassword(&buffer[0]);
   }
 
-  if (!sm->getBoolean(_T("AlwaysShared"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setAlwaysShared(boolVal);
-  }
-  if (!sm->getBoolean(_T("NeverShared"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setNeverShared(boolVal);
-  }
-  if (!sm->getBoolean(_T("DisconnectClients"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.disconnectExistingClients(boolVal);
-  }
   if (!sm->getUINT(_T("PollingInterval"), &uintVal)) {
     loadResult = false;
   } else {

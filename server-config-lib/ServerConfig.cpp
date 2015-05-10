@@ -35,8 +35,8 @@ ServerConfig::ServerConfig()
   m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
   m_removeWallpaper(true),
-  m_hasPrimaryPassword(false), m_alwaysShared(false), m_neverShared(false),
-  m_disconnectClients(true), m_pollingInterval(1000), m_localInputPriorityTimeout(3),
+  m_hasPrimaryPassword(false),
+  m_pollingInterval(1000), m_localInputPriorityTimeout(3),
   m_blockLocalInput(false), m_blockRemoteInput(false), m_localInputPriority(false),
   m_grabTransparentWindows(true),
   m_saveLogToAllUsersPath(false),
@@ -61,9 +61,6 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_useAuthentication ? 1 : 0);
   output->writeInt32(m_logLevel);
-  output->writeInt8(m_alwaysShared ? 1 : 0);
-  output->writeInt8(m_neverShared ? 1 : 0);
-  output->writeInt8(m_disconnectClients ? 1 : 0);
   output->writeUInt32(m_pollingInterval);
   output->writeInt8(m_blockRemoteInput ? 1 : 0);
   output->writeInt8(m_blockLocalInput ? 1 : 0);
@@ -91,9 +88,6 @@ void ServerConfig::deserialize(DataInputStream *input)
   input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   m_useAuthentication = input->readInt8() == 1;
   m_logLevel = input->readInt32();
-  m_alwaysShared = input->readInt8() == 1;
-  m_neverShared = input->readInt8() == 1;
-  m_disconnectClients = input->readInt8() == 1;
   m_pollingInterval = input->readUInt32();
   m_blockRemoteInput = input->readInt8() == 1;
   m_blockLocalInput = input->readInt8() == 1;
@@ -261,42 +255,6 @@ void ServerConfig::setLogLevel(int logLevel)
   } else {
     m_logLevel = logLevel;
   }
-}
-
-bool ServerConfig::isAlwaysShared()
-{
-  AutoLock lock(&m_objectCS);
-  return m_alwaysShared;
-}
-
-bool ServerConfig::isNeverShared()
-{
-  AutoLock lock(&m_objectCS);
-  return m_neverShared;
-}
-
-bool ServerConfig::isDisconnectingExistingClients()
-{
-  AutoLock lock(&m_objectCS);
-  return m_disconnectClients;
-}
-
-void ServerConfig::setAlwaysShared(bool enabled)
-{
-  AutoLock lock(&m_objectCS);
-  m_alwaysShared = enabled;
-}
-
-void ServerConfig::setNeverShared(bool enabled)
-{
-  AutoLock lock(&m_objectCS);
-  m_neverShared = enabled;
-}
-
-void ServerConfig::disconnectExistingClients(bool disconnectExisting)
-{
-  AutoLock lock(&m_objectCS);
-  m_disconnectClients = disconnectExisting;
 }
 
 void ServerConfig::setPollingInterval(unsigned int interval)

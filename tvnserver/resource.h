@@ -38,11 +38,6 @@
 #define IDC_PASSWORD                    1060
 #define IDC_PASSWORD2                   1061
 #define IDC_PRIMARY_PASSWORD            1062
-#define IDC_SHARED_RADIO1               1063
-#define IDC_SHARED_RADIO2               1065
-#define IDC_SHARED_RADIO3               1066
-#define IDC_SHARED_RADIO4               1067
-#define IDC_SHARED_RADIO5               1068
 #define IDC_POLLING_INTERVAL            1069
 #define IDC_POLLING_INTERVAL_SPIN       1071
 #define IDC_INACTIVITY_TIMEOUT_SPIN     1073

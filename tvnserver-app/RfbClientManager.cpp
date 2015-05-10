@@ -59,35 +59,8 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
 
   AutoLock al(&m_clientListLocker);
 
-  // Checking if this client is allowed to connect, depending on its "shared"
-  // flag and the server's configuration.
-  ServerConfig *servConf = Configurator::getInstance()->getServerConfig();
-  bool isAlwaysShared = servConf->isAlwaysShared();
-  bool isNeverShared = servConf->isNeverShared();
-
-  bool isResultShared;
-  if (isAlwaysShared) {
-    isResultShared = true;
-  } else if (isNeverShared) {
-    isResultShared = false;
-  } else {
-    isResultShared = client->getSharedFlag();
-  }
-
-  // If the client wishes to have exclusive access then remove other clients.
-  if (!isResultShared) {
-    // Which client takes priority, existing or incoming?
-    if (servConf->isDisconnectingExistingClients()) {
-      // Incoming
-      disconnectAuthClients();
-    } else {
-      // Existing
-      if (!m_clientList.empty()) {
-        throw Exception(_T("Cannot disconnect existing clients and therefore")
-                        _T(" the client will be disconected")); // Disconnect this client
-      }
-    }
-  }
+  // Disconnect existing clients, ignoring the viewer shared flag.
+  disconnectAuthClients();
 
   // Removing the client from the non-authorized clients list.
   for (ClientListIter iter = m_nonAuthClientList.begin();
