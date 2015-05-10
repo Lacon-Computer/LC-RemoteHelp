@@ -32,8 +32,6 @@
 #define IDC_LOCAL_INPUT_PRIORITY        1041
 #define IDC_ACCEPT_RFB_CONNECTIONS      1045
 #define IDC_RFB_PORT                    1048
-#define IDC_LOCK_WORKSTATION            1049
-#define IDC_LOGOFF_WORKSTATION          1050
 #define IDC_ENABLE_FILE_TRANSFERS       1051
 #define IDC_REMOVE_WALLPAPER            1052
 #define IDC_LOG_LEVEL                   1053
@@ -51,7 +49,6 @@
 #define IDC_POLLING_INTERVAL_SPIN       1071
 #define IDC_INACTIVITY_TIMEOUT_SPIN     1073
 #define IDC_OPEN_LOG_FOLDER_BUTTON      1077
-#define IDC_DO_NOTHING                  1078
 #define IDC_USE_MIRROR_DRIVER           1082
 #define ID_ABOUT_TIGHTVNC_MENUITEM      40001
 #define IDR_TRAYMENU                    40002

@@ -30,7 +30,7 @@
 
 ServerConfig::ServerConfig()
 : m_rfbPort(5900),
-  m_disconnectAction(DA_DO_NOTHING), m_logLevel(0),
+  m_logLevel(0),
   m_acceptRfbConnections(true), m_useAuthentication(true),
   m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
@@ -58,7 +58,6 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_enableFileTransfers ? 1 : 0);
   output->writeInt8(m_removeWallpaper ? 1 : 0);
   output->writeInt8(m_mirrorDriverAllowed ? 1 : 0);
-  output->writeInt32(m_disconnectAction);
   output->writeInt8(m_acceptRfbConnections ? 1 : 0);
   output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   output->writeFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
@@ -91,7 +90,6 @@ void ServerConfig::deserialize(DataInputStream *input)
   m_enableFileTransfers = input->readInt8() == 1;
   m_removeWallpaper = input->readInt8() == 1;
   m_mirrorDriverAllowed = input->readInt8() != 0;
-  m_disconnectAction = (ServerConfig::DisconnectAction)input->readInt32();
   m_acceptRfbConnections = input->readInt8() == 1;
   input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   input->readFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
@@ -184,18 +182,6 @@ bool ServerConfig::isRemovingDesktopWallpaperEnabled()
 {
   AutoLock lock(&m_objectCS);
   return m_removeWallpaper;
-}
-
-void ServerConfig::setDisconnectAction(DisconnectAction action)
-{
-  AutoLock lock(&m_objectCS);
-  m_disconnectAction = action;
-}
-
-ServerConfig::DisconnectAction ServerConfig::getDisconnectAction()
-{
-  AutoLock lock(&m_objectCS);
-  return m_disconnectAction;
 }
 
 bool ServerConfig::getMirrorIsAllowed()

@@ -76,12 +76,6 @@ BOOL AdministrationConfigDialog::onCommand(UINT controlID, UINT notificationID)
       onShareRadioButtonClick(4);
     } else if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
       onOpenFolderButtonClick();
-    } else if (controlID == IDC_DO_NOTHING) {
-      onDARadioButtonClick(0);
-    } else if (controlID == IDC_LOCK_WORKSTATION) {
-      onDARadioButtonClick(1);
-    } else if (controlID == IDC_LOGOFF_WORKSTATION) {
-      onDARadioButtonClick(2);
     } else if (controlID == IDC_LOG_FOR_ALL_USERS) {
       onLogForAllUsersClick();
     }
@@ -165,25 +159,6 @@ void AdministrationConfigDialog::updateUI()
     m_shared[4].check(true);
   }
 
-  //
-  // When last client disconnects
-  //
-
-  for (int i = 0; i < 3; i++) {
-    m_disconnectAction[i].check(false);
-  }
-  switch (m_config->getDisconnectAction()) {
-  case ServerConfig::DA_DO_NOTHING:
-    m_disconnectAction[0].check(true);
-    break;
-  case ServerConfig::DA_LOCK_WORKSTATION:
-    m_disconnectAction[1].check(true);
-    break;
-  case ServerConfig::DA_LOGOUT_WORKSTATION:
-    m_disconnectAction[2].check(true);
-    break;
-  }
-
   m_logForAllUsers.check(m_config->isSaveLogToAllUsersPathFlagEnabled());
 }
 
@@ -224,14 +199,6 @@ void AdministrationConfigDialog::apply()
     disconnectClients = true;
   }
 
-  if (m_disconnectAction[0].isChecked()) {
-    m_config->setDisconnectAction(ServerConfig::DA_DO_NOTHING);
-  } else if (m_disconnectAction[1].isChecked()) {
-    m_config->setDisconnectAction(ServerConfig::DA_LOCK_WORKSTATION);
-  } else if (m_disconnectAction[2].isChecked()) {
-    m_config->setDisconnectAction(ServerConfig::DA_LOGOUT_WORKSTATION);
-  }
-
   m_config->setAlwaysShared(alwaysShared);
   m_config->setNeverShared(neverShared);
   m_config->disconnectExistingClients(disconnectClients);
@@ -251,10 +218,6 @@ void AdministrationConfigDialog::initControls()
   m_shared[2].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO3));
   m_shared[3].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO4));
   m_shared[4].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO5));
-
-  m_disconnectAction[0].setWindow(GetDlgItem(hwnd, IDC_DO_NOTHING));
-  m_disconnectAction[1].setWindow(GetDlgItem(hwnd, IDC_LOCK_WORKSTATION));
-  m_disconnectAction[2].setWindow(GetDlgItem(hwnd, IDC_LOGOFF_WORKSTATION));
 
   m_logForAllUsers.setWindow(GetDlgItem(hwnd, IDC_LOG_FOR_ALL_USERS));
 
@@ -296,19 +259,6 @@ void AdministrationConfigDialog::onOpenFolderButtonClick()
   } catch (...) {
     // TODO: Place error notification here.
   }
-}
-
-void AdministrationConfigDialog::onDARadioButtonClick(int number)
-{
-  if (!m_disconnectAction[number].isChecked()) {
-    m_disconnectAction[number].check(true);
-    for (int i = 0; i < 3; i++) {
-      if (i != number) {
-        m_disconnectAction[i].check(false);
-      } // if
-    } // for
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  } // if
 }
 
 void AdministrationConfigDialog::onLogForAllUsersClick()

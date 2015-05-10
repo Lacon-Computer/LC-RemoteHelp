@@ -121,10 +121,6 @@ STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "Ms Shell Dlg 2", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "When Last Client Disconnects",IDC_STATIC,193,4,106,53,WS_GROUP
-    RADIOBUTTON     "Do nothing",IDC_DO_NOTHING,199,16,95,10,WS_GROUP | WS_TABSTOP
-    RADIOBUTTON     "Lock desktop",IDC_LOCK_WORKSTATION,199,29,95,10
-    RADIOBUTTON     "Logoff current user",IDC_LOGOFF_WORKSTATION,199,42,95,10
     GROUPBOX        "Session Sharing",IDC_STATIC,6,62,293,79,WS_GROUP
     RADIOBUTTON     "Always treat connections as shared, add new clients and keep old connections",IDC_SHARED_RADIO1,16,73,276,10,WS_GROUP | WS_TABSTOP
     RADIOBUTTON     "Never treat connections as shared, disable new clients if there is one already",IDC_SHARED_RADIO2,16,86,276,10

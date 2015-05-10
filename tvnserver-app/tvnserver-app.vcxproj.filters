@@ -11,9 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AdditionalActionApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AuthTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,9 +64,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdditionalActionApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AuthTracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>

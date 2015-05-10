@@ -29,7 +29,6 @@
 
 #include "tvnserver-app/TvnServerApplication.h"
 #include "tvnserver-app/DesktopServerApplication.h"
-#include "tvnserver-app/AdditionalActionApplication.h"
 #include "tvnserver-app/DesktopServerCommandLine.h"
 
 #include "tvncontrol-app/ControlApplication.h"
@@ -51,9 +50,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     { ControlCommandLine::CONTROL_APPLICATION, NO_ARG },
 
     { DesktopServerCommandLine::DESKTOP_SERVER_KEY, NO_ARG },
-
-    { AdditionalActionApplication::LOCK_WORKSTATION_KEY, NO_ARG },
-    { AdditionalActionApplication::LOGOUT_KEY, NO_ARG },
   };
 
   CommandLine parser;
@@ -86,16 +82,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         StringTable::getString(IDS_MBC_TVNCONTROL),
         MB_OK | MB_ICONERROR);
       return 1;
-    }
-  } else if (firstKey.isEqualTo(AdditionalActionApplication::LOCK_WORKSTATION_KEY) ||
-    firstKey.isEqualTo(AdditionalActionApplication::LOGOUT_KEY)) {
-    try {
-      AdditionalActionApplication actionApp(hInstance,
-        WindowNames::WINDOW_CLASS_NAME,
-        lpCmdLine);
-      return actionApp.run();
-    } catch (SystemException &ex) {
-      return ex.getErrorCode();
     }
   } else if (firstKey.isEqualTo(DesktopServerCommandLine::DESKTOP_SERVER_KEY)) {
     try {
