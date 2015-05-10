@@ -45,8 +45,7 @@ RfbInitializer::RfbInitializer(Channel *stream,
   m_minorVerNum(0),
   m_extAuthListener(extAuthListener),
   m_client(client),
-  m_authAllowed(authAllowed),
-  m_viewOnlyAuth(false)
+  m_authAllowed(authAllowed)
 {
   m_output = new DataOutputStream(stream);
   m_input = new DataInputStream(stream);
@@ -164,9 +163,8 @@ void RfbInitializer::doVncAuth()
   // Comparing the challenge with the response.
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
   bool hasPrim = srvConf->hasPrimaryPassword();
-  bool hasRdly = srvConf->hasReadOnlyPassword();
 
-  if (!hasPrim && !hasRdly) {
+  if (!hasPrim) {
     throw AuthException(_T("Server is not configured properly"));
   }
 
@@ -179,16 +177,7 @@ void RfbInitializer::doVncAuth()
       return;
     }
   }
-  if (hasRdly) {
-    UINT8 crypReadOnlyPass[8];
-    srvConf->getReadOnlyPassword(crypReadOnlyPass);
-    VncPassCrypt passCrypt;
-    passCrypt.updatePlain(crypReadOnlyPass);
-    if (passCrypt.challengeAndResponseIsValid(challenge, response)) {
-      m_viewOnlyAuth = true;
-      return;
-    }
-  }
+
   // At this time we are sure that the client was typed an incorectly password.
   m_extAuthListener->onAuthFailed(m_client);
 

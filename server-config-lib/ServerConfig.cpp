@@ -34,7 +34,7 @@ ServerConfig::ServerConfig()
   m_acceptRfbConnections(true), m_useAuthentication(true),
   m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
-  m_removeWallpaper(true), m_hasReadOnlyPassword(false),
+  m_removeWallpaper(true),
   m_hasPrimaryPassword(false), m_alwaysShared(false), m_neverShared(false),
   m_disconnectClients(true), m_pollingInterval(1000), m_localInputPriorityTimeout(3),
   m_blockLocalInput(false), m_blockRemoteInput(false), m_localInputPriority(false),
@@ -43,7 +43,6 @@ ServerConfig::ServerConfig()
   m_showTrayIcon(true)
 {
   memset(m_primaryPassword,  0, sizeof(m_primaryPassword));
-  memset(m_readonlyPassword, 0, sizeof(m_readonlyPassword));
 }
 
 ServerConfig::~ServerConfig()
@@ -60,7 +59,6 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_mirrorDriverAllowed ? 1 : 0);
   output->writeInt8(m_acceptRfbConnections ? 1 : 0);
   output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
-  output->writeFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_useAuthentication ? 1 : 0);
   output->writeInt32(m_logLevel);
   output->writeInt8(m_alwaysShared ? 1 : 0);
@@ -76,7 +74,6 @@ void ServerConfig::serialize(DataOutputStream *output)
 
   output->writeInt8(m_saveLogToAllUsersPath ? 1 : 0);
   output->writeInt8(m_hasPrimaryPassword ? 1 : 0);
-  output->writeInt8(m_hasReadOnlyPassword ? 1 : 0);
   output->writeInt8(m_showTrayIcon ? 1 : 0);
 
   output->writeUTF8(m_logFilePath.getString());
@@ -92,7 +89,6 @@ void ServerConfig::deserialize(DataInputStream *input)
   m_mirrorDriverAllowed = input->readInt8() != 0;
   m_acceptRfbConnections = input->readInt8() == 1;
   input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
-  input->readFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
   m_useAuthentication = input->readInt8() == 1;
   m_logLevel = input->readInt32();
   m_alwaysShared = input->readInt8() == 1;
@@ -108,7 +104,6 @@ void ServerConfig::deserialize(DataInputStream *input)
 
   m_saveLogToAllUsersPath = input->readInt8() == 1;
   m_hasPrimaryPassword = input->readInt8() == 1;
-  m_hasReadOnlyPassword = input->readInt8() == 1;
   m_showTrayIcon = input->readInt8() == 1;
 
   input->readUTF8(&m_logFilePath);
@@ -224,22 +219,6 @@ void ServerConfig::setPrimaryPassword(const unsigned char *value)
   memcpy((void *)&m_primaryPassword[0], (void *)value, VNC_PASSWORD_SIZE);
 }
 
-void ServerConfig::getReadOnlyPassword(unsigned char *password)
-{
-  AutoLock lock(&m_objectCS);
-
-  memcpy(password, m_readonlyPassword, VNC_PASSWORD_SIZE);
-}
-
-void ServerConfig::setReadOnlyPassword(const unsigned char *value)
-{
-  AutoLock lock(&m_objectCS);
-
-  m_hasReadOnlyPassword = true;
-
-  memcpy((void *)&m_readonlyPassword[0], (void *)value, VNC_PASSWORD_SIZE);
-}
-
 bool ServerConfig::hasPrimaryPassword()
 {
   AutoLock lock(&m_objectCS);
@@ -247,25 +226,11 @@ bool ServerConfig::hasPrimaryPassword()
   return m_hasPrimaryPassword;
 }
 
-bool ServerConfig::hasReadOnlyPassword()
-{
-  AutoLock lock(&m_objectCS);
-
-  return m_hasReadOnlyPassword;
-}
-
 void ServerConfig::deletePrimaryPassword()
 {
   AutoLock lock(&m_objectCS);
 
   m_hasPrimaryPassword = false;
-}
-
-void ServerConfig::deleteReadOnlyPassword()
-{
-  AutoLock lock(&m_objectCS);
-
-  m_hasReadOnlyPassword = false;
 }
 
 bool ServerConfig::isUsingAuthentication()

@@ -52,7 +52,6 @@ public:
   // Returns shared flag value. Shared flag value is valid only after
   // the authPhase() function calling.
   bool getSharedFlag() const { return m_shared; }
-  bool getViewOnlyAuth() const { return m_viewOnlyAuth; }
 
   bool getTightEnabledFlag() const { return m_tightEnabled; }
 
@@ -88,7 +87,6 @@ protected:
 
   bool m_shared;
   unsigned int m_minorVerNum;
-  bool m_viewOnlyAuth;
   bool m_tightEnabled;
   bool m_authAllowed;
 

@@ -42,7 +42,6 @@ RfbClient::RfbClient(SocketIPv4 *socket,
   m_viewOnly(viewOnly),
   m_isOutgoing(isOutgoing),
   m_shared(false),
-  m_viewOnlyAuth(true),
   m_clientState(IN_NONAUTH),
   m_isMarkedOk(false),
   m_extTermListener(extTermListener),
@@ -136,7 +135,7 @@ void RfbClient::setViewOnlyFlag(bool value)
   if (getClientState() < IN_NORMAL_PHASE) {
     throw Exception(_T("Irrelevant call to RfbClient::setViewOnlyFlag()"));
   }
-  m_viewOnly = value || m_viewOnlyAuth;
+  m_viewOnly = value;
   m_clientInputHandler->setViewOnlyFlag(m_viewOnly);
 }
 
@@ -191,10 +190,7 @@ void RfbClient::execute()
 
       m_shared = rfbInitializer.getSharedFlag();
       m_log->debug(_T("Shared flag = %d"), (int)m_shared);
-      m_viewOnlyAuth = rfbInitializer.getViewOnlyAuth();
       m_log->debug(_T("Initial view-only state = %d"), (int)m_viewOnly);
-      m_log->debug(_T("Authenticated with view-only password = %d"), (int)m_viewOnlyAuth);
-      m_viewOnly = m_viewOnly || m_viewOnlyAuth;
 
       // Let RfbClientManager handle new authenticated connection.
       m_desktop = m_extAuthListener->onClientAuth(this);

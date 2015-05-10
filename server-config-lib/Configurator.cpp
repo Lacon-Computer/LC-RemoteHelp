@@ -216,17 +216,6 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   } else {
     sm->deleteKey(_T("Password"));
   }
-  if (m_serverConfig.hasReadOnlyPassword()) {
-    unsigned char password[VNC_PASSWORD_SIZE];
-
-    m_serverConfig.getReadOnlyPassword(&password[0]);
-
-    if (!sm->setBinaryData(_T("PasswordViewOnly"), &password[0], VNC_PASSWORD_SIZE)) {
-      saveResult = false;
-    }
-  } else {
-    sm->deleteKey(_T("PasswordViewOnly"));
-  }
   if (!sm->setBoolean(_T("AlwaysShared"), m_serverConfig.isAlwaysShared())) {
     saveResult = false;
   }
@@ -313,14 +302,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setPrimaryPassword(&buffer[0]);
-  }
-  passSize = 8;
-  if (!sm->getBinaryData(_T("PasswordViewOnly"), (void *)&buffer, &passSize)) {
-    loadResult = false;
-    m_serverConfig.deleteReadOnlyPassword();
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.setReadOnlyPassword(&buffer[0]);
   }
 
   if (!sm->getBoolean(_T("AlwaysShared"), &boolVal)) {

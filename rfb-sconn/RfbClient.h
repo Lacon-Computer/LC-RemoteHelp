@@ -79,7 +79,6 @@ public:
   bool isOutgoing() const;
 
   bool getSharedFlag() const { return m_shared; }
-  bool getViewOnlyAuth() const { return m_viewOnlyAuth; }
 
   void setViewOnlyFlag(bool value);
 
@@ -136,7 +135,6 @@ private:
 
   bool m_viewOnly;
   bool m_isOutgoing;
-  bool m_viewOnlyAuth;
   bool m_shared;
 
   LogWriter *m_log;

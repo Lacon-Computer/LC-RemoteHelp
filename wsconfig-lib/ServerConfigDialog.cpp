@@ -79,14 +79,8 @@ BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
     case IDC_PRIMARY_PASSWORD:
       onPrimaryPasswordChange();
       break;
-    case IDC_VIEW_ONLY_PASSWORD:
-      onReadOnlyPasswordChange();
-      break;
     case IDC_UNSET_PRIMARY_PASSWORD_BUTTON:
       onUnsetPrimaryPasswordClick();
-      break;
-    case IDC_UNSET_READONLY_PASSWORD_BUTTON:
-      onUnsetReadOnlyPasswordClick();
       break;
     case IDC_ENABLE_FILE_TRANSFERS:
       onFileTransferCheckBoxClick();
@@ -171,11 +165,9 @@ bool ServerConfigDialog::validateInput()
     return false;
   }
 
-  bool passwordSpecified = m_ppControl->hasPassword() || m_vpControl->hasPassword();
-
   if (m_acceptRfbConnections.isChecked() &&
       m_useAuthentication.isChecked() &&
-      !passwordSpecified) {
+      !m_ppControl->hasPassword()) {
     MessageBox(m_ctrlThis.getWindow(),
                StringTable::getString(IDS_SET_PASSWORD_NOTIFICATION),
                StringTable::getString(IDS_CAPTION_BAD_INPUT),
@@ -200,12 +192,6 @@ void ServerConfigDialog::updateUI()
     UINT8 ppCrypted[8];
     m_config->getPrimaryPassword(ppCrypted);
     m_ppControl->setCryptedPassword((const char *)ppCrypted);
-  }
-
-  if (m_config->hasReadOnlyPassword()) {
-    UINT8 vpCrypted[8];
-    m_config->getReadOnlyPassword(vpCrypted);
-    m_vpControl->setCryptedPassword((const char *)vpCrypted);
   }
 
   m_useAuthentication.check(m_config->isUsingAuthentication());
@@ -260,16 +246,6 @@ void ServerConfigDialog::apply()
     m_config->deletePrimaryPassword();
   }
 
-  //
-  // View only password.
-  //
-
-  if (m_vpControl->hasPassword()) {
-    m_config->setReadOnlyPassword((const unsigned char *)m_vpControl->getCryptedPassword());
-  } else {
-    m_config->deleteReadOnlyPassword();
-  }
-
   // Local input priority timeout string storage
   StringStorage liptStringStorage;
   m_localInputPriorityTimeout.getText(&liptStringStorage);
@@ -299,10 +275,8 @@ void ServerConfigDialog::initControls()
   m_removeWallpaper.setWindow(GetDlgItem(hwnd, IDC_REMOVE_WALLPAPER));
   m_acceptRfbConnections.setWindow(GetDlgItem(hwnd, IDC_ACCEPT_RFB_CONNECTIONS));
   m_primaryPassword.setWindow(GetDlgItem(hwnd, IDC_PRIMARY_PASSWORD));
-  m_readOnlyPassword.setWindow(GetDlgItem(hwnd, IDC_VIEW_ONLY_PASSWORD));
   m_useAuthentication.setWindow(GetDlgItem(hwnd, IDC_USE_AUTHENTICATION));
   m_unsetPrimaryPassword.setWindow(GetDlgItem(hwnd, IDC_UNSET_PRIMARY_PASSWORD_BUTTON));
-  m_unsetReadOnlyPassword.setWindow(GetDlgItem(hwnd, IDC_UNSET_READONLY_PASSWORD_BUTTON));
   m_showTrayIcon.setWindow(GetDlgItem(hwnd, IDC_SHOW_TVNCONTROL_ICON_CHECKBOX));
 
   m_rfbPortSpin.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT_SPIN));
@@ -340,7 +314,6 @@ void ServerConfigDialog::initControls()
   m_grabTransparentWindows.check(true);
 
   m_ppControl = new PasswordControl(&m_primaryPassword, &m_unsetPrimaryPassword);
-  m_vpControl = new PasswordControl(&m_readOnlyPassword, &m_unsetReadOnlyPassword);
 }
 
 //
@@ -360,7 +333,6 @@ void ServerConfigDialog::updateControlDependencies()
   bool passwordsAreEnabled = ((m_useAuthentication.isChecked()) && (m_useAuthentication.isEnabled()));
 
   m_ppControl->setEnabled(passwordsAreEnabled);
-  m_vpControl->setEnabled(passwordsAreEnabled);
 
   m_rfbPortSpin.invalidate();
   m_pollingIntervalSpin.invalidate();
@@ -396,23 +368,9 @@ void ServerConfigDialog::onPrimaryPasswordChange()
   }
 }
 
-void ServerConfigDialog::onReadOnlyPasswordChange()
-{
-  if (m_vpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  }
-}
-
 void ServerConfigDialog::onUnsetPrimaryPasswordClick()
 {
   m_ppControl->unsetPassword(true, m_ctrlThis.getWindow());
-
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
-
-void ServerConfigDialog::onUnsetReadOnlyPasswordClick()
-{
-  m_vpControl->unsetPassword(true, m_ctrlThis.getWindow());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }

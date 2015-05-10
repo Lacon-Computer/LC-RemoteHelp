@@ -21,7 +21,6 @@
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
 #define IDC_LOG_FILEPATH_EDIT           1014
 #define IDC_STATIC_LICENSING            1016
-#define IDC_UNSET_READONLY_PASSWORD_BUTTON 1017
 #define IDC_APPLY                       1019
 #define IDC_LOG_FOR_ALL_USERS           1020
 #define IDC_UNSET_PRIMARY_PASSWORD_BUTTON 1022
@@ -40,7 +39,6 @@
 #define IDC_PASSWORD2                   1061
 #define IDC_PRIMARY_PASSWORD            1062
 #define IDC_SHARED_RADIO1               1063
-#define IDC_VIEW_ONLY_PASSWORD          1064
 #define IDC_SHARED_RADIO2               1065
 #define IDC_SHARED_RADIO3               1066
 #define IDC_SHARED_RADIO4               1067

@@ -178,7 +178,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
   // Vnc authentication enabled.
   bool vncAuthEnabled = m_srvConfig->isUsingAuthentication();
   // No vnc passwords are set.
-  bool noVncPasswords = !m_srvConfig->hasPrimaryPassword() && !m_srvConfig->hasReadOnlyPassword();
+  bool noVncPasswords = !m_srvConfig->hasPrimaryPassword();
   // Determinates that main rfb server cannot accept connection in case of passwords problem.
   bool vncPasswordsError = vncAuthEnabled && noVncPasswords;
 

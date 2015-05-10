@@ -72,9 +72,7 @@ private:
   void onAcceptRfbConnectionsClick();
   void onAuthenticationClick();
   void onPrimaryPasswordChange();
-  void onReadOnlyPasswordChange();
   void onUnsetPrimaryPasswordClick();
-  void onUnsetReadOnlyPasswordClick();
   void onShowTrayIconCheckBoxClick();
   void onPollingIntervalSpinChangePos(LPNMUPDOWN message);
   void onRfbPortUpdate();
@@ -106,9 +104,7 @@ protected:
   CheckBox m_acceptRfbConnections;
   CheckBox m_showTrayIcon;
   Control m_primaryPassword;
-  Control m_readOnlyPassword;
   Control m_unsetPrimaryPassword;
-  Control m_unsetReadOnlyPassword;
   CheckBox m_useAuthentication;
   SpinControl m_rfbPortSpin;
   SpinControl m_pollingIntervalSpin;
@@ -132,7 +128,6 @@ protected:
 
   // Primary password control.
   PasswordControl *m_ppControl;
-  PasswordControl *m_vpControl;
 };
 
 #endif
