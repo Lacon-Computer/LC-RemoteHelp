@@ -29,7 +29,6 @@
 
 #include "desktop/ApplicationDesktopFactory.h"
 #include "RfbClientManager.h"
-#include "RfbServer.h"
 #include "ControlServer.h"
 #include "TvnServerListener.h"
 
@@ -49,9 +48,8 @@
  *   1) Zombie killer singleton.
  *   2) Configurator singleton.
  *   3) Log singleton.
- *   4) Rfb servers (main rfb server and extra servers).
- *   5) Control server.
- *   6) Other features:
+ *   4) Control server.
+ *   5) Other features:
      1) Do action when last client disconnects.
  */
 class TvnServer : public Singleton<TvnServer>,
@@ -93,7 +91,6 @@ public:
    *
    * Make several things:
    *  1) Changes log level.
-   *  2) Restarts rfb servers.
    */
   virtual void onConfigReload(ServerConfig *serverConfig);
 
@@ -123,10 +120,8 @@ public:
 
 protected:
   void restartControlServer();
-  void restartMainRfbServer();
 
   void stopControlServer();
-  void stopMainRfbServer();
 
   // Calls a callback function to change update log properties.
   void changeLogProps();
@@ -156,10 +151,6 @@ protected:
    * Control server.
    */
   ControlServer *m_controlServer;
-  /**
-   * Main rfb server.
-   */
-  RfbServer *m_rfbServer;
 
   LogInitListener *m_logInitListener;
 };

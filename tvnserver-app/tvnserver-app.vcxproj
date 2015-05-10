@@ -298,7 +298,6 @@
     <ClCompile Include="OutgoingRfbConnectionThread.cpp" />
     <ClCompile Include="RfbClientManager.cpp" />
     <ClCompile Include="RfbClientManagerEventListener.cpp" />
-    <ClCompile Include="RfbServer.cpp" />
     <ClCompile Include="ServerCommandLine.cpp" />
     <ClCompile Include="SessionChangesWatcher.cpp" />
     <ClCompile Include="TvnServer.cpp" />
@@ -317,7 +316,6 @@
     <ClInclude Include="OutgoingRfbConnectionThread.h" />
     <ClInclude Include="RfbClientManager.h" />
     <ClInclude Include="RfbClientManagerEventListener.h" />
-    <ClInclude Include="RfbServer.h" />
     <ClInclude Include="ServerCommandLine.h" />
     <ClInclude Include="SessionChangesWatcher.h" />
     <ClInclude Include="TvnServer.h" />

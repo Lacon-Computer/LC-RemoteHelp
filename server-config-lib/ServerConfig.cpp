@@ -29,9 +29,8 @@
 #include "file-lib/File.h"
 
 ServerConfig::ServerConfig()
-: m_rfbPort(5900),
-  m_logLevel(0),
-  m_acceptRfbConnections(true), m_useAuthentication(true),
+: m_logLevel(0),
+  m_useAuthentication(true),
   m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
   m_removeWallpaper(true),
@@ -53,11 +52,9 @@ void ServerConfig::serialize(DataOutputStream *output)
 {
   AutoLock l(this);
 
-  output->writeInt32(m_rfbPort);
   output->writeInt8(m_enableFileTransfers ? 1 : 0);
   output->writeInt8(m_removeWallpaper ? 1 : 0);
   output->writeInt8(m_mirrorDriverAllowed ? 1 : 0);
-  output->writeInt8(m_acceptRfbConnections ? 1 : 0);
   output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_useAuthentication ? 1 : 0);
   output->writeInt32(m_logLevel);
@@ -80,11 +77,9 @@ void ServerConfig::deserialize(DataInputStream *input)
 {
   AutoLock l(this);
 
-  m_rfbPort = input->readInt32();
   m_enableFileTransfers = input->readInt8() == 1;
   m_removeWallpaper = input->readInt8() == 1;
   m_mirrorDriverAllowed = input->readInt8() != 0;
-  m_acceptRfbConnections = input->readInt8() == 1;
   input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
   m_useAuthentication = input->readInt8() == 1;
   m_logLevel = input->readInt32();
@@ -131,24 +126,6 @@ void ServerConfig::setLogFileDir(const TCHAR *logFilePath)
   m_logFilePath.setString(logFilePath);
 }
 
-void ServerConfig::setRfbPort(int port)
-{
-  AutoLock lock(&m_objectCS);
-  if (port > 65535) {
-    m_rfbPort = 65535;
-  } else if (port <= 0) {
-    m_rfbPort = 1;
-  } else {
-    m_rfbPort = port;
-  }
-}
-
-int ServerConfig::getRfbPort()
-{
-  AutoLock lock(&m_objectCS);
-  return m_rfbPort;
-}
-
 void ServerConfig::enableFileTransfers(bool enabled)
 {
   AutoLock lock(&m_objectCS);
@@ -183,18 +160,6 @@ void ServerConfig::setMirrorAllowing(bool value)
 {
   AutoLock lock(&m_objectCS);
   m_mirrorDriverAllowed = value;
-}
-
-bool ServerConfig::isAcceptingRfbConnections()
-{
-  AutoLock lock(&m_objectCS);
-  return m_acceptRfbConnections;
-}
-
-void ServerConfig::acceptRfbConnections(bool accept)
-{
-  AutoLock lock(&m_objectCS);
-  m_acceptRfbConnections = accept;
 }
 
 void ServerConfig::getPrimaryPassword(unsigned char *password)

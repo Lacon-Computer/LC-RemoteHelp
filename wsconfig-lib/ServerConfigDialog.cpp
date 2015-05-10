@@ -70,9 +70,6 @@ BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (notificationID == BN_CLICKED) {
     switch (controlID) {
-    case IDC_ACCEPT_RFB_CONNECTIONS:
-      onAcceptRfbConnectionsClick();
-      break;
     case IDC_USE_AUTHENTICATION:
       onAuthenticationClick();
       break;
@@ -110,9 +107,6 @@ BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
     }
   } else if (notificationID == EN_UPDATE) {
     switch (controlID) {
-    case IDC_RFB_PORT:
-      onRfbPortUpdate();
-      break;
     case IDC_POLLING_INTERVAL:
       onPollingIntervalUpdate();
       break;
@@ -127,7 +121,6 @@ BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
 bool ServerConfigDialog::validateInput()
 {
   bool commonValidationOk =
-    CommonInputValidation::validatePort(&m_rfbPort) &&
     CommonInputValidation::validateUINT(
       &m_pollingInterval,
       StringTable::getString(IDS_INVALID_POLLING_INTERVAL)) &&
@@ -138,10 +131,6 @@ bool ServerConfigDialog::validateInput()
   if (!commonValidationOk) {
     return false;
   }
-
-  int rfbPort;
-
-  UIDataAccess::queryValueAsInt(&m_rfbPort, &rfbPort);
 
   unsigned int pollingInterval;
 
@@ -165,8 +154,7 @@ bool ServerConfigDialog::validateInput()
     return false;
   }
 
-  if (m_acceptRfbConnections.isChecked() &&
-      m_useAuthentication.isChecked() &&
+  if (m_useAuthentication.isChecked() &&
       !m_ppControl->hasPassword()) {
     MessageBox(m_ctrlThis.getWindow(),
                StringTable::getString(IDS_SET_PASSWORD_NOTIFICATION),
@@ -180,13 +168,10 @@ bool ServerConfigDialog::validateInput()
 
 void ServerConfigDialog::updateUI()
 {
-  m_rfbPort.setSignedInt(m_config->getRfbPort());
   m_pollingInterval.setUnsignedInt(m_config->getPollingInterval());
 
   m_enableFileTransfers.check(m_config->isFileTransfersEnabled());
   m_removeWallpaper.check(m_config->isRemovingDesktopWallpaperEnabled());
-
-  m_acceptRfbConnections.check(m_config->isAcceptingRfbConnections());
 
   if (m_config->hasPrimaryPassword()) {
     UINT8 ppCrypted[8];
@@ -215,25 +200,19 @@ void ServerConfigDialog::updateUI()
 
 void ServerConfigDialog::apply()
 {
-  StringStorage rfbPortText;
   // Polling interval string storage
   StringStorage pollingIntervalText;
 
-  m_rfbPort.getText(&rfbPortText);
   m_pollingInterval.getText(&pollingIntervalText);
 
   int intVal = 0;
 
-  StringParser::parseInt(rfbPortText.getString(), &intVal);
-  m_config->setRfbPort(intVal);
-  
   StringParser::parseInt(pollingIntervalText.getString(), &intVal);
   m_config->setPollingInterval(intVal);
 
   m_config->enableFileTransfers(m_enableFileTransfers.isChecked());
   m_config->enableRemovingDesktopWallpaper(m_removeWallpaper.isChecked());
 
-  m_config->acceptRfbConnections(m_acceptRfbConnections.isChecked());
   m_config->useAuthentication(m_useAuthentication.isChecked());
 
   //
@@ -267,24 +246,17 @@ void ServerConfigDialog::apply()
 void ServerConfigDialog::initControls()
 {
   HWND hwnd = m_ctrlThis.getWindow();
-  m_rfbPort.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT));
   m_pollingInterval.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL));
   m_grabTransparentWindows.setWindow(GetDlgItem(hwnd, IDC_GRAB_TRANSPARENT));
   m_useMirrorDriver.setWindow(GetDlgItem(hwnd, IDC_USE_MIRROR_DRIVER));
   m_enableFileTransfers.setWindow(GetDlgItem(hwnd, IDC_ENABLE_FILE_TRANSFERS));
   m_removeWallpaper.setWindow(GetDlgItem(hwnd, IDC_REMOVE_WALLPAPER));
-  m_acceptRfbConnections.setWindow(GetDlgItem(hwnd, IDC_ACCEPT_RFB_CONNECTIONS));
   m_primaryPassword.setWindow(GetDlgItem(hwnd, IDC_PRIMARY_PASSWORD));
   m_useAuthentication.setWindow(GetDlgItem(hwnd, IDC_USE_AUTHENTICATION));
   m_unsetPrimaryPassword.setWindow(GetDlgItem(hwnd, IDC_UNSET_PRIMARY_PASSWORD_BUTTON));
   m_showTrayIcon.setWindow(GetDlgItem(hwnd, IDC_SHOW_TVNCONTROL_ICON_CHECKBOX));
 
-  m_rfbPortSpin.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT_SPIN));
   m_pollingIntervalSpin.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL_SPIN));
-
-  m_rfbPortSpin.setBuddy(&m_rfbPort);
-  m_rfbPortSpin.setAccel(0, 1);
-  m_rfbPortSpin.setRange32(1, 65535);
 
   int limitersTmp[] = {50, 200};
   int deltasTmp[] = {5, 10};
@@ -322,26 +294,11 @@ void ServerConfigDialog::initControls()
 
 void ServerConfigDialog::updateControlDependencies()
 {
-  if (m_acceptRfbConnections.isChecked()) {
-    m_rfbPort.setEnabled(true);
-    m_useAuthentication.setEnabled(true);
-  } else {
-    m_rfbPort.setEnabled(false);
-    m_useAuthentication.setEnabled(false);
-  }
-
   bool passwordsAreEnabled = ((m_useAuthentication.isChecked()) && (m_useAuthentication.isEnabled()));
 
   m_ppControl->setEnabled(passwordsAreEnabled);
 
-  m_rfbPortSpin.invalidate();
   m_pollingIntervalSpin.invalidate();
-}
-
-void ServerConfigDialog::onAcceptRfbConnectionsClick()
-{
-  updateControlDependencies();
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
 
 void ServerConfigDialog::onAuthenticationClick()
@@ -378,11 +335,6 @@ void ServerConfigDialog::onUnsetPrimaryPasswordClick()
 void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN message)
 {
   m_pollingIntervalSpin.autoAccelerationHandler(message);
-}
-
-void ServerConfigDialog::onRfbPortUpdate()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
 
 void ServerConfigDialog::onPollingIntervalUpdate()

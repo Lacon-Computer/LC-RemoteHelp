@@ -35,9 +35,6 @@
     <ClCompile Include="RfbClientManagerEventListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RfbServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ServerCommandLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,9 +83,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RfbClientManagerEventListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RfbServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerCommandLine.h">

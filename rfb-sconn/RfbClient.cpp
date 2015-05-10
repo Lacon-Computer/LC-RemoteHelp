@@ -178,7 +178,7 @@ void RfbClient::execute()
   FileTransferRequestHandler *fileTransfer = 0;
 
   RfbInitializer rfbInitializer(&sockStream, m_extAuthListener, this,
-                                !m_isOutgoing);
+                                true);
 
   try {
     // First initialization phase

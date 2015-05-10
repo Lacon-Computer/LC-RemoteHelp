@@ -297,10 +297,8 @@ void ControlTrayIcon::syncStatusWithServer()
     // Change icon status.
     if (clients.size() > 0) {
       setIcon(m_iconWorking);
-    } else if (info.m_acceptFlag) {
-      setIcon(m_iconIdle);
     } else {
-      setIcon(m_iconDisabled);
+      setIcon(m_iconIdle);
     }
 
     setText(info.m_statusText.getString());

@@ -16,7 +16,6 @@
 #define IDC_STATIC_VERSION              1002
 #define IDC_CONFIG_TAB                  1003
 #define IDC_LOG_LEVEL_SPIN              1006
-#define IDC_RFB_PORT_SPIN               1008
 #define IDC_VIEW_ONLY_CHECKBOX          1010
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
 #define IDC_LOG_FILEPATH_EDIT           1014
@@ -29,8 +28,6 @@
 #define IDC_BLOCK_LOCAL_INPUT           1038
 #define IDC_LOCAL_INPUT_PRIORITY_TIMEOUT 1040
 #define IDC_LOCAL_INPUT_PRIORITY        1041
-#define IDC_ACCEPT_RFB_CONNECTIONS      1045
-#define IDC_RFB_PORT                    1048
 #define IDC_ENABLE_FILE_TRANSFERS       1051
 #define IDC_REMOVE_WALLPAPER            1052
 #define IDC_LOG_LEVEL                   1053

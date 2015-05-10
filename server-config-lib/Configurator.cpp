@@ -184,12 +184,6 @@ bool Configurator::loadInputHandlingConfig(SettingsManager *sm, ServerConfig *co
 bool Configurator::saveServerConfig(SettingsManager *sm)
 {
   bool saveResult = true;
-  if (!sm->setUINT(_T("RfbPort"), m_serverConfig.getRfbPort())) {
-    saveResult = false;
-  }
-  if (!sm->setBoolean(_T("AcceptRfbConnections"), m_serverConfig.isAcceptingRfbConnections())) {
-    saveResult = false;
-  }
   if (!sm->setBoolean(_T("UseVncAuthentication"), m_serverConfig.isUsingAuthentication())) {
     saveResult = false;
   }
@@ -242,17 +236,6 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   bool boolVal;
   UINT uintVal;
 
-  if (!sm->getUINT(_T("RfbPort"), &uintVal)) {
-    loadResult = false;
-  } else {
-    m_serverConfig.setRfbPort(uintVal);
-  }
-  if (!sm->getBoolean(_T("AcceptRfbConnections"), &boolVal)) {
-    loadResult = false;
-  } else {
-    m_isConfigLoadedPartly = true;
-    m_serverConfig.acceptRfbConnections(boolVal);
-  }
   if (!sm->getBoolean(_T("UseVncAuthentication"), &boolVal)) {
     loadResult = false;
   } else {

@@ -46,8 +46,6 @@ TvnServerInfo ControlProxy::getServerInfo()
 
   createMessage(ControlProto::GET_SERVER_INFO_MSG_ID)->send();
 
-  ret.m_acceptFlag = m_gate->readUInt8() == 1;
-
   m_gate->readUTF8(&ret.m_statusText);
 
   return ret;

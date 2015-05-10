@@ -189,7 +189,6 @@ void ControlClient::getServerInfoMsgRcvd()
 
   m_gate->writeUInt32(ControlProto::REPLY_OK);
 
-  m_gate->writeUInt8(info.m_acceptFlag ? 1 : 0);
   m_gate->writeUTF8(status.getString());
 }
 

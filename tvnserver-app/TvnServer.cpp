@@ -58,7 +58,7 @@ TvnServer::TvnServer(LogInitListener *logInitListener,
   ListenerContainer<TvnServerListener *>(),
   m_logInitListener(logInitListener),
   m_rfbClientManager(0),
-  m_controlServer(0), m_rfbServer(0),
+  m_controlServer(0),
   m_log(logger)
 {
   m_log.message(_T("%s Build on %s"),
@@ -107,7 +107,6 @@ TvnServer::TvnServer(LogInitListener *logInitListener,
     // FIXME: Nested lock in protected code (congifuration locking).
     AutoLock l(&m_mutex);
 
-    restartMainRfbServer();
     restartControlServer();
   }
 }
@@ -117,7 +116,6 @@ TvnServer::~TvnServer()
   Configurator::getInstance()->removeListener(this);
 
   stopControlServer();
-  stopMainRfbServer();
 
   ZombieKiller *zombieKiller = ZombieKiller::getInstance();
 
@@ -141,69 +139,14 @@ TvnServer::~TvnServer()
 // Remark: this method can be called from other threads.
 void TvnServer::onConfigReload(ServerConfig *serverConfig)
 {
-  // Start/stop/restart RFB servers if needed.
-  {
-    // FIXME: Protect only primitive operations.
-    // FIXME: Nested lock in protected code (congifuration locking).
-    AutoLock l(&m_mutex);
-
-    bool toggleMainRfbServer =
-      m_srvConfig->isAcceptingRfbConnections() != (m_rfbServer != 0);
-    bool changeMainRfbPort = m_rfbServer != 0 &&
-      (m_srvConfig->getRfbPort() != (int)m_rfbServer->getBindPort());
-
-    bool changeBindHost =  m_rfbServer != 0 &&
-      _tcscmp(m_rfbServer->getBindHost(), _T("0.0.0.0")) != 0;
-
-    if (toggleMainRfbServer ||
-        changeMainRfbPort ||
-        changeBindHost) {
-      restartMainRfbServer();
-    }
-  }
-
   changeLogProps();
 }
 
 void TvnServer::getServerInfo(TvnServerInfo *info)
 {
-  bool rfbServerListening = true;
-  {
-    AutoLock l(&m_mutex);
-    rfbServerListening = m_rfbServer != 0;
-  }
-
-  StringStorage statusString;
-
-  // Vnc authentication enabled.
-  bool vncAuthEnabled = m_srvConfig->isUsingAuthentication();
-  // No vnc passwords are set.
-  bool noVncPasswords = !m_srvConfig->hasPrimaryPassword();
-  // Determinates that main rfb server cannot accept connection in case of passwords problem.
-  bool vncPasswordsError = vncAuthEnabled && noVncPasswords;
-
-  if (rfbServerListening) {
-    if (vncPasswordsError) {
-      statusString = StringTable::getString(IDS_NO_PASSWORDS_SET);
-    } else {
-      // FIXME: Usage of deprecated FUNCTION!
-      char localAddressString[1024];
-      getLocalIPAddrString(localAddressString, 1024);
-      AnsiStringStorage ansiString(localAddressString);
-      ansiString.toStringStorage(&statusString);
-
-      if (!vncAuthEnabled) {
-        statusString.appendString(StringTable::getString(IDS_NO_AUTH_STATUS));
-      } // if no auth enabled.
-    } // accepting connections and no problem with passwords.
-  } else {
-    statusString = StringTable::getString(IDS_SERVER_NOT_LISTENING);
-  } // not accepting connections.
-
   info->m_statusText.format(_T("%s - %s"),
                             StringTable::getString(IDS_TVNSERVER_APP),
-                            statusString.getString());
-  info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
+                            StringTable::getString(IDS_SERVER_NOT_LISTENING));
 }
 
 void TvnServer::generateExternalShutdownSignal()
@@ -251,27 +194,6 @@ void TvnServer::restartControlServer()
   }
 }
 
-void TvnServer::restartMainRfbServer()
-{
-  // FIXME: Errors are critical here, they should not be ignored.
-
-  stopMainRfbServer();
-
-  if (!m_srvConfig->isAcceptingRfbConnections()) {
-    return;
-  }
-
-  unsigned short bindPort = m_srvConfig->getRfbPort();
-
-  m_log.message(_T("Starting main RFB server"));
-
-  try {
-    m_rfbServer = new RfbServer(_T("0.0.0.0"), bindPort, m_rfbClientManager, false, &m_log);
-  } catch (Exception &ex) {
-    m_log.error(_T("Failed to start main RFB server: \"%s\""), ex.getMessage());
-  }
-}
-
 void TvnServer::stopControlServer()
 {
   m_log.message(_T("Stopping control server"));
@@ -284,21 +206,6 @@ void TvnServer::stopControlServer()
   }
   if (controlServer != 0) {
     delete controlServer;
-  }
-}
-
-void TvnServer::stopMainRfbServer()
-{
-  m_log.message(_T("Stopping main RFB server"));
-
-  RfbServer *rfbServer = 0;
-  {
-    AutoLock l(&m_mutex);
-    rfbServer = m_rfbServer;
-    m_rfbServer = 0;
-  }
-  if (rfbServer != 0) {
-    delete rfbServer;
   }
 }
 

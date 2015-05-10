@@ -76,13 +76,6 @@ public:
   }
 
   //
-  // Display (or port numbers) group.
-  //
-
-  void setRfbPort(int port);
-  int getRfbPort();
-
-  //
   // Other server options access methods
   //
 
@@ -94,13 +87,6 @@ public:
 
   bool getMirrorIsAllowed();
   void setMirrorAllowing(bool value);
-
-  //
-  // Incoming connections options group
-  //
-
-  bool isAcceptingRfbConnections();
-  void acceptRfbConnections(bool accept);
 
   void getPrimaryPassword(unsigned char *password);
   void setPrimaryPassword(const unsigned char *value);
@@ -163,24 +149,12 @@ public:
 protected:
 
   //
-  // Server port numbers
-  //
-
-  int m_rfbPort;
-
-  //
   // Other server options members group
   //
 
   bool m_enableFileTransfers;
   bool m_removeWallpaper;
   bool m_mirrorDriverAllowed;
-
-  //
-  // Incoming connections options group
-  //
-
-  bool m_acceptRfbConnections;
 
   unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
 

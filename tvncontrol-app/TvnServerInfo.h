@@ -35,12 +35,6 @@
 struct TvnServerInfo
 {
   /**
-   * Determinates if main rfb server can normally accept connections.
-   * Set to false when rfb server has any kind of problem (socket not bound,
-   * auth is enabled but no passwords are set etc).
-   */
-  bool m_acceptFlag;
-  /**
    * TightVNC server status text.
    */
   StringStorage m_statusText;

@@ -263,7 +263,6 @@
   <ItemGroup>
     <ClInclude Include="ConfigReloadListener.h" />
     <ClInclude Include="Configurator.h" />
-    <ClInclude Include="DesktopConfig.h" />
     <ClInclude Include="ServerConfig.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
