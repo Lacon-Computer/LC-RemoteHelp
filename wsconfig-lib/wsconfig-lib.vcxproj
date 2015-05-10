@@ -272,23 +272,19 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AdministrationConfigDialog.cpp" />
     <ClCompile Include="ChangePasswordDialog.cpp" />
     <ClCompile Include="CommonInputValidation.cpp" />
     <ClCompile Include="ConfigDialog.cpp" />
     <ClCompile Include="PasswordControl.cpp" />
     <ClCompile Include="ServerConfigDialog.cpp" />
-    <ClCompile Include="TvnLogFilename.cpp" />
     <ClCompile Include="UIDataAccess.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdministrationConfigDialog.h" />
     <ClInclude Include="ChangePasswordDialog.h" />
     <ClInclude Include="CommonInputValidation.h" />
     <ClInclude Include="ConfigDialog.h" />
     <ClInclude Include="PasswordControl.h" />
     <ClInclude Include="ServerConfigDialog.h" />
-    <ClInclude Include="TvnLogFilename.h" />
     <ClInclude Include="UIDataAccess.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

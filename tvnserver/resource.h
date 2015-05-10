@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by tvnserver.rc
 //
-#define IDD_CONFIG_ADMINISTRATION_PAGE  102
 #define IDD_CONFIG_SERVER_PAGE          103
 #define IDD_CONFIG                      107
 #define IDD_CHANGE_PASSWORD             111
@@ -15,13 +14,10 @@
 #define IDC_SHOW_TVNCONTROL_ICON_CHECKBOX 1001
 #define IDC_STATIC_VERSION              1002
 #define IDC_CONFIG_TAB                  1003
-#define IDC_LOG_LEVEL_SPIN              1006
 #define IDC_VIEW_ONLY_CHECKBOX          1010
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
-#define IDC_LOG_FILEPATH_EDIT           1014
 #define IDC_STATIC_LICENSING            1016
 #define IDC_APPLY                       1019
-#define IDC_LOG_FOR_ALL_USERS           1020
 #define IDC_UNSET_PRIMARY_PASSWORD_BUTTON 1022
 #define IDC_BLOCK_REMOTE_INPUT          1023
 #define IDC_GRAB_TRANSPARENT            1025
@@ -30,7 +26,6 @@
 #define IDC_LOCAL_INPUT_PRIORITY        1041
 #define IDC_ENABLE_FILE_TRANSFERS       1051
 #define IDC_REMOVE_WALLPAPER            1052
-#define IDC_LOG_LEVEL                   1053
 #define IDC_USE_AUTHENTICATION          1056
 #define IDC_PASSWORD                    1060
 #define IDC_PASSWORD2                   1061
@@ -38,7 +33,6 @@
 #define IDC_POLLING_INTERVAL            1069
 #define IDC_POLLING_INTERVAL_SPIN       1071
 #define IDC_INACTIVITY_TIMEOUT_SPIN     1073
-#define IDC_OPEN_LOG_FOLDER_BUTTON      1077
 #define IDC_USE_MIRROR_DRIVER           1082
 #define ID_ABOUT_TIGHTVNC_MENUITEM      40001
 #define IDR_TRAYMENU                    40002

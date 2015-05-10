@@ -38,8 +38,8 @@ ServerConfig::ServerConfig()
   m_pollingInterval(1000), m_localInputPriorityTimeout(3),
   m_blockLocalInput(false), m_blockRemoteInput(false), m_localInputPriority(false),
   m_grabTransparentWindows(true),
-  m_saveLogToAllUsersPath(false),
-  m_showTrayIcon(true)
+  m_showTrayIcon(true),
+  m_logFilePath(_T(".\\"))
 {
   memset(m_primaryPassword,  0, sizeof(m_primaryPassword));
 }
@@ -66,7 +66,6 @@ void ServerConfig::serialize(DataOutputStream *output)
 
   output->writeInt8(m_grabTransparentWindows ? 1 : 0);
 
-  output->writeInt8(m_saveLogToAllUsersPath ? 1 : 0);
   output->writeInt8(m_hasPrimaryPassword ? 1 : 0);
   output->writeInt8(m_showTrayIcon ? 1 : 0);
 
@@ -91,7 +90,6 @@ void ServerConfig::deserialize(DataInputStream *input)
 
   m_grabTransparentWindows = input->readInt8() == 1;
 
-  m_saveLogToAllUsersPath = input->readInt8() == 1;
   m_hasPrimaryPassword = input->readInt8() == 1;
   m_showTrayIcon = input->readInt8() == 1;
 
@@ -288,20 +286,6 @@ bool ServerConfig::isBlockingLocalInput()
 {
   AutoLock lock(&m_objectCS);
   return m_blockLocalInput;
-}
-
-void ServerConfig::saveLogToAllUsersPath(bool enabled)
-{
-  AutoLock lock(&m_objectCS);
-
-  m_saveLogToAllUsersPath = enabled;
-}
-
-bool ServerConfig::isSaveLogToAllUsersPathFlagEnabled()
-{
-  AutoLock l(&m_objectCS);
-
-  return m_saveLogToAllUsersPath;
 }
 
 void ServerConfig::setGrabTransparentWindowsFlag(bool grab)

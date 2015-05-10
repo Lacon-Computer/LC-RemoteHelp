@@ -11,9 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AdministrationConfigDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ChangePasswordDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -29,17 +26,11 @@
     <ClCompile Include="ServerConfigDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnLogFilename.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UIDataAccess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdministrationConfigDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ChangePasswordDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -53,9 +44,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerConfigDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TvnLogFilename.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UIDataAccess.h">

@@ -122,13 +122,7 @@ BOOL ConfigDialog::onInitDialog()
   m_serverConfigDialog.create();
   moveDialogToTabControl(&m_serverConfigDialog);
 
-  m_administrationConfigDialog.setParent(&m_ctrlThis);
-  m_administrationConfigDialog.setParentDialog(this);
-  m_administrationConfigDialog.create();
-  moveDialogToTabControl(&m_administrationConfigDialog);
-
   m_tabControl.addTab(&m_serverConfigDialog, StringTable::getString(IDS_SERVER_TAB_CAPTION));
-  m_tabControl.addTab(&m_administrationConfigDialog, StringTable::getString(IDS_ADMINISTRATION_TAB_CAPTION));
 
   m_tabControl.removeTab(0);
 
@@ -168,7 +162,6 @@ void ConfigDialog::onApplyButtonClick()
 
   // Fill global server configuration with values from gui.
   if (canApply) {
-    m_administrationConfigDialog.apply();
     m_serverConfigDialog.apply();
   } else {
     return ;
@@ -180,7 +173,6 @@ void ConfigDialog::onApplyButtonClick()
     m_reloadConfigCommand->execute();
 
     if (m_reloadConfigCommand->executionResultOk()) {
-      m_administrationConfigDialog.updateUI();
       m_ctrlApplyButton.setEnabled(false);
     }
   } else {
@@ -242,17 +234,6 @@ bool ConfigDialog::validateInput()
     m_tabControl.showTab(&m_serverConfigDialog);
     return false;
   }
-#ifdef USE_EXTRA_TABS
-  if (!m_administrationConfigDialog.validateInput()) {
-    m_tabControl.showTab(&m_administrationConfigDialog);
-    return false;
-  }
-#else
-  if (!m_administrationConfigDialog.validateInput()) {
-    m_tabControl.showTab(&m_administrationConfigDialog);
-    return false;
-  }
-#endif
   return true;
 }
 
