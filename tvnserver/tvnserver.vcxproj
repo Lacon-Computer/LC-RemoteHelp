@@ -518,10 +518,6 @@
       <Project>{56eadc5b-9c2c-431c-9275-98fe9088518b}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\wsconfig-lib\wsconfig-lib.vcxproj">
-      <Project>{c5041d03-4c03-4386-ae20-d6ed78215c00}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\zlib\zlib.vcxproj">
       <Project>{f9597c92-5d25-4a3c-bad6-8a2566fddd6f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

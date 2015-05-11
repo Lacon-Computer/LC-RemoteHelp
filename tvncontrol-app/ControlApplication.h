@@ -118,13 +118,6 @@ protected:
    * @return application exit code.
    */
   int runControlCommand(Command *command);
-  /**
-   * Runs configuration dialog (mode of tvncontrol).
-   * @return application exit code.
-   * @remark Call this function only to config in offline mode because it uses
-   * the registry.
-   */
-  int runConfigurator();
 
 private:
   LogWriter m_log;

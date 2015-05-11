@@ -53,7 +53,6 @@
 
 #include "tvnserver/resource.h"
 
-#include "wsconfig-lib/ConfigDialog.h"
 #include "util/AnsiStringStorage.h"
 #include "tvnserver-app/NamingDefs.h"
 
@@ -104,11 +103,6 @@ int ControlApplication::run()
   } catch (CommandLineFormatException &) {
     TvnServerHelp::showUsage();
     return 1;
-  }
-
-  // Run configuration dialog and exit.
-  if (cmdLineParser.hasConfigAppFlag()) {
-    return runConfigurator();
   }
 
   int retCode = 0;
@@ -273,15 +267,4 @@ int ControlApplication::runControlCommand(Command *command)
 
   int errorCode = ctrlCmd.executionResultOk() ? 0 : 1;
   return errorCode;
-}
-
-int ControlApplication::runConfigurator()
-{
-  Configurator *configurator = Configurator::getInstance();
-
-  configurator->load();
-
-  ConfigDialog confDialog;
-
-  return confDialog.showModal();
 }

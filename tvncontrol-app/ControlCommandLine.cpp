@@ -37,8 +37,6 @@ const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
 const TCHAR ControlCommandLine::CONNECT[] = _T("-connect");
 const TCHAR ControlCommandLine::SHUTDOWN[] = _T("-shutdown");
 
-const TCHAR ControlCommandLine::CONFIG_APPLICATION[] = _T("-configapp");
-
 const TCHAR ControlCommandLine::SLAVE_MODE[] = _T("-slave");
 
 ControlCommandLine::ControlCommandLine()
@@ -57,15 +55,10 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
     { CONNECT, NEEDS_ARG },
     { SHUTDOWN, NO_ARG },
     { CONTROL_APPLICATION, NO_ARG },
-    { CONFIG_APPLICATION, NO_ARG },
     { SLAVE_MODE, NO_ARG },
   };
 
   if (!CommandLine::parse(fmt, sizeof(fmt) / sizeof(CommandLineFormat), cmdArgs)) {
-    throw CommandLineFormatException();
-  }
-
-  if (hasConfigAppFlag() && m_foundKeys.size() > 1) {
     throw CommandLineFormatException();
   }
 
@@ -114,11 +107,6 @@ void ControlCommandLine::getConnectHostName(StringStorage *hostName) const
 bool ControlCommandLine::hasShutdownFlag()
 {
   return optionSpecified(SHUTDOWN);
-}
-
-bool ControlCommandLine::hasConfigAppFlag()
-{
-  return optionSpecified(CONFIG_APPLICATION);
 }
 
 bool ControlCommandLine::hasControlAppFlag()

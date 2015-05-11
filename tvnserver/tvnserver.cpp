@@ -43,7 +43,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
   ResourceLoader resourceLoaderSingleton(hInstance);
 
   CommandLineFormat format[] = {
-    { ControlCommandLine::CONFIG_APPLICATION, NO_ARG },
     { ControlCommandLine::CONTROL_APPLICATION, NO_ARG },
   };
 
@@ -63,8 +62,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
   // Check if need to start additional application that packed into tvnserver.exe.
 
-  if (firstKey.isEqualTo(ControlCommandLine::CONFIG_APPLICATION) ||
-             firstKey.isEqualTo(ControlCommandLine::CONTROL_APPLICATION)) {
+  if (firstKey.isEqualTo(ControlCommandLine::CONTROL_APPLICATION)) {
     try {
       ControlApplication tvnControl(hInstance,
         WindowNames::WINDOW_CLASS_NAME,

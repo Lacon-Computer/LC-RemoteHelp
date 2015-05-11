@@ -35,8 +35,6 @@
 #include "util/Command.h"
 #include "util/MacroCommand.h"
 
-#include "wsconfig-lib/ConfigDialog.h"
-
 #include "ControlProxy.h"
 #include "Notificator.h"
 #include "ControlApplication.h"
@@ -103,7 +101,6 @@ protected:
   /**
    * Tray icon popup menu items message handlers.
    */
-  void onConfigurationMenuItemClick();
   void onDisconnectAllClientsMenuItemClick();
   void onShutdownServerMenuItemClick();
   void onOutgoingConnectionMenuItemClick();
@@ -129,8 +126,6 @@ protected:
   // Interface to execute some commands on remote TightVNC server.
   ControlProxy *m_serverControl;
 
-  // Configuration dialog.
-  ConfigDialog *m_configDialog;
   // About dialog.
   AboutDialog m_aboutDialog;
 
@@ -138,12 +133,6 @@ protected:
   TvnServerInfo m_lastKnownServerInfo;
   // Thread-safety of m_lastKnownServerInfo member.
   LocalMutex m_serverInfoMutex;
-
-  // Commands for configuration dialog.
-  Command *m_updateRemoteConfigCommand;
-  Command *m_updateLocalConfigCommand;
-  MacroCommand *m_applyChangesMacroCommand;
-  ControlCommand *m_applyChangesControlCommand;
 
   // This variable is set to true when entering ControlTrayIcon::windowProc(),
   // and is used to prevent from executing that function recursively.

@@ -61,18 +61,6 @@ ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
 
   setWindowProcHolder(this);
 
-  // Prepare commands for configration dialog.
-  m_updateRemoteConfigCommand = new UpdateRemoteConfigCommand(m_serverControl);
-  m_updateLocalConfigCommand = new UpdateLocalConfigCommand(m_serverControl);
-  m_applyChangesMacroCommand = new MacroCommand();
-  m_applyChangesMacroCommand->addCommand(m_updateRemoteConfigCommand);
-  // m_applyChangesMacroCommand->addCommand(m_updateLocalConfigCommand);
-  m_applyChangesControlCommand = new ControlCommand(m_applyChangesMacroCommand, m_notificator);
-
-  // Create config dialog.
-  m_configDialog = new ConfigDialog();
-  m_configDialog->setConfigReloadCommand(m_applyChangesControlCommand);
-
   // Default icon state.
   setNotConnectedState();
 
@@ -84,13 +72,6 @@ ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
 
 ControlTrayIcon::~ControlTrayIcon()
 {
-  delete m_configDialog;
-
-  delete m_applyChangesControlCommand;
-  delete m_applyChangesMacroCommand;
-  delete m_updateLocalConfigCommand;
-  delete m_updateRemoteConfigCommand;
-
   delete m_iconDisabled;
   delete m_iconIdle;
   delete m_iconWorking;
@@ -141,7 +122,7 @@ void ControlTrayIcon::onRightButtonUp()
   HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
   HMENU hMenu = GetSubMenu(hRoot, 0);
 
-  SetMenuDefaultItem(hMenu, ID_CONFIGURATION, FALSE);
+  SetMenuDefaultItem(hMenu, ID_ABOUT_TIGHTVNC_MENUITEM, FALSE);
 
   if (m_appControl->m_slaveModeEnabled) {
     RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
@@ -166,9 +147,6 @@ void ControlTrayIcon::onRightButtonUp()
   case ID_SHUTDOWN_SERVICE:
     onShutdownServerMenuItemClick();
     break;
-  case ID_CONFIGURATION:
-    onConfigurationMenuItemClick();
-    break;
   case ID_OUTGOING_CONN:
     onOutgoingConnectionMenuItemClick();
     break;
@@ -183,30 +161,7 @@ void ControlTrayIcon::onRightButtonUp()
 
 void ControlTrayIcon::onLeftButtonDown()
 {
-  onConfigurationMenuItemClick();
-}
-
-void ControlTrayIcon::onConfigurationMenuItemClick()
-{
-  ControlApplication::removeModelessDialog(m_configDialog->getControl()->getWindow());
-
-  // Copy running tightvnc config to our global server config.
-  if (!m_configDialog->isCreated()) {
-    UpdateLocalConfigCommand updateLocalConfigCommand(m_serverControl);
-
-    ControlCommand safeCommand(&updateLocalConfigCommand, m_appControl);
-
-    safeCommand.execute();
-
-    if (!safeCommand.executionResultOk()) {
-      return;
-    }
-  }
-
-  // Show dialog.
-  m_configDialog->show();
-
-  ControlApplication::addModelessDialog(m_configDialog->getControl()->getWindow());
+  onAboutMenuItemClick();
 }
 
 void ControlTrayIcon::onDisconnectAllClientsMenuItemClick()
