@@ -28,8 +28,6 @@
 #include "win-system/WinCommandLineArgs.h"
 
 #include "tvnserver-app/TvnServerApplication.h"
-#include "tvnserver-app/DesktopServerApplication.h"
-#include "tvnserver-app/DesktopServerCommandLine.h"
 
 #include "tvncontrol-app/ControlApplication.h"
 #include "tvncontrol-app/ControlCommandLine.h"
@@ -48,8 +46,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     { ControlCommandLine::CONFIG_APPLICATION, NO_ARG },
     { ControlCommandLine::SET_PRIMARY_VNC_PASSWORD, NO_ARG },
     { ControlCommandLine::CONTROL_APPLICATION, NO_ARG },
-
-    { DesktopServerCommandLine::DESKTOP_SERVER_KEY, NO_ARG },
   };
 
   CommandLine parser;
@@ -81,18 +77,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         fatalException.getMessage(),
         StringTable::getString(IDS_MBC_TVNCONTROL),
         MB_OK | MB_ICONERROR);
-      return 1;
-    }
-  } else if (firstKey.isEqualTo(DesktopServerCommandLine::DESKTOP_SERVER_KEY)) {
-    try {
-      WinCommandLineArgs args(lpCmdLine);
-      DesktopServerApplication desktopServerApp(hInstance,
-        WindowNames::WINDOW_CLASS_NAME,
-        &args);
-
-      int retCode = desktopServerApp.run();
-      return retCode;
-    } catch (...) {
       return 1;
     }
   }

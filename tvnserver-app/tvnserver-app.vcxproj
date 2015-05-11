@@ -292,8 +292,6 @@
     <ClCompile Include="AuthTracker.cpp" />
     <ClCompile Include="ControlClient.cpp" />
     <ClCompile Include="ControlServer.cpp" />
-    <ClCompile Include="DesktopServerApplication.cpp" />
-    <ClCompile Include="DesktopServerCommandLine.cpp" />
     <ClCompile Include="NamingDefs.cpp" />
     <ClCompile Include="OutgoingRfbConnectionThread.cpp" />
     <ClCompile Include="RfbClientManager.cpp" />
@@ -310,8 +308,6 @@
     <ClInclude Include="AuthTracker.h" />
     <ClInclude Include="ControlClient.h" />
     <ClInclude Include="ControlServer.h" />
-    <ClInclude Include="DesktopServerApplication.h" />
-    <ClInclude Include="DesktopServerCommandLine.h" />
     <ClInclude Include="NamingDefs.h" />
     <ClInclude Include="OutgoingRfbConnectionThread.h" />
     <ClInclude Include="RfbClientManager.h" />
