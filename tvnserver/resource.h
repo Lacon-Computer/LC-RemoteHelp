@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by tvnserver.rc
 //
-#define IDD_OUTGOING_CONN               113
 #define IDI_IDLE                        115
 #define IDI_CONNECTED                   117
 #define IDI_DISABLED                    119
@@ -10,7 +9,6 @@
 #define IDB_LOGO_BIG                    127
 #define IDD_SESSION_PRESENTER           135
 #define IDC_STATIC_VERSION              1002
-#define IDC_VIEW_ONLY_CHECKBOX          1010
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
 #define IDC_STATIC_LICENSING            1016
 #define IDC_SESSION_ID                  1097
@@ -26,7 +24,6 @@
 #define ID_SHUTDOWN_SERVICE             40014
 #define IDS_MBC_TVNSERVER               40020
 #define IDS_MBC_TVNCONTROL              40021
-#define IDC_HOSTNAME_COMBO              40028
 #define IDS_TVNSERVER_USAGE             40060
 #define IDS_SERVER_NOT_LISTENING        40061
 #define IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER 40062

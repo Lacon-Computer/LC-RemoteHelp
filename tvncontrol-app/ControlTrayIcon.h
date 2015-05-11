@@ -101,11 +101,8 @@ protected:
   /**
    * Tray icon popup menu items message handlers.
    */
-  void onDisconnectAllClientsMenuItemClick();
   void onShutdownServerMenuItemClick();
-  void onOutgoingConnectionMenuItemClick();
   void onAboutMenuItemClick();
-  void onCloseControlInterfaceMenuItemClick();
 
 protected:
   static UINT WM_USER_TASKBAR;

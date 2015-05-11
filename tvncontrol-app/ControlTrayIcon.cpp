@@ -23,7 +23,6 @@
 //
 
 #include "ControlTrayIcon.h"
-#include "OutgoingConnectionDialog.h"
 #include "ControlApplication.h"
 
 #include "UpdateRemoteConfigCommand.h"
@@ -141,20 +140,11 @@ void ControlTrayIcon::onRightButtonUp()
                               pos.x, pos.y, 0, getWindow(), NULL);
 
   switch (action) {
-  case ID_KILLCLIENTS:
-    onDisconnectAllClientsMenuItemClick();
-    break;
   case ID_SHUTDOWN_SERVICE:
     onShutdownServerMenuItemClick();
     break;
-  case ID_OUTGOING_CONN:
-    onOutgoingConnectionMenuItemClick();
-    break;
   case ID_ABOUT_TIGHTVNC_MENUITEM:
     onAboutMenuItemClick();
-    break;
-  case ID_CLOSE_CONTROL_INTERFACE:
-    onCloseControlInterfaceMenuItemClick();
     break;
   }
 }
@@ -162,15 +152,6 @@ void ControlTrayIcon::onRightButtonUp()
 void ControlTrayIcon::onLeftButtonDown()
 {
   onAboutMenuItemClick();
-}
-
-void ControlTrayIcon::onDisconnectAllClientsMenuItemClick()
-{
-  DisconnectAllCommand unsafeCommand(m_serverControl);
-
-  ControlCommand safeCommand(&unsafeCommand, m_notificator);
-
-  safeCommand.execute();
 }
 
 void ControlTrayIcon::onShutdownServerMenuItemClick()
@@ -213,32 +194,11 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
   safeCommand.execute();
 }
 
-void ControlTrayIcon::onOutgoingConnectionMenuItemClick()
-{
-  OutgoingConnectionDialog connDialog;
-
-  if (connDialog.showModal() == IDOK) {
-    MakeRfbConnectionCommand unsafeCommand(
-      m_serverControl,
-      connDialog.getConnectString(),
-      connDialog.isViewOnly());
-
-    ControlCommand safeCommand(&unsafeCommand, m_notificator);
-
-    safeCommand.execute();
-  }
-}
-
 void ControlTrayIcon::onAboutMenuItemClick()
 {
   m_aboutDialog.show();
 
   ControlApplication::addModelessDialog(m_aboutDialog.getControl()->getWindow());
-}
-
-void ControlTrayIcon::onCloseControlInterfaceMenuItemClick()
-{
-  m_appControl->shutdown();
 }
 
 void ControlTrayIcon::syncStatusWithServer()

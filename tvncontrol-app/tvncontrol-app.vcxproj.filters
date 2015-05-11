@@ -56,9 +56,6 @@
     <ClCompile Include="Notificator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OutgoingConnectionDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ReloadConfigCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -134,9 +131,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Notificator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OutgoingConnectionDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ReloadConfigCommand.h">

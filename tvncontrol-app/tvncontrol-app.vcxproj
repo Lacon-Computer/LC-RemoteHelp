@@ -272,7 +272,6 @@
     <ClCompile Include="MakeRfbConnectionCommand.cpp" />
     <ClCompile Include="NamedPipeTransport.cpp" />
     <ClCompile Include="Notificator.cpp" />
-    <ClCompile Include="OutgoingConnectionDialog.cpp" />
     <ClCompile Include="ReloadConfigCommand.cpp" />
     <ClCompile Include="RemoteException.cpp" />
     <ClCompile Include="RfbClientInfo.cpp" />
@@ -300,7 +299,6 @@
     <ClInclude Include="MakeRfbConnectionCommand.h" />
     <ClInclude Include="NamedPipeTransport.h" />
     <ClInclude Include="Notificator.h" />
-    <ClInclude Include="OutgoingConnectionDialog.h" />
     <ClInclude Include="ReloadConfigCommand.h" />
     <ClInclude Include="RemoteException.h" />
     <ClInclude Include="RfbClientInfo.h" />
