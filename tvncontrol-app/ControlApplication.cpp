@@ -32,7 +32,6 @@
 #include "ConnectCommand.h"
 #include "ShutdownCommand.h"
 
-#include "util/VncPassCrypt.h"
 #include "util/winhdr.h"
 #include "util/StringTable.h"
 #include "tvnserver-app/NamingDefs.h"
@@ -110,18 +109,6 @@ int ControlApplication::run()
   // Run configuration dialog and exit.
   if (cmdLineParser.hasConfigAppFlag()) {
     return runConfigurator();
-  }
-
-  // Change passwords and exit.
-  if (cmdLineParser.hasSetVncPasswordFlag()) {
-    Configurator::getInstance()->load();
-    ServerConfig *config = Configurator::getInstance()->getServerConfig();
-    UINT8 cryptedPass[8];
-    getCryptedPassword(cryptedPass, cmdLineParser.getPrimaryVncPassword());
-    config->setPrimaryPassword((const unsigned char *)cryptedPass);
-    config->useAuthentication(true);
-    Configurator::getInstance()->save();
-    return 0;
   }
 
   int retCode = 0;
@@ -297,21 +284,4 @@ int ControlApplication::runConfigurator()
   ConfigDialog confDialog;
 
   return confDialog.showModal();
-}
-
-void ControlApplication::getCryptedPassword(UINT8 cryptedPass[8], const TCHAR *plainTextPassString)
-{
-  // Get a copy of the password truncated at 8 characters.
-  StringStorage plainTextPass(plainTextPassString);
-  plainTextPass.getSubstring(&plainTextPass, 0, 7);
-  // Convert from TCHAR[] to char[].
-  // FIXME: Check exception catching.
-  AnsiStringStorage ansiPass(&plainTextPass);
-
-  // Convert to a byte array.
-  UINT8 byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  memcpy(byteArray, ansiPass.getString(), ansiPass.getLength());
-
-  // Encrypt with a fixed key.
-  VncPassCrypt::getEncryptedPass(cryptedPass, byteArray);
 }

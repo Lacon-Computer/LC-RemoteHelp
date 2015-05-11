@@ -41,8 +41,6 @@ public:
   static const TCHAR CONNECT[];
   static const TCHAR SHUTDOWN[];
 
-  static const TCHAR SET_PRIMARY_VNC_PASSWORD[];
-
   static const TCHAR SLAVE_MODE[];
 
 public:
@@ -56,17 +54,13 @@ public:
   bool hasConnectFlag();
   void getConnectHostName(StringStorage *hostName) const;
   bool hasShutdownFlag();
-  bool hasSetVncPasswordFlag();
   bool hasConfigAppFlag();
   bool hasControlAppFlag();
   bool isSlave();
 
-  const TCHAR *getPrimaryVncPassword() const;
-
   bool isCommandSpecified();
 
 private:
-  StringStorage m_vncPassword;
 
   StringStorage m_connectHostName;
 };

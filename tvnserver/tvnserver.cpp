@@ -44,7 +44,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
   CommandLineFormat format[] = {
     { ControlCommandLine::CONFIG_APPLICATION, NO_ARG },
-    { ControlCommandLine::SET_PRIMARY_VNC_PASSWORD, NO_ARG },
     { ControlCommandLine::CONTROL_APPLICATION, NO_ARG },
   };
 
@@ -65,7 +64,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
   // Check if need to start additional application that packed into tvnserver.exe.
 
   if (firstKey.isEqualTo(ControlCommandLine::CONFIG_APPLICATION) ||
-             firstKey.isEqualTo(ControlCommandLine::SET_PRIMARY_VNC_PASSWORD) ||
              firstKey.isEqualTo(ControlCommandLine::CONTROL_APPLICATION)) {
     try {
       ControlApplication tvnControl(hInstance,

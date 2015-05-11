@@ -31,8 +31,6 @@
 
 #include "ConnectStringParser.h"
 
-const TCHAR ControlCommandLine::SET_PRIMARY_VNC_PASSWORD[] = _T("-setservicevncpass");
-
 const TCHAR ControlCommandLine::CONTROL_APPLICATION[] = _T("-controlapp");
 const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = _T("-reload");
 const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
@@ -58,7 +56,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
     { DISCONNECT_ALL, NO_ARG },
     { CONNECT, NEEDS_ARG },
     { SHUTDOWN, NO_ARG },
-    { SET_PRIMARY_VNC_PASSWORD, NEEDS_ARG },
     { CONTROL_APPLICATION, NO_ARG },
     { CONFIG_APPLICATION, NO_ARG },
     { SLAVE_MODE, NO_ARG },
@@ -78,12 +75,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 
   if (hasConnectFlag()) {
     optionSpecified(CONNECT, &m_connectHostName);
-  }
-
-  if (hasSetVncPasswordFlag() && m_foundKeys.size() > 1) {
-    throw CommandLineFormatException();
-  } else {
-    optionSpecified(SET_PRIMARY_VNC_PASSWORD, &m_vncPassword);
   }
 
   if (hasControlAppFlag() && (isSlave()) && (m_foundKeys.size() > 2)) {
@@ -125,11 +116,6 @@ bool ControlCommandLine::hasShutdownFlag()
   return optionSpecified(SHUTDOWN);
 }
 
-bool ControlCommandLine::hasSetVncPasswordFlag()
-{
-  return optionSpecified(SET_PRIMARY_VNC_PASSWORD);
-}
-
 bool ControlCommandLine::hasConfigAppFlag()
 {
   return optionSpecified(CONFIG_APPLICATION);
@@ -145,13 +131,8 @@ bool ControlCommandLine::isSlave()
   return optionSpecified(SLAVE_MODE);
 }
 
-const TCHAR *ControlCommandLine::getPrimaryVncPassword() const
-{
-  return m_vncPassword.getString();
-}
-
 bool ControlCommandLine::isCommandSpecified()
 {
   return hasKillAllFlag() || hasReloadFlag() ||
-         hasSetVncPasswordFlag() || hasConnectFlag() || hasShutdownFlag();
+         hasConnectFlag() || hasShutdownFlag();
 }

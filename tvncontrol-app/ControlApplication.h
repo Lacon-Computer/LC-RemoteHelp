@@ -127,13 +127,6 @@ protected:
   int runConfigurator();
 
 private:
-  /**
-   * Converts plain text password to crypted password.
-   * @fixme move in to tvnserver application as additional application.
-   */
-  static void getCryptedPassword(UINT8 cryptedPass[8], const TCHAR *plainTextPass);
-
-private:
   LogWriter m_log;
 
   // Initialization of the Configurator instance.
