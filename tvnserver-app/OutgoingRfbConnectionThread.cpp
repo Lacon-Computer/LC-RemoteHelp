@@ -23,6 +23,7 @@
 //
 
 #include "OutgoingRfbConnectionThread.h"
+#include "TvnServer.h"
 
 OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const TCHAR *connectHost,
                                                          unsigned int connectPort,
@@ -50,6 +51,12 @@ void OutgoingRfbConnectionThread::execute()
     m_log->error(_T("Failed to connect to %s:%d with reason: '%s'"),
                m_connectHost.getString(), m_connectPort, someEx.getMessage());
     delete socket;
+
+    StringStorage message;
+    message.format(_T("Failed to connect to %s:%d\n\n%s"),
+      m_connectHost.getString(), m_connectPort, someEx.getMessage());
+    MessageBox(0, message.getString(), _T("LC RemoteHelp Server"), MB_OK | MB_ICONERROR);
+    TvnServer::getInstance()->generateExternalShutdownSignal();
     return ;
   }
 

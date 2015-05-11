@@ -45,6 +45,9 @@
 #include "tvncontrol-app/TransportFactory.h"
 #include "tvncontrol-app/ControlPipeName.h"
 
+#include "rfb/HostPath.h"
+#include "tvnserver-app/OutgoingRfbConnectionThread.h"
+
 #include "tvnserver/BuildTime.h"
 
 #include <crtdbg.h>
@@ -107,6 +110,8 @@ TvnServer::TvnServer(LogInitListener *logInitListener,
 
     restartControlServer();
   }
+
+  connectAutoConnectHost(false);
 }
 
 TvnServer::~TvnServer()
@@ -165,6 +170,7 @@ void TvnServer::afterFirstClientConnect()
 
 void TvnServer::afterLastClientDisconnect()
 {
+  connectAutoConnectHost(false);
 }
 
 void TvnServer::restartControlServer()
@@ -217,4 +223,44 @@ void TvnServer::changeLogProps()
     logLevel = m_srvConfig->getLogLevel();
   }
   m_logInitListener->onChangeLogProps(logDir.getString(), logLevel);
+}
+
+void TvnServer::connectAutoConnectHost(bool viewOnly)
+{
+  StringStorage autoConnectHost;
+  m_srvConfig->getAutoConnectHost(&autoConnectHost);
+  if (!connectHost(&autoConnectHost, false)) {
+    throw Exception(_T("AutoConnectHost not specified."));
+  }
+}
+
+bool TvnServer::connectHost(StringStorage *connectString, bool viewOnly)
+{
+  //
+  //  Parse host and port from connection string.
+  //
+  AnsiStringStorage connectStringAnsi(connectString);
+  HostPath hp(connectStringAnsi.getString(), 5499);
+
+  if (!hp.isValid()) {
+    return false;
+  }
+
+  StringStorage host;
+  AnsiStringStorage ansiHost(hp.getVncHost());
+  ansiHost.toStringStorage(&host);
+
+  //
+  // Make outgoing connection in separate thread.
+  //
+  OutgoingRfbConnectionThread *newConnectionThread =
+    new OutgoingRfbConnectionThread(host.getString(),
+    hp.getVncPort(), viewOnly,
+    m_rfbClientManager, &m_log);
+
+  newConnectionThread->resume();
+
+  ZombieKiller::getInstance()->addZombie(newConnectionThread);
+
+  return true;
 }

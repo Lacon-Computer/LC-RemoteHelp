@@ -138,6 +138,9 @@ public:
   // Other
   //
 
+  void setAutoConnectHost(const TCHAR *host);
+  void getAutoConnectHost(StringStorage *host);
+
   void setGrabTransparentWindowsFlag(bool grab);
   bool getGrabTransparentWindowsFlag();
 
@@ -202,6 +205,7 @@ protected:
   // Other
   //
 
+  StringStorage m_autoConnectHost;
   bool m_grabTransparentWindows;
 
   // Run control interface with TightVNC server or not.

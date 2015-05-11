@@ -72,6 +72,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_showTrayIcon ? 1 : 0);
 
   output->writeUTF8(m_logFilePath.getString());
+  output->writeUTF8(m_autoConnectHost.getString());
 }
 
 void ServerConfig::deserialize(DataInputStream *input)
@@ -97,6 +98,7 @@ void ServerConfig::deserialize(DataInputStream *input)
   m_showTrayIcon = input->readInt8() == 1;
 
   input->readUTF8(&m_logFilePath);
+  input->readUTF8(&m_autoConnectHost);
 }
 
 bool ServerConfig::getShowTrayIconFlag()
@@ -313,4 +315,16 @@ bool ServerConfig::getGrabTransparentWindowsFlag()
 {
   AutoLock lock(&m_objectCS);
   return m_grabTransparentWindows;
+}
+
+void ServerConfig::getAutoConnectHost(StringStorage *host)
+{
+  AutoLock lock(&m_objectCS);
+  *host = m_autoConnectHost;
+}
+
+void ServerConfig::setAutoConnectHost(const TCHAR *host)
+{
+  AutoLock lock(&m_objectCS);
+  m_autoConnectHost.setString(host);
 }

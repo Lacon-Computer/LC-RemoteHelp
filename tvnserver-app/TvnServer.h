@@ -118,6 +118,8 @@ public:
    */
   virtual void afterLastClientDisconnect();
 
+  void connectAutoConnectHost(bool viewOnly);
+
 protected:
   void restartControlServer();
 
@@ -125,6 +127,8 @@ protected:
 
   // Calls a callback function to change update log properties.
   void changeLogProps();
+
+  bool connectHost(StringStorage *connectString, bool viewOnly);
 
 protected:
   LogWriter m_log;

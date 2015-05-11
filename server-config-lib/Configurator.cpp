@@ -232,6 +232,10 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   if (!sm->setString(_T("LogFileDir"), stringVal.getString())) {
     saveResult = false;
   }
+  m_serverConfig.getAutoConnectHost(&stringVal);
+  if (!sm->setString(_T("AutoConnectHost"), stringVal.getString())) {
+    saveResult = false;
+  }
   return saveResult;
 }
 
@@ -318,6 +322,12 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   } else {
     m_isConfigLoadedPartly = true;
     m_serverConfig.setLogFileDir(stringVal.getString());
+  }
+  if (!sm->getString(_T("AutoConnectHost"), &stringVal)) {
+    loadResult = false;
+  }  else {
+    m_isConfigLoadedPartly = true;
+    m_serverConfig.setAutoConnectHost(stringVal.getString());
   }
   return loadResult;
 }

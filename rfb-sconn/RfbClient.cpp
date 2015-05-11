@@ -31,6 +31,7 @@
 #include "ClientAuthListener.h"
 #include "server-config-lib/Configurator.h"
 #include "tvnserver-app/SessionPresenterThread.h"
+#include "tvnserver-app/TvnServer.h"
 
 RfbClient::RfbClient(SocketIPv4 *socket,
                      ClientTerminationListener *extTermListener,
@@ -181,6 +182,10 @@ void RfbClient::execute()
   RfbInitializer rfbInitializer(&sockStream, m_extAuthListener, this,
                                 true);
 
+  bool isAuthException = false;
+  bool doReconnect = false;
+  bool doShutdown = false;
+
   try {
     // First initialization phase
     try {
@@ -207,6 +212,7 @@ void RfbClient::execute()
       m_log->info(_T("View only = %d"), (int)m_viewOnly);
     } catch (Exception &e) {
       m_log->error(_T("Error during RFB initialization: %s"), e.getMessage());
+      isAuthException = true;
       throw;
     }
     _ASSERT(m_desktop != 0);
@@ -271,9 +277,27 @@ void RfbClient::execute()
     sysLogMessage.format(_T("The client %s has been")
                          _T(" disconnected for the reason: %s"),
                          peerStr.getString(), e.getMessage());
+    if (isAuthException) {
+      if (!_tcscmp(e.getMessage(), _T("Connection has been gracefully closed"))) {
+        doShutdown = true;
+      } else {
+        doReconnect = true;
+      }
+    } else {
+      MessageBox(0, e.getMessage(), _T("LC RemoteHelp Server"), MB_OK);
+      doShutdown = true;
+    }
   }
 
   disconnect();
+
+  if (doShutdown) {
+    TvnServer::getInstance()->generateExternalShutdownSignal();
+  }
+
+  if (doReconnect) {
+    TvnServer::getInstance()->connectAutoConnectHost(false);
+  }
 
   // After this call, we are guaranteed not to be used by other threads.
   notifyAbStateChanging(IN_PENDING_TO_REMOVE);
