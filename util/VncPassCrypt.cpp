@@ -38,6 +38,11 @@ VncPassCrypt::~VncPassCrypt()
   clearPlainPass();
 }
 
+void VncPassCrypt::setPlain(const UINT8 plainPassword[8])
+{
+  memcpy(&m_plainPassword.front(), plainPassword, m_plainPassword.size());
+}
+
 void VncPassCrypt::updatePlain(const UINT8 cryptedPass[8])
 {
   DesCrypt desCrypt;

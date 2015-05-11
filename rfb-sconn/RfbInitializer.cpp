@@ -185,10 +185,10 @@ void RfbInitializer::doVncAuth()
   }
 
   if (hasPrim) {
-    UINT8 crypPrimPass[8];
-    srvConf->getPrimaryPassword(crypPrimPass);
+    UINT8 primPass[8];
+    srvConf->getPrimaryPassword(primPass);
     VncPassCrypt passCrypt;
-    passCrypt.updatePlain(crypPrimPass);
+    passCrypt.setPlain(primPass);
     if (passCrypt.challengeAndResponseIsValid(challenge, response)) {
       return;
     }

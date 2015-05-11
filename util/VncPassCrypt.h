@@ -34,6 +34,8 @@ public:
   VncPassCrypt();
   virtual ~VncPassCrypt();
 
+  void setPlain(const UINT8 plainPassword[8]);
+
   void updatePlain(const UINT8 cryptedPass[8]);
 
   // Encrypt the plain password and fills by encrypted values the

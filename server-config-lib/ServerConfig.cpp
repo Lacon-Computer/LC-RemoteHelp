@@ -30,7 +30,7 @@
 
 ServerConfig::ServerConfig()
 : m_logLevel(0),
-  m_useAuthentication(true),
+  m_useAuthentication(false),
   m_enableFileTransfers(true),
   m_mirrorDriverAllowed(true),
   m_lastSessionId(0),

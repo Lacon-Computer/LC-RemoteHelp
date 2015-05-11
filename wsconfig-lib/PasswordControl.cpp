@@ -24,7 +24,6 @@
 
 #include "PasswordControl.h"
 
-#include "util/VncPassCrypt.h"
 #include "util/StringTable.h"
 #include "util/AnsiStringStorage.h"
 
@@ -78,12 +77,7 @@ void PasswordControl::setPassword(const TCHAR *plainText)
   memcpy(plainTextInANSI, ansiPlainTextStorage.getString(),
          min(ansiPlainTextStorage.getLength(), sizeof(plainTextInANSI)));
 
-  UINT8 cryptedPassword[8];
-  memset(cryptedPassword, 0, 8);
-
-  VncPassCrypt::getEncryptedPass(cryptedPassword, (const UINT8 *)plainTextInANSI);
-
-  setCryptedPassword((char *)cryptedPassword);
+  setCryptedPassword(plainTextInANSI);
 
   updateControlsState();
 }

@@ -31,6 +31,8 @@
 #include "Configurator.h"
 #include "tvnserver-app/NamingDefs.h"
 
+#include "util/AnsiStringStorage.h"
+
 Configurator *Configurator::s_instance = NULL;
 LocalMutex Configurator::m_instanceMutex;
 
@@ -209,11 +211,15 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
     saveResult = false;
   }
   if (m_serverConfig.hasPrimaryPassword()) {
-    unsigned char password[VNC_PASSWORD_SIZE];
+    unsigned char password[VNC_PASSWORD_SIZE + 1];
+    AnsiStringStorage ansiStringVal;
 
     m_serverConfig.getPrimaryPassword(&password[0]);
+    password[VNC_PASSWORD_SIZE] = '\0';
+    ansiStringVal.setString((char *)&password[0]);
+    ansiStringVal.toStringStorage(&stringVal);
 
-    if (!sm->setBinaryData(_T("Password"), &password[0], VNC_PASSWORD_SIZE)) {
+    if (!sm->setString(_T("Password"), stringVal.getString())) {
       saveResult = false;
     }
   } else {
@@ -288,13 +294,17 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
     m_serverConfig.setLastSessionId(uintVal);
   }
 
-  size_t passSize = 8;
-  unsigned char buffer[VNC_PASSWORD_SIZE] = {0};
-
-  if (!sm->getBinaryData(_T("Password"), (void *)&buffer, &passSize)) {
+  if (!sm->getString(_T("Password"), &stringVal)) {
     loadResult = false;
     m_serverConfig.deletePrimaryPassword();
   } else {
+    unsigned char buffer[VNC_PASSWORD_SIZE];
+    AnsiStringStorage ansiStringVal(&stringVal);
+
+    memset(buffer, 0, sizeof(buffer));
+    memcpy(buffer, ansiStringVal.getString(),
+      min(ansiStringVal.getLength(), sizeof(buffer)));
+
     m_isConfigLoadedPartly = true;
     m_serverConfig.setPrimaryPassword(&buffer[0]);
   }
