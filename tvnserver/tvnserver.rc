@@ -226,8 +226,6 @@ END
 STRINGTABLE
 BEGIN
     IDS_TVNSERVER_APP       "LC RemoteHelp Server"
-    IDS_SHUTDOWN_NOTIFICATION_FORMAT 
-                            "This will disconnect all clients and they will not be able to reconnect until the LC RemoteHelp Server is restarted.\n\nAre you sure you want to shutdown the %s?"
     IDS_LICENSING_INFO      "Licensing Terms: GNU General Public License version 2"
 END
 

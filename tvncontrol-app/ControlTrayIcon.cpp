@@ -154,35 +154,6 @@ void ControlTrayIcon::onLeftButtonDown()
 
 void ControlTrayIcon::onShutdownServerMenuItemClick()
 {
-  // Promt user if any client is connected to rfb server.
-
-  // FIXME: Bad way to determinate connected clients.
-  bool someoneConnected = (getIcon() == m_iconWorking);
-
-  if (someoneConnected) {
-    TvnServerInfo serverInfo = {0};
-
-    {
-      AutoLock l(&m_serverInfoMutex);
-
-      serverInfo = m_lastKnownServerInfo;
-    }
-
-    StringStorage userMessage;
-
-    userMessage.format(
-      StringTable::getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
-      StringTable::getString(IDS_TVNSERVER_APP));
-
-    if (MessageBox(
-      getWindow(),
-      userMessage.getString(),
-      StringTable::getString(IDS_MBC_TVNCONTROL),
-      MB_YESNO | MB_ICONQUESTION) == IDNO) {
-        return;
-    }
-  }
-
   // Shutdown TightVNC server.
 
   ShutdownCommand unsafeCommand(m_serverControl);
