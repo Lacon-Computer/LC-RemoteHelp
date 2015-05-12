@@ -53,6 +53,11 @@ void AboutDialog::onVisitSiteButtonClick()
   openUrl(StringTable::getString(IDS_URL_PRODUCT_FSA));
 }
 
+void AboutDialog::onVisitGithubButtonClick()
+{
+  openUrl(StringTable::getString(IDS_URL_GITHUB_PROJECT));
+}
+
 void AboutDialog::openUrl(const TCHAR *url)
 {
   try {
@@ -117,6 +122,9 @@ BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
     break;
   case IDC_VISIT_WEB_SITE_BUTTON:
     onVisitSiteButtonClick();
+    break;
+  case IDC_VISIT_GITHUB_PROJECT_BUTTON:
+    onVisitGithubButtonClick();
     break;
   }
   return FALSE;

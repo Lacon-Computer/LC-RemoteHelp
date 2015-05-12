@@ -10,6 +10,7 @@
 #define IDD_SESSION_PRESENTER           135
 #define IDC_STATIC_VERSION              1002
 #define IDC_VISIT_WEB_SITE_BUTTON       1011
+#define IDC_VISIT_GITHUB_PROJECT_BUTTON 1012
 #define IDC_STATIC_LICENSING            1016
 #define IDC_SESSION_ID                  1097
 #define ID_ABOUT_TIGHTVNC_MENUITEM      40001
@@ -35,6 +36,7 @@
 #define IDS_TVNSERVER_APP               40096
 #define IDS_SHUTDOWN_NOTIFICATION_FORMAT 40098
 #define IDS_LICENSING_INFO              40100
+#define IDS_URL_GITHUB_PROJECT          40101
 
 // Next default values for new objects
 // 

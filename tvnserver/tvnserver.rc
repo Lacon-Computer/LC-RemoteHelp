@@ -82,6 +82,7 @@ BEGIN
     LTEXT           "Copyright (C) 2015 Lacon Computer\nCopyright (C) 2008-2013 GlavSoft LLC.\nAll Rights Reserved.",IDC_STATIC,107,38,189,24
     LTEXT           "",IDC_STATIC_LICENSING,107,66,189,10
     DEFPUSHBUTTON   "Visit the Web Site",IDC_VISIT_WEB_SITE_BUTTON,7,78,94,16,WS_GROUP
+    PUSHBUTTON      "Visit GitHub Project Page",IDC_VISIT_GITHUB_PROJECT_BUTTON,107,78,94,16,WS_GROUP
     PUSHBUTTON      "Close This Window",IDCANCEL,208,78,94,16
 END
 
@@ -227,6 +228,7 @@ STRINGTABLE
 BEGIN
     IDS_TVNSERVER_APP       "LC RemoteHelp"
     IDS_LICENSING_INFO      "Licensing Terms: GNU General Public License version 2"
+    IDS_URL_GITHUB_PROJECT  "https://github.com/Lacon-Computer/LC-RemoteHelp"
 END
 
 #endif    // English (United States) resources
