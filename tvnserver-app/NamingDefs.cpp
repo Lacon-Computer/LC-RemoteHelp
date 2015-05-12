@@ -28,24 +28,24 @@ const TCHAR NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME[] =
   _T("MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME");
 
 const TCHAR ProductNames::PRODUCT_NAME[] = _T("LC RemoteHelp");
-const TCHAR ProductNames::SERVER_PRODUCT_NAME[] = _T("LC RemoteHelp Server");
+const TCHAR ProductNames::SERVER_PRODUCT_NAME[] = _T("LC RemoteHelp");
 
-const TCHAR IniFilePaths::SERVER_PATH[] = _T(".\\lcrhserver.ini");
+const TCHAR IniFilePaths::SERVER_PATH[] = _T(".\\lcremotehelp.ini");
 const TCHAR IniFileKeys::SERVER_CONFIG[] = _T("config");
 
 const TCHAR WindowNames::WINDOW_CLASS_NAME[] =
   _T("LcrhWindowsApplicationClass");
 
-const TCHAR LogNames::SERVER_LOG_FILE_STUB_NAME[] = _T("lcrhserver");
+const TCHAR LogNames::SERVER_LOG_FILE_STUB_NAME[] = _T("lcremotehelp");
 const TCHAR LogNames::VIEWER_LOG_FILE_STUB_NAME[] = _T("lcrhviewer");
 const TCHAR LogNames::LOG_DIR_NAME[] = _T("LC RemoteHelp");
 const TCHAR LogNames::LOG_PIPE_PUBLIC_NAME[] = _T("LCRH_log_pipe_public_name");
 
 const TCHAR ClipboardNames::CLIPBOARD_WIN_CLASS_NAME[] = 
-  _T("Lcrhserver.Clipboard.MessageWindow");
+  _T("Lcremotehelp.Clipboard.MessageWindow");
 
 const TCHAR ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME[] =
-  _T("lcrhserverApplication");
+  _T("lcremotehelpApplication");
 const TCHAR ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME[] =
   _T("LC_RemoteHelp_Application_Control");
 
@@ -59,4 +59,4 @@ const UINT HookDefinitions::LOADER_CLOSE_CODE =
 const UINT HookDefinitions::SPEC_IPC_CODE =
   RegisterWindowMessage(_T("LCRH.HOOK.MESSAGE.CODE"));
 
-const TCHAR DefaultNames::DEFAULT_COMPUTER_NAME[] = _T("LC RemoteHelp Server");
+const TCHAR DefaultNames::DEFAULT_COMPUTER_NAME[] = _T("LC RemoteHelp");

@@ -48,7 +48,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rfb-sconn", "rfb-sconn\rfb-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhcontrol-app", "tvncontrol-app\tvncontrol-app.vcxproj", "{FC19FFE8-6294-4F1A-8D7A-281C93C5C040}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcrhserver", "tvnserver\tvnserver.vcxproj", "{D622BCC0-80B6-452E-8C34-9E7A27633C8F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lcremotehelp", "tvnserver\tvnserver.vcxproj", "{D622BCC0-80B6-452E-8C34-9E7A27633C8F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log-server", "log-server\log-server.vcxproj", "{7D22B0DC-D240-47DB-AC6B-165AE3C0C54D}"
 EndProject

@@ -284,7 +284,7 @@ void RfbClient::execute()
         doReconnect = true;
       }
     } else {
-      MessageBox(0, e.getMessage(), _T("LC RemoteHelp Server"), MB_OK);
+      MessageBox(0, e.getMessage(), _T("LC RemoteHelp"), MB_OK);
       doShutdown = true;
     }
   }

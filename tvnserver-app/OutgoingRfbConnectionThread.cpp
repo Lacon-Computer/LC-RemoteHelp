@@ -55,7 +55,7 @@ void OutgoingRfbConnectionThread::execute()
     StringStorage message;
     message.format(_T("Failed to connect to %s:%d\n\n%s"),
       m_connectHost.getString(), m_connectPort, someEx.getMessage());
-    MessageBox(0, message.getString(), _T("LC RemoteHelp Server"), MB_OK | MB_ICONERROR);
+    MessageBox(0, message.getString(), _T("LC RemoteHelp"), MB_OK | MB_ICONERROR);
     TvnServer::getInstance()->generateExternalShutdownSignal();
     return ;
   }
