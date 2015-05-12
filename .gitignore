@@ -2,6 +2,7 @@
 *.ini
 *.log
 *.opensdf
+*.pyc
 *.sdf
 *.suo
 *.vcxproj.user
