@@ -41,12 +41,16 @@ public:
   static const TCHAR SERVER_PRODUCT_NAME[];
 };
 
-class RegistryPaths
+class IniFilePaths
 {
 public:
   static const TCHAR SERVER_PATH[];
-  static const TCHAR SERVER_REVERSE_CONN_HISTORY_PATH[];
-  static const TCHAR DISPATCHER_CONN_HISTORY_PATH[];
+};
+
+class IniFileKeys
+{
+public:
+  static const TCHAR SERVER_CONFIG[];
 };
 
 class WindowNames

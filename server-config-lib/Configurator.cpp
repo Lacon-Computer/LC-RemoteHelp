@@ -23,7 +23,7 @@
 //
 
 #include "win-system/Environment.h"
-#include "config-lib/RegistrySettingsManager.h"
+#include "config-lib/IniFileSettingsManager.h"
 
 #include "win-system/Registry.h"
 #include "win-system/RegistryKey.h"
@@ -76,7 +76,7 @@ bool Configurator::load()
 {
   bool isOk = false;
 
-  RegistrySettingsManager sm(HKEY_CURRENT_USER, RegistryPaths::SERVER_PATH, 0);
+  IniFileSettingsManager sm(IniFilePaths::SERVER_PATH, IniFileKeys::SERVER_CONFIG);
 
   isOk = load(&sm);
 
@@ -89,7 +89,7 @@ bool Configurator::save()
 {
   bool isOk = false;
 
-  RegistrySettingsManager sm(HKEY_CURRENT_USER, RegistryPaths::SERVER_PATH, 0);
+  IniFileSettingsManager sm(IniFilePaths::SERVER_PATH, IniFileKeys::SERVER_CONFIG);
 
   isOk = save(&sm);
 

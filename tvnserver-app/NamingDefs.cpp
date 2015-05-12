@@ -30,11 +30,8 @@ const TCHAR NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME[] =
 const TCHAR ProductNames::PRODUCT_NAME[] = _T("LC RemoteHelp");
 const TCHAR ProductNames::SERVER_PRODUCT_NAME[] = _T("LC RemoteHelp Server");
 
-const TCHAR RegistryPaths::SERVER_PATH[] = _T("Software\\LC RemoteHelp\\Server");
-const TCHAR RegistryPaths::SERVER_REVERSE_CONN_HISTORY_PATH[] =
-  _T("Software\\LC RemoteHelp\\Control\\ReverseConnectionHistory");
-const TCHAR RegistryPaths::DISPATCHER_CONN_HISTORY_PATH[] =
-  _T("Software\\LC RemoteHelp\\Control\\DispatcherConnectionHistory");
+const TCHAR IniFilePaths::SERVER_PATH[] = _T(".\\lcrhserver.ini");
+const TCHAR IniFileKeys::SERVER_CONFIG[] = _T("config");
 
 const TCHAR WindowNames::WINDOW_CLASS_NAME[] =
   _T("LcrhWindowsApplicationClass");
