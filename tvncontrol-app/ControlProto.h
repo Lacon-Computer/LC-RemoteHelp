@@ -82,27 +82,11 @@ public:
   static const UINT32 RELOAD_CONFIG_MSG_ID = 0x5;
 
   /**
-   * Disconnect all clients from rfb server.
-   * Request body: [empty].
-   * Reply body: [empty].
-   */
-  static const UINT32 DISCONNECT_ALL_CLIENTS_MSG_ID = 0x6;
-
-  /**
    * Shutdown TightVNC server.
    * Request body: [empty].
    * Reply body: [empty].
    */
   static const UINT32 SHUTDOWN_SERVER_MSG_ID = 0x7;
-
-  /**
-   * Make outgoing (reverse) rfb connection from server.
-   * Request body:
-   *   StringUTF8 connectString.
-   *   UINT8 viewOnlyFlag.
-   * Reply body: [empty].
-   */
-  static const UINT32 ADD_CLIENT_MSG_ID = 0x8;
 
   /**
    * Send new configuration to TightVNC server.

@@ -126,19 +126,9 @@ private:
    * Called when disconnect all clients message recieved.
    * @throws IOException on io error.
    */
-  void disconnectAllMsgRcvd() throw(IOException);
-  /**
-   * Called when shutdown message recieved.
-   * @throws IOException on io error.
-   */
   void shutdownMsgRcvd() throw(IOException);
   /**
    * Called when add new client message recieved.
-   * @throws IOException on io error.
-   */
-  void addClientMsgRcvd() throw(IOException);
-  /**
-   * Called when set server config message recieved.
    * @throws IOException on io error.
    */
   void setServerConfigMsgRcvd() throw(IOException);

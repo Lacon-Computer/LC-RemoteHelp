@@ -14,9 +14,6 @@
     <ClCompile Include="AboutDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ConnectStringParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,12 +39,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ControlTrayIcon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DisconnectAllCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MakeRfbConnectionCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NamedPipeTransport.cpp">
@@ -88,9 +79,6 @@
     <ClInclude Include="AboutDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConnectStringParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -119,12 +107,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControlTrayIcon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DisconnectAllCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MakeRfbConnectionCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NamedPipeTransport.h">

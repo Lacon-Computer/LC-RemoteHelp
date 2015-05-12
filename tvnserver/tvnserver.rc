@@ -191,7 +191,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_INVALID_LOG_LEVEL   "The specified log level value is incorrect.\nLog level must be a number between 0 and 9."
     IDS_CONTROL_SERVER_RAISE_EXCEPTION 
                             "LC RemoteHelp Server has reported an error:\n%s"
     IDS_CONTROL_CONNECTION_LOST 
@@ -208,7 +207,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t-controlapp\nlcrhserver\t-controlapp\n\t   { -connect HOST | -disconnectall | -reload | -shutdown }"
+    IDS_TVNSERVER_USAGE     "LC RemoteHelp Server supports the following command-line options:\n\nlcrhserver\t-help\nlcrhserver\t[ -run ]\nlcrhserver\t-controlapp\nlcrhserver\t-controlapp\n\t   { -reload | -shutdown }"
     IDS_SERVER_NOT_LISTENING "not listening"
     IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER 
                             "Failed to connect to LC RemoteHelp Server."

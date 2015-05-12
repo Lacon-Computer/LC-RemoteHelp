@@ -33,8 +33,6 @@
 
 const TCHAR ControlCommandLine::CONTROL_APPLICATION[] = _T("-controlapp");
 const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = _T("-reload");
-const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
-const TCHAR ControlCommandLine::CONNECT[] = _T("-connect");
 const TCHAR ControlCommandLine::SHUTDOWN[] = _T("-shutdown");
 
 const TCHAR ControlCommandLine::SLAVE_MODE[] = _T("-slave");
@@ -51,8 +49,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 {
   CommandLineFormat fmt[] = {
     { CONFIG_RELOAD, NO_ARG },
-    { DISCONNECT_ALL, NO_ARG },
-    { CONNECT, NEEDS_ARG },
     { SHUTDOWN, NO_ARG },
     { CONTROL_APPLICATION, NO_ARG },
     { SLAVE_MODE, NO_ARG },
@@ -60,14 +56,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 
   if (!CommandLine::parse(fmt, sizeof(fmt) / sizeof(CommandLineFormat), cmdArgs)) {
     throw CommandLineFormatException();
-  }
-
-  if (hasKillAllFlag() && hasReloadFlag()) {
-    throw CommandLineFormatException();
-  }
-
-  if (hasConnectFlag()) {
-    optionSpecified(CONNECT, &m_connectHostName);
   }
 
   if (hasControlAppFlag() && (isSlave()) && (m_foundKeys.size() > 2)) {
@@ -87,16 +75,6 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
 bool ControlCommandLine::hasReloadFlag()
 {
   return optionSpecified(CONFIG_RELOAD);
-}
-
-bool ControlCommandLine::hasKillAllFlag()
-{
-  return optionSpecified(DISCONNECT_ALL);
-}
-
-bool ControlCommandLine::hasConnectFlag()
-{
-  return optionSpecified(CONNECT);
 }
 
 void ControlCommandLine::getConnectHostName(StringStorage *hostName) const
@@ -121,6 +99,5 @@ bool ControlCommandLine::isSlave()
 
 bool ControlCommandLine::isCommandSpecified()
 {
-  return hasKillAllFlag() || hasReloadFlag() ||
-         hasConnectFlag() || hasShutdownFlag();
+  return hasReloadFlag() || hasShutdownFlag();
 }

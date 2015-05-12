@@ -58,13 +58,6 @@ void ControlProxy::reloadServerConfig()
   createMessage(ControlProto::RELOAD_CONFIG_MSG_ID)->send();
 }
 
-void ControlProxy::disconnectAllClients()
-{
-  AutoLock l(m_gate);
-
-  createMessage(ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID)->send();
-}
-
 void ControlProxy::shutdownTightVnc()
 {
   AutoLock l(m_gate);
@@ -91,18 +84,6 @@ void ControlProxy::getClientsList(list<RfbClientInfo *> *clients)
 
     clients->push_back(clientInfo);
   }
-}
-
-void ControlProxy::makeOutgoingConnection(const TCHAR *connectString, bool viewOnly)
-{
-  AutoLock l(m_gate);
-
-  ControlMessage *msg = createMessage(ControlProto::ADD_CLIENT_MSG_ID);
-
-  msg->writeUTF8(connectString);
-  msg->writeUInt8(viewOnly);
-
-  msg->send();
 }
 
 void ControlProxy::setServerConfig(ServerConfig *config)

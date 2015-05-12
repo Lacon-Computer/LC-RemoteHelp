@@ -26,9 +26,7 @@
 #include "ControlApplication.h"
 
 #include "UpdateRemoteConfigCommand.h"
-#include "DisconnectAllCommand.h"
 #include "ShutdownCommand.h"
-#include "MakeRfbConnectionCommand.h"
 #include "ControlCommand.h"
 #include "UpdateLocalConfigCommand.h"
 

@@ -81,27 +81,11 @@ public:
   void reloadServerConfig() throw(IOException, RemoteException);
   
   /**
-   * Disconnects all existing rfb clients from server.
-   * @throws RemoteException on error on server.
-   * @throws IOException on io error.
-   */
-  void disconnectAllClients() throw(IOException, RemoteException);
-
-  /**
    * Shutdowns TightVNC server.
    * @throws RemoteException on error on server.
    * @throws IOException on io error.
    */
   void shutdownTightVnc() throw(IOException, RemoteException);
-
-  /**
-   * Initialized outgoing rfb connection.
-   * @param connectString connect string in host[:(port|diplay)] format.
-   * @param viewOnly if rfb connection must be in view only mode.
-   * @throws RemoteException on error on server.
-   * @throws IOException on io error.
-   */
-  void makeOutgoingConnection(const TCHAR *connectString, bool viewOnly) throw(IOException, RemoteException);
 
   /**
    * Sends new configuration to server.

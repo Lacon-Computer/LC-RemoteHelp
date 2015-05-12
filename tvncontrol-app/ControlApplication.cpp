@@ -28,8 +28,6 @@
 #include "ControlPipeName.h"
 #include "ControlCommand.h"
 #include "ReloadConfigCommand.h"
-#include "DisconnectAllCommand.h"
-#include "ConnectCommand.h"
 #include "ShutdownCommand.h"
 
 #include "util/winhdr.h"
@@ -125,14 +123,8 @@ int ControlApplication::run()
   if (cmdLineParser.isCommandSpecified()) {
     Command *command = 0;
 
-    if (cmdLineParser.hasKillAllFlag()) {
-      command = new DisconnectAllCommand(m_serverControl);
-    } else if (cmdLineParser.hasReloadFlag()) {
+    if (cmdLineParser.hasReloadFlag()) {
       command = new ReloadConfigCommand(m_serverControl);
-    } else if (cmdLineParser.hasConnectFlag()) {
-      StringStorage hostName;
-      cmdLineParser.getConnectHostName(&hostName);
-      command = new ConnectCommand(m_serverControl, hostName.getString());
     } else if (cmdLineParser.hasShutdownFlag()) {
       command = new ShutdownCommand(m_serverControl);
     }

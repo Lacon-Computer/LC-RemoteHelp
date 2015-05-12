@@ -81,17 +81,9 @@ void ControlClient::execute()
           m_log->detail(_T("Command requested: Reload configuration"));
           reloadConfigMsgRcvd();
           break;
-        case ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID:
-          m_log->detail(_T("Command requested: Disconnect all clients command requested"));
-          disconnectAllMsgRcvd();
-          break;
         case ControlProto::SHUTDOWN_SERVER_MSG_ID:
           m_log->detail(_T("Command requested: Shutdown command requested"));
           shutdownMsgRcvd();
-          break;
-        case ControlProto::ADD_CLIENT_MSG_ID:
-          m_log->detail(_T("Command requested: Attach listening viewer"));
-          addClientMsgRcvd();
           break;
         case ControlProto::GET_SERVER_INFO_MSG_ID:
           m_log->detail(_T("Control client requests server info"));
@@ -199,60 +191,11 @@ void ControlClient::reloadConfigMsgRcvd()
   Configurator::getInstance()->load();
 }
 
-void ControlClient::disconnectAllMsgRcvd()
-{
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  m_rfbClientManager->disconnectAllClients();
-  m_connectingSocketThreadCollector.destroyAllThreads();
-}
-
 void ControlClient::shutdownMsgRcvd()
 {
   m_gate->writeUInt32(ControlProto::REPLY_OK);
 
   TvnServer::getInstance()->generateExternalShutdownSignal();
-}
-
-void ControlClient::addClientMsgRcvd()
-{
-  m_gate->writeUInt32(ControlProto::REPLY_OK);
-
-  //
-  // Read parameters.
-  //
-
-  StringStorage connectString;
-
-  m_gate->readUTF8(&connectString);
-
-  bool viewOnly = m_gate->readUInt8() == 1;
-
-  //
-  // Parse host and port from connection string.
-  //
-  AnsiStringStorage connectStringAnsi(&connectString);
-  HostPath hp(connectStringAnsi.getString(), 5499);
-
-  if (!hp.isValid()) {
-    return;
-  }
-
-  StringStorage host;
-  AnsiStringStorage ansiHost(hp.getVncHost());
-  ansiHost.toStringStorage(&host);
-
-  //
-  // Make outgoing connection in separate thread.
-  //
-  OutgoingRfbConnectionThread *newConnectionThread =
-                               new OutgoingRfbConnectionThread(host.getString(),
-                                                               hp.getVncPort(), viewOnly,
-                                                               m_rfbClientManager, m_log);
-
-  newConnectionThread->resume();
-
-  ZombieKiller::getInstance()->addZombie(newConnectionThread);
 }
 
 void ControlClient::setServerConfigMsgRcvd()

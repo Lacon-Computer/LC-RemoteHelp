@@ -35,8 +35,6 @@ class ControlCommandLine : private CommandLine
 public:
   static const TCHAR CONTROL_APPLICATION[];
   static const TCHAR CONFIG_RELOAD[];
-  static const TCHAR DISCONNECT_ALL[];
-  static const TCHAR CONNECT[];
   static const TCHAR SHUTDOWN[];
 
   static const TCHAR SLAVE_MODE[];
@@ -48,8 +46,6 @@ public:
   void parse(const CommandLineArgs *cmdArgs) throw(CommandLineFormatException);
 
   bool hasReloadFlag();
-  bool hasKillAllFlag();
-  bool hasConnectFlag();
   void getConnectHostName(StringStorage *hostName) const;
   bool hasShutdownFlag();
   bool hasControlAppFlag();

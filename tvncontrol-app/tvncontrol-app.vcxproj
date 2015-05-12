@@ -258,7 +258,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AboutDialog.cpp" />
-    <ClCompile Include="ConnectCommand.cpp" />
     <ClCompile Include="ConnectStringParser.cpp" />
     <ClCompile Include="ControlApplication.cpp" />
     <ClCompile Include="ControlCommand.cpp" />
@@ -268,8 +267,6 @@
     <ClCompile Include="ControlPipeName.cpp" />
     <ClCompile Include="ControlProxy.cpp" />
     <ClCompile Include="ControlTrayIcon.cpp" />
-    <ClCompile Include="DisconnectAllCommand.cpp" />
-    <ClCompile Include="MakeRfbConnectionCommand.cpp" />
     <ClCompile Include="NamedPipeTransport.cpp" />
     <ClCompile Include="Notificator.cpp" />
     <ClCompile Include="ReloadConfigCommand.cpp" />
@@ -284,7 +281,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutDialog.h" />
-    <ClInclude Include="ConnectCommand.h" />
     <ClInclude Include="ConnectStringParser.h" />
     <ClInclude Include="ControlApplication.h" />
     <ClInclude Include="ControlCommand.h" />
@@ -295,8 +291,6 @@
     <ClInclude Include="ControlProto.h" />
     <ClInclude Include="ControlProxy.h" />
     <ClInclude Include="ControlTrayIcon.h" />
-    <ClInclude Include="DisconnectAllCommand.h" />
-    <ClInclude Include="MakeRfbConnectionCommand.h" />
     <ClInclude Include="NamedPipeTransport.h" />
     <ClInclude Include="Notificator.h" />
     <ClInclude Include="ReloadConfigCommand.h" />
