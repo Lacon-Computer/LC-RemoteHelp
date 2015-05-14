@@ -16,62 +16,309 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #############################################################################
 
+import ctypes
 import logging
+from optparse import OptionParser
+from random import randrange
 import select
+import socket
+import struct
 import sys
-import time
-
-from viewer import ViewerListener
-from server import ServerListener
+from threading import RLock, Thread
 
 
-#LOG_LEVEL   = logging.DEBUG
-LOG_LEVEL   = logging.WARNING
-TICK_PERIOD = 5
-VIEWER_PORT = 5899
 SERVER_PORT = 5499
+VIEWER_PORT = 5899
+MIN_SESSION_ID = 1
+MAX_SESSION_ID = 999999999
+READ_SIZE = 4096
 
 
 def main():
-    logging.basicConfig(stream=sys.stderr, level=LOG_LEVEL)
+    parser = OptionParser()
+    parser.add_option('-l', '--log-level', default='error')
+    options, args = parser.parse_args()
 
-    selectable_list = []
+    logging.basicConfig(stream=sys.stderr, level=options.log_level.upper(),
+                        format='%(threadName)s %(message)s')
 
-    viewer_addr = ('0.0.0.0', VIEWER_PORT)
-    viewer_listener = ViewerListener(selectable_list, viewer_addr)
-    selectable_list.append(viewer_listener)
+    server_listener = Listener(ServerThread, ('0.0.0.0', SERVER_PORT))
+    viewer_listener = Listener(ViewerThread, ('0.0.0.0', VIEWER_PORT))
 
-    server_addr = ('0.0.0.0', SERVER_PORT)
-    server_listener = ServerListener(selectable_list, server_addr)
-    selectable_list.append(server_listener)
+    try:
+        while True:
+            rs = (server_listener, viewer_listener)
+            rs, ws, es = select.select(rs, [], [], 1)
+            for r in rs:
+                r.on_read()
+    except KeyboardInterrupt:
+        pass
 
-    last_tick = time.time()
-    while True:
-        rs, ws, es = [], [], []
+    server_listener.shutdown()
+    viewer_listener.shutdown()
 
-        for selectable in selectable_list:
-            if selectable.can_read():
-                rs.append(selectable)
-            if selectable.can_write():
-                ws.append(selectable)
-            es.append(selectable)
+    with BaseThread.pool_lock:
+        for thread in BaseThread.pool:
+            thread.shutdown()
 
-        rs, ws, es = select.select(rs, ws, es, TICK_PERIOD)
 
-        now = time.time()
-        if last_tick + TICK_PERIOD <= now:
-            last_tick = now
-            for selectable in selectable_list:
-                selectable.on_tick(now)
+class Listener(object):
+    def __init__(self, thread_type, addr):
+        self.thread_type = thread_type
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind(addr)
+        self.sock.listen(5)
 
-        for r in rs:
-            r.on_read()
+    def fileno(self):
+        return self.sock.fileno()
 
-        for w in ws:
-            w.on_write()
+    def shutdown(self):
+        self.sock.close()
 
-        for e in es:
-            e.on_except()
+    def on_read(self):
+        sock, addr = self.sock.accept()
+        thread = self.thread_type(sock, addr)
+        thread.start()
+
+
+class SocketClosedException(Exception):
+    pass
+
+
+class BaseThread(Thread):
+    pool = []
+    pool_lock = RLock()
+
+    @classmethod
+    def add_pool(cls, thread):
+        with cls.pool_lock:
+            cls.pool.append(thread)
+
+    @classmethod
+    def remove_pool(cls, thread):
+        with cls.pool_lock:
+            cls.pool.remove(thread)
+
+    def __init__(self, sock, addr):
+        Thread.__init__(self)
+        self.name = '%s(%s)' % (self.__class__.__name__[:-6], self.name[7:])
+        self.sock = sock
+        self.addr = addr
+        self.pair = None
+
+    def run(self):
+        logging.info('connection from %s', self.addr[0])
+        BaseThread.add_pool(self)
+        try:
+            self.run_safe()
+        except Exception as e:
+            self.shutdown()
+            if type(e) != SocketClosedException:
+                logging.warning(str(e))
+        BaseThread.remove_pool(self)
+        logging.info('closed')
+
+    def shutdown(self):
+        if not self.sock:
+            return
+
+        if self.pair:
+            self.pair.pair = None
+            self.pair.shutdown()
+            self.pair = None
+
+        sock = self.sock
+        self.sock = None
+        try:
+            sock.shutdown(socket.SHUT_RDWR)
+            sock.close()
+        except:
+            pass
+
+    def read(self, count):
+        data = self.sock.recv(count)
+        if not data:
+            raise SocketClosedException
+        return data
+
+    def readFully(self, toread):
+        buf = bytearray(toread)
+        view = memoryview(buf)
+        while toread:
+            nbytes = self.sock.recv_into(view, toread)
+            if not nbytes:
+                raise SocketClosedException
+            view = view[nbytes:]
+            toread -= nbytes
+        return buf
+
+    def readUInt8(self):
+        data = self.readFully(1)
+        return struct.unpack('!B', data)[0]
+
+    def readUInt16(self):
+        data = self.readFully(2)
+        return struct.unpack('!H', data)[0]
+
+    def readUInt32(self):
+        data = self.readFully(4)
+        return struct.unpack('!I', data)[0]
+
+    def readUInt64(self):
+        data = self.readFully(8)
+        return struct.unpack('!Q', data)[0]
+
+    def readInt8(self):
+        data = self.readFully(1)
+        return struct.unpack('!b', data)[0]
+
+    def readInt16(self):
+        data = self.readFully(2)
+        return struct.unpack('!h', data)[0]
+
+    def readInt32(self):
+        data = self.readFully(4)
+        return struct.unpack('!i', data)[0]
+
+    def readInt64(self):
+        data = self.readFully(8)
+        return struct.unpack('!q', data)[0]
+
+    def readUTF8(self):
+        nbytes = self.readUInt32()
+        if nbytes > 1024:
+            raise Exception('utf-8 string too long')
+        s = u''
+        if nbytes > 0:
+            data = readFully(nbytes)
+            s = data.decode('utf-8', 'ignore')
+        return s
+
+    def write(self, data):
+        self.sock.send(data)
+
+    def writeFully(self, data):
+        self.sock.sendall(data)
+
+    def writeUInt8(self, n):
+        data = struct.pack('!B', ctypes.c_uint8(n).value)
+        self.writeFully(data)
+
+    def writeUInt16(self, n):
+        data = struct.pack('!H', ctypes.c_uint16(n).value)
+        self.writeFully(data)
+
+    def writeUInt32(self, n):
+        data = struct.pack('!I', ctypes.c_uint32(n).value)
+        self.writeFully(data)
+
+    def writeUInt64(self, n):
+        data = struct.pack('!Q', ctypes.c_uint64(n).value)
+        self.writeFully(data)
+
+    def writeInt8(self, n):
+        data = struct.pack('!b', ctypes.c_int8(n).value)
+        self.writeFully(data)
+
+    def writeInt16(self, n):
+        data = struct.pack('!h', ctypes.c_int16(n).value)
+        self.writeFully(data)
+
+    def writeInt32(self, n):
+        data = struct.pack('!i', ctypes.c_int32(n).value)
+        self.writeFully(data)
+
+    def writeInt64(self, n):
+        data = struct.pack('!q', ctypes.c_int64(n).value)
+        self.writeFully(data)
+
+    def writeUTF8(self, s):
+        data = s.encode('utf-8')
+        self.writeUInt32(len(data))
+        self.writeFully(data)
+
+
+class ServerThread(BaseThread):
+    sessions = {}
+    sessions_lock = RLock()
+
+    def __init__(self, *args, **kwargs):
+        super(ServerThread, self).__init__(*args, **kwargs)
+        self.session_id = 0
+        self.readbuf = ''
+        self.readbuf_lock = RLock()
+
+    def run_safe(self):
+        self.session_phase()
+        self.wait_for_paring()
+        self.paired_phase()
+
+    def shutdown(self):
+        super(ServerThread, self).shutdown()
+        with ServerThread.sessions_lock:
+            if ServerThread.sessions.has_key(self.session_id):
+                del ServerThread.sessions[self.session_id]
+
+    def session_phase(self):
+        session_id = self.readUInt32()
+        logging.debug('requested session id %09d', session_id)
+
+        with ServerThread.sessions_lock:
+            while session_id < MIN_SESSION_ID or \
+                  session_id > MAX_SESSION_ID or \
+                  ServerThread.sessions.has_key(session_id):
+                session_id = randrange(MIN_SESSION_ID, MAX_SESSION_ID + 1)
+            ServerThread.sessions[session_id] = self
+
+        self.session_id = session_id
+        self.writeUInt32(session_id)
+        logging.info('assigned session id %09d', session_id)
+
+    def wait_for_paring(self):
+        while not self.pair:
+            data = self.read(READ_SIZE)
+            with self.readbuf_lock:
+                self.readbuf += data
+                if len(self.readbuf) > 1024:
+                    raise Exception('readbuf overflow')
+
+    def paired_phase(self):
+        with self.readbuf_lock:
+            self.pair.writeFully(self.readbuf)
+            self.readbuf = ''
+
+        while self.pair:
+            data = self.read(READ_SIZE)
+            self.pair.writeFully(data)
+
+
+class ViewerThread(BaseThread):
+    def run_safe(self):
+        self.session_phase()
+        self.paired_phase()
+
+    def session_phase(self):
+        while not self.pair:
+            requested_session_id = self.readUInt32()
+            logging.debug('requested session id %09d', requested_session_id)
+            with ServerThread.sessions_lock:
+                for session_id, thread in ServerThread.sessions.iteritems():
+                    if session_id == requested_session_id:
+                        self.pair = thread
+                        thread.pair = self
+                        break
+            self.writeUInt32(1 if self.pair else 0)
+        logging.info('paired with %s', self.pair.name)
+
+    def paired_phase(self):
+        with self.pair.readbuf_lock:
+            self.writeFully(self.pair.readbuf)
+            self.pair.readbuf = ''
+
+        while True:
+            data = self.read(READ_SIZE)
+            self.pair.writeFully(data)
 
 
 if __name__ == '__main__':
