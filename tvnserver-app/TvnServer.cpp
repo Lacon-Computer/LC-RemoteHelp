@@ -147,9 +147,16 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
 
 void TvnServer::getServerInfo(TvnServerInfo *info)
 {
-  info->m_statusText.format(_T("%s - %s"),
-                            StringTable::getString(IDS_TVNSERVER_APP),
-                            StringTable::getString(IDS_SERVER_NOT_LISTENING));
+  RfbClientInfoList clients;
+  m_rfbClientManager->getClientsInfo(&clients);
+
+  if (clients.size() == 0) {
+    info->m_statusText.format(_T("%s - Waiting"),
+      StringTable::getString(IDS_TVNSERVER_APP));
+  } else {
+    info->m_statusText.format(_T("%s - In session"),
+      StringTable::getString(IDS_TVNSERVER_APP));
+  }
 }
 
 void TvnServer::generateExternalShutdownSignal()

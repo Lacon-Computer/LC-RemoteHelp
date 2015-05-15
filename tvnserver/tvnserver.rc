@@ -210,7 +210,6 @@ END
 STRINGTABLE
 BEGIN
     IDS_TVNSERVER_USAGE     "LC RemoteHelp supports the following command-line options:\n\nlcremotehelp\t-help\nlcremotehelp\t[ -run ]\nlcremotehelp\t-controlapp\nlcremotehelp\t-controlapp\n\t   { -reload | -shutdown }"
-    IDS_SERVER_NOT_LISTENING "not listening"
     IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER 
                             "Failed to connect to LC RemoteHelp."
     IDS_MBC_TVNSERVER_USAGE "LC RemoteHelp Usage Help"
