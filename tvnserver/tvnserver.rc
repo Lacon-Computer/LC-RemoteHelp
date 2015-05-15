@@ -229,6 +229,10 @@ BEGIN
     IDS_TVNSERVER_APP       "LC RemoteHelp"
     IDS_LICENSING_INFO      "Licensing Terms: GNU General Public License version 2"
     IDS_URL_GITHUB_PROJECT  "https://github.com/Lacon-Computer/LC-RemoteHelp"
+    IDS_NEW_CLIENT_BALLOON_MESSAGE 
+                            "%s has joined your session. They are now able to see your screen and interact with your computer."
+    IDS_NEW_CLIENT_BALLOON_CAPTION "LC RemoteHelp Session Active"
+    IDS_NEW_CLIENT_UNKNOWN_CONTACT "Someone"
 END
 
 #endif    // English (United States) resources

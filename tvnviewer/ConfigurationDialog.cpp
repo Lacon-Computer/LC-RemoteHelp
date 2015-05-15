@@ -121,6 +121,7 @@ BOOL ConfigurationDialog::onInitDialog()
 {
   setControlById(m_showToolBars, IDC_CSHOWTOOLBARS); 
   setControlById(m_warnAtSwitching, IDC_CWARNATSW);
+  setControlById(m_contactName, IDC_CONTACT_NAME);
   setControlById(m_numberConn, IDC_ENUMCON);
   setControlById(m_snumConn, IDC_SNUMCON);
   setControlById(m_reverseConn, IDC_EREVCON);
@@ -155,6 +156,9 @@ void ConfigurationDialog::updateControlValues()
 
   txt.format(_T("%d"), config->getLogLevel());
   m_verbLvl.setText(txt.getString());
+
+  config->getContactName(&txt);
+  m_contactName.setText(txt.getString());
 
   txt.format(_T("%d"), config->getHistoryLimit());
   m_numberConn.setText(txt.getString());
@@ -219,6 +223,9 @@ void ConfigurationDialog::onOkPressed()
   m_verbLvl.getText(&text);
   StringParser::parseInt(text.getString(), &intVal);
   config->setLogLevel(intVal);
+
+  m_contactName.getText(&text);
+  config->setContactName(text.getString());
 
   int oldLimit = config->getHistoryLimit();
   m_numberConn.getText(&text);

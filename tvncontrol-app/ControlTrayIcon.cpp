@@ -187,6 +187,21 @@ void ControlTrayIcon::syncStatusWithServer()
 
     setText(info.m_statusText.getString());
 
+    if (clients.size() > m_lastKnownNumClients) {
+      StringStorage message;
+      if (clients.back()->m_contactName.isEmpty()) {
+        message.format(StringTable::getString(IDS_NEW_CLIENT_BALLOON_MESSAGE),
+          StringTable::getString(IDS_NEW_CLIENT_UNKNOWN_CONTACT));
+      } else {
+        message.format(StringTable::getString(IDS_NEW_CLIENT_BALLOON_MESSAGE),
+          clients.back()->m_contactName.getString());
+      }
+      showBalloon(message.getString(),
+        StringTable::getString(IDS_NEW_CLIENT_BALLOON_CAPTION), 5000);
+    }
+
+    m_lastKnownNumClients = clients.size();
+
     // Cleanup.
     for (std::list<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
       delete *it;

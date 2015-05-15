@@ -43,6 +43,7 @@ public:
   virtual ~RfbInitializer();
 
   void sessionPhase();
+  void contactPhase();
   void authPhase();
   void afterAuthPhase(const CapContainer *srvToClCaps,
                       const CapContainer *clToSrvCaps,

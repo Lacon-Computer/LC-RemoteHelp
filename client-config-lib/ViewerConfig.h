@@ -89,6 +89,9 @@ public:
   // Returns "prompt on fullscreen flag"
   bool isPromptOnFullscreenEnabled() const;
 
+  void setContactName(const TCHAR *contactName);
+  void getContactName(StringStorage *contactName);
+
   // Returns path to log file if file is avaliable to write,
   // returns NULL otherwise
   const TCHAR *getPathToLogFile() const;
@@ -109,6 +112,8 @@ protected:
   // If set then app must show promt dialog when viewer window
   // become fullscreen
   bool m_promptOnFullscreen;
+  // Contact name
+  StringStorage m_contactName;
   // Log file
   StringStorage m_pathToLogFile;
   StringStorage m_logName;

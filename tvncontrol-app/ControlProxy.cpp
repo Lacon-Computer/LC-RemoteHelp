@@ -75,12 +75,15 @@ void ControlProxy::getClientsList(list<RfbClientInfo *> *clients)
 
   for (UINT32 i = 0; i < count; i++) {
     StringStorage peerAddr;
+    StringStorage contactName;
 
     UINT32 id = m_gate->readUInt32();
 
     m_gate->readUTF8(&peerAddr);
+    m_gate->readUTF8(&contactName);
 
-    RfbClientInfo *clientInfo = new RfbClientInfo(id, peerAddr.getString());
+    RfbClientInfo *clientInfo = new RfbClientInfo(id, peerAddr.getString(),
+                                                  contactName.getString());
 
     clients->push_back(clientInfo);
   }

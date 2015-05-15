@@ -192,8 +192,8 @@ class BaseThread(Thread):
             raise Exception('utf-8 string too long')
         s = u''
         if nbytes > 0:
-            data = readFully(nbytes)
-            s = data.decode('utf-8', 'ignore')
+            data = self.readFully(nbytes)
+            s = data.decode('utf-8', 'ignore')[:-1]
         return s
 
     def write(self, data):
@@ -235,7 +235,7 @@ class BaseThread(Thread):
         self.writeFully(data)
 
     def writeUTF8(self, s):
-        data = s.encode('utf-8')
+        data = s.encode('utf-8') + '\0'
         self.writeUInt32(len(data))
         self.writeFully(data)
 
@@ -302,16 +302,21 @@ class ViewerThread(BaseThread):
         self.paired_phase()
 
     def session_phase(self):
+        contact_name = self.readUTF8()
+        logging.debug('got contact name "%s"', contact_name)
+
         while not self.pair:
             requested_session_id = self.readUInt32()
             logging.debug('requested session id %09d', requested_session_id)
             with ServerThread.sessions_lock:
                 for session_id, thread in ServerThread.sessions.iteritems():
-                    if session_id == requested_session_id:
+                    if not thread.pair and session_id == requested_session_id:
                         self.pair = thread
                         thread.pair = self
                         break
-            self.writeUInt32(1 if self.pair else 0)
+            self.writeUInt8(1 if self.pair else 0)
+
+        self.pair.writeUTF8(contact_name)
         logging.info('paired with %s', self.pair.name)
 
     def paired_phase(self):

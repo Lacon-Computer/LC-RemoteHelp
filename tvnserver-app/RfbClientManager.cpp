@@ -316,10 +316,13 @@ void RfbClientManager::getClientsInfo(RfbClientInfoList *list)
     RfbClient *each = *it;
     if (each->getClientState() == IN_NORMAL_PHASE) {
       StringStorage peerHost;
+      StringStorage contactName;
 
       each->getPeerHost(&peerHost);
+      each->getContactName(&contactName);
 
-      list->push_back(RfbClientInfo(each->getId(), peerHost.getString()));
+      list->push_back(RfbClientInfo(each->getId(), peerHost.getString(),
+                      contactName.getString()));
     }
   }
 }

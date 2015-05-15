@@ -82,6 +82,9 @@ public:
 
   void setViewOnlyFlag(bool value);
 
+  void getContactName(StringStorage *contactName);
+  void setContactName(const TCHAR *contactName);
+
   // Changes current dynViewPort value by new.
   void changeDynViewPort(const ViewPortState *dynViewPort);
 
@@ -141,6 +144,7 @@ private:
 
   // Information
   unsigned int m_id;
+  StringStorage m_contactName;
 };
 
 #endif // __RFBCLIENT_H__

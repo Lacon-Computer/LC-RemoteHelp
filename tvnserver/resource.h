@@ -33,6 +33,9 @@
 #define IDS_TVNSERVER_APP               40096
 #define IDS_LICENSING_INFO              40100
 #define IDS_URL_GITHUB_PROJECT          40101
+#define IDS_NEW_CLIENT_BALLOON_MESSAGE  40102
+#define IDS_NEW_CLIENT_BALLOON_CAPTION  40103
+#define IDS_NEW_CLIENT_UNKNOWN_CONTACT  40104
 
 // Next default values for new objects
 // 

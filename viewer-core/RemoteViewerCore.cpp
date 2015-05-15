@@ -57,6 +57,7 @@
 #include "RichCursorDecoder.h"
 
 #include "tvnviewer/SessionEntryDialog.h"
+#include "client-config-lib/ViewerConfig.h"
 
 #include <algorithm>
 
@@ -500,8 +501,13 @@ void RemoteViewerCore::connectToHost()
 void RemoteViewerCore::session()
 {
   SessionEntryDialog sessionEntryDialog;
+  StringStorage contactName;
   unsigned int sessionId;
-  unsigned int status;
+  unsigned char status;
+
+  ViewerConfig::getInstance()->getContactName(&contactName);
+  m_output->writeUTF8(contactName.getString());
+  m_output->flush();
 
   while (true) {
     if (sessionEntryDialog.showModal()) {
@@ -512,7 +518,7 @@ void RemoteViewerCore::session()
 
     m_output->writeUInt32(sessionId);
     m_output->flush();
-    status = m_input->readUInt32();
+    status = m_input->readUInt8();
 
     if (status > 0) {
       break;

@@ -141,6 +141,16 @@ void RfbClient::setViewOnlyFlag(bool value)
   m_clientInputHandler->setViewOnlyFlag(m_viewOnly);
 }
 
+void RfbClient::getContactName(StringStorage *contactName)
+{
+  contactName->setString(m_contactName.getString());
+}
+
+void RfbClient::setContactName(const TCHAR *contactName)
+{
+  m_contactName.setString(contactName);
+}
+
 void RfbClient::changeDynViewPort(const ViewPortState *dynViewPort)
 {
   AutoLock al(&m_viewPortMutex);
@@ -191,10 +201,15 @@ void RfbClient::execute()
     try {
       m_log->info(_T("Entering session phase"));
       rfbInitializer.sessionPhase();
+      m_log->debug(_T("Organization = %s"), rfbInitializer.getOrganization().getString());
       m_log->debug(_T("Session ID = %d"), rfbInitializer.getSessionId());
 
       SessionPresenterThread sessionPresenterThread(&rfbInitializer);
       sessionPresenterThread.resume();
+
+      m_log->info(_T("Entering contact phase"));
+      rfbInitializer.contactPhase();
+      m_log->debug(_T("ContactName = %s"), m_contactName.getString());
 
       m_log->info(_T("Entering RFB initialization phase 1"));
       rfbInitializer.authPhase();

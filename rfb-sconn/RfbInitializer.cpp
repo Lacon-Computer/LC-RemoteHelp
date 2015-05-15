@@ -75,6 +75,14 @@ void RfbInitializer::sessionPhase()
   }
 }
 
+void RfbInitializer::contactPhase()
+{
+  StringStorage contactName;
+
+  m_input->readUTF8(&contactName);
+  m_client->setContactName(contactName.getString());
+}
+
 void RfbInitializer::authPhase()
 {
   initVersion();

@@ -79,6 +79,8 @@ bool ViewerConfig::loadFromStorage(SettingsManager *storage)
     loadAllOk = false;
   }
 
+  TEST_FAIL(storage->getString(_T("ContactName"), &m_contactName), loadAllOk);
+
   return loadAllOk;
 }
 
@@ -91,6 +93,7 @@ bool ViewerConfig::saveToStorage(SettingsManager *storage) const
   TEST_FAIL(storage->setInt(_T("HistoryLimit"), m_historyLimit), saveAllOk);
   TEST_FAIL(storage->setBoolean(_T("NoToolbar"), m_showToolbar), saveAllOk);
   TEST_FAIL(storage->setBoolean(_T("SkipFullScreenPrompt"), !m_promptOnFullscreen), saveAllOk);
+  TEST_FAIL(storage->setString(_T("ContactName"), m_contactName.getString()), saveAllOk);
 
   return saveAllOk;
 }
@@ -185,6 +188,18 @@ bool ViewerConfig::isPromptOnFullscreenEnabled() const
 {
   AutoLock l(&m_cs);
   return m_promptOnFullscreen;
+}
+
+void ViewerConfig::setContactName(const TCHAR *contactName)
+{
+  AutoLock l(&m_cs);
+  m_contactName.setString(contactName);
+}
+
+void ViewerConfig::getContactName(StringStorage *contactName)
+{
+  AutoLock l(&m_cs);
+  contactName->setString(m_contactName.getString());
 }
 
 const TCHAR *ViewerConfig::getPathToLogFile() const

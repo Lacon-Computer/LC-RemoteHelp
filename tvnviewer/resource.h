@@ -156,6 +156,8 @@
 #define IDC_OPEN_LOG_FOLDER_BUTTON      1087
 #define IDC_CWARN_FS                    1088
 #define IDC_SESSION_ID                  1089
+#define IDC_EDIT1                       1090
+#define IDC_CONTACT_NAME                1090
 #define ID_CONN_OPTIONS                 40001
 #define ID_CONN_INFO                    40002
 #define ID_SHOW_TOOLBAR                 40004
@@ -170,7 +172,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        232
 #define _APS_NEXT_COMMAND_VALUE         40010
-#define _APS_NEXT_CONTROL_VALUE         1090
+#define _APS_NEXT_CONTROL_VALUE         1091
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

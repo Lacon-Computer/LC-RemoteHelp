@@ -152,6 +152,7 @@ void ControlClient::getClientsListMsgRcvd()
   for (RfbClientInfoList::iterator it = clients.begin(); it != clients.end(); it++) {
     m_gate->writeUInt32((*it).m_id);
     m_gate->writeUTF8((*it).m_peerAddr.getString());
+    m_gate->writeUTF8((*it).m_contactName.getString());
   }
 }
 

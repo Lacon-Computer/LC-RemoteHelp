@@ -128,6 +128,7 @@ protected:
 
   // Last known TightVNC server information.
   TvnServerInfo m_lastKnownServerInfo;
+  unsigned int m_lastKnownNumClients;
   // Thread-safety of m_lastKnownServerInfo member.
   LocalMutex m_serverInfoMutex;
 
