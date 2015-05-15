@@ -27,6 +27,7 @@ import sys
 from threading import RLock, Thread
 
 
+ORGANIZATION_NAME = u'Lacon Computer'
 SERVER_PORT = 5499
 VIEWER_PORT = 5899
 MIN_SESSION_ID = 1
@@ -261,6 +262,8 @@ class ServerThread(BaseThread):
                 del ServerThread.sessions[self.session_id]
 
     def session_phase(self):
+        self.writeUTF8(ORGANIZATION_NAME)
+
         session_id = self.readUInt32()
         logging.debug('requested session id %09d', session_id)
 

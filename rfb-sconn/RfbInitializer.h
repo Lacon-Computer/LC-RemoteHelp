@@ -56,6 +56,7 @@ public:
 
   bool getTightEnabledFlag() const { return m_tightEnabled; }
   unsigned int getSessionId() const { return m_sessionId; }
+  StringStorage getOrganization() const { return m_organization; }
 
 protected:
   void initVersion();
@@ -95,6 +96,8 @@ protected:
 
   ClientAuthListener *m_extAuthListener;
   RfbClient *m_client;
+
+  StringStorage m_organization;
 };
 
 #endif // __RFBINITIALIZER_H__

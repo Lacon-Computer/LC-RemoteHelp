@@ -26,17 +26,20 @@
 #include "gui/Control.h"
 #include "gui/Font.h"
 
+#include "rfb-sconn/RfbInitializer.h"
+
 class SessionPresenterDialog : public BaseDialog
 {
 public:
   SessionPresenterDialog(WindowsApplication *windowsApplication,
-    unsigned int sessionId);
+    RfbInitializer *rfbInitializer);
   virtual ~SessionPresenterDialog();
 
   int getResult();
 
 protected:
   void onCancelButtonClick();
+  void updateOrganizationLabel();
   void updateConnectorIdLabel();
 
 protected:
@@ -50,9 +53,10 @@ protected:
 
 protected:
   WindowsApplication *m_windowsApplication;
+  Control m_organizationLabel;
   Control m_sessionIdLabel;
   Font m_sessionIdFont;
-  unsigned int m_sessionId;
+  RfbInitializer *m_rfbInitializer;
   int m_result;
 };
 

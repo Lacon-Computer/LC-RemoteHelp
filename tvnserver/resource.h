@@ -13,6 +13,7 @@
 #define IDC_VISIT_GITHUB_PROJECT_BUTTON 1012
 #define IDC_STATIC_LICENSING            1016
 #define IDC_SESSION_ID                  1097
+#define IDC_ORGANIZATION                1098
 #define ID_ABOUT_TIGHTVNC_MENUITEM      40001
 #define IDR_TRAYMENU                    40002
 #define ID_CLOSE_CONTROL_INTERFACE      40004
@@ -44,7 +45,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         40101
-#define _APS_NEXT_CONTROL_VALUE         1098
+#define _APS_NEXT_CONTROL_VALUE         1099
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

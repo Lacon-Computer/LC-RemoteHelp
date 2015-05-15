@@ -191,10 +191,9 @@ void RfbClient::execute()
     try {
       m_log->info(_T("Entering session phase"));
       rfbInitializer.sessionPhase();
-      unsigned int sessionId = rfbInitializer.getSessionId();
-      m_log->debug(_T("Session ID = %d"), sessionId);
+      m_log->debug(_T("Session ID = %d"), rfbInitializer.getSessionId());
 
-      SessionPresenterThread sessionPresenterThread(this, sessionId);
+      SessionPresenterThread sessionPresenterThread(&rfbInitializer);
       sessionPresenterThread.resume();
 
       m_log->info(_T("Entering RFB initialization phase 1"));

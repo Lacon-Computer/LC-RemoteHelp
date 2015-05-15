@@ -19,13 +19,12 @@
 //
 
 #include "SessionPresenterThread.h"
-#include "TvnServerApplication.h"
+#include "SessionPresenterDialog.h"
+#include "TvnServer.h"
 
-SessionPresenterThread::SessionPresenterThread(Thread *parentThread,
-  unsigned int sessionId)
+SessionPresenterThread::SessionPresenterThread(RfbInitializer *rfbInitializer)
   : WindowsApplication((HINSTANCE)GetModuleHandle(NULL), _T("SessionPresenterWindow")),
-  m_parentThread(parentThread),
-  m_sessionId(sessionId)
+  m_rfbInitializer(rfbInitializer)
 {
 }
 
@@ -37,7 +36,7 @@ SessionPresenterThread::~SessionPresenterThread()
 
 void SessionPresenterThread::execute()
 {
-  SessionPresenterDialog sessionPresenterDialog(this, m_sessionId);
+  SessionPresenterDialog sessionPresenterDialog(this, m_rfbInitializer);
 
   sessionPresenterDialog.show();
   sessionPresenterDialog.setForeground();
@@ -47,6 +46,6 @@ void SessionPresenterThread::execute()
 
   int result = sessionPresenterDialog.getResult();
   if (result == 1) {
-    m_parentThread->terminate();
+    TvnServer::getInstance()->generateExternalShutdownSignal();
   }
 }

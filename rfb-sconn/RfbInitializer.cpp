@@ -64,6 +64,8 @@ void RfbInitializer::sessionPhase()
   ServerConfig *srvConf = conf->getServerConfig();
   unsigned int id = srvConf->getLastSessionId();
 
+  m_input->readUTF8(&m_organization);
+
   m_output->writeUInt32(id);
   m_sessionId = m_input->readUInt32();
 

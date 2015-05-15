@@ -23,10 +23,10 @@
 #include "tvnserver/resource.h"
 
 SessionPresenterDialog::SessionPresenterDialog(WindowsApplication *windowsApplication,
-  unsigned int sessionId)
+  RfbInitializer *rfbInitializer)
   : BaseDialog(IDD_SESSION_PRESENTER),
   m_windowsApplication(windowsApplication),
-  m_sessionId(sessionId),
+  m_rfbInitializer(rfbInitializer),
   m_result(0)
 {
 }
@@ -46,12 +46,22 @@ void SessionPresenterDialog::onCancelButtonClick()
   kill(IDCANCEL);
 }
 
+void SessionPresenterDialog::updateOrganizationLabel()
+{
+  StringStorage labelText;
+  labelText.format(_T("Connected to %s."), m_rfbInitializer->getOrganization().getString());
+
+  m_organizationLabel.setText(labelText.getString());
+}
+
 void SessionPresenterDialog::updateConnectorIdLabel()
 {
+  unsigned int sessionId = m_rfbInitializer->getSessionId();
   unsigned int n[3];
-  n[0] = (m_sessionId / 1000000) % 1000;
-  n[1] = (m_sessionId / 1000) % 1000;
-  n[2] = (m_sessionId / 1) % 1000;
+
+  n[0] = (sessionId / 1000000) % 1000;
+  n[1] = (sessionId / 1000) % 1000;
+  n[2] = (sessionId / 1) % 1000;
 
   StringStorage labelText;
   labelText.format(_T("%03d %03d %03d"), n[0], n[1], n[2]);
@@ -61,10 +71,13 @@ void SessionPresenterDialog::updateConnectorIdLabel()
 
 BOOL SessionPresenterDialog::onInitDialog()
 {
+  m_organizationLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_ORGANIZATION));
+
   m_sessionIdLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_SESSION_ID));
   m_sessionIdFont.setFont(_T("Arial"), 32, true);
   m_sessionIdLabel.setFont(&m_sessionIdFont);
 
+  updateOrganizationLabel();
   updateConnectorIdLabel();
 
   return FALSE;

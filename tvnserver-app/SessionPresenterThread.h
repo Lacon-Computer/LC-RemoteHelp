@@ -21,23 +21,22 @@
 #ifndef _SESSION_PRESENTER_THREAD_H_
 #define _SESSION_PRESENTER_THREAD_H_
 
-#include "thread/ThreadCollector.h"
+#include "thread/Thread.h"
 #include "win-system/WindowsApplication.h"
-#include "SessionPresenterDialog.h"
+#include "rfb-sconn/RfbInitializer.h"
 
 class SessionPresenterThread : public Thread,
                                public WindowsApplication
 {
 public:
-  SessionPresenterThread(Thread *parentThread, unsigned int sessionId);
+  SessionPresenterThread(RfbInitializer *rfbInitializer);
   virtual ~SessionPresenterThread();
 
 protected:
   virtual void execute();
 
 private:
-  unsigned int m_sessionId;
-  Thread *m_parentThread;
+  RfbInitializer *m_rfbInitializer;
 };
 
 #endif
