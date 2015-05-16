@@ -143,16 +143,11 @@ class BaseThread(Thread):
             raise SocketClosedException
         return data
 
-    def readFully(self, toread):
-        buf = bytearray(toread)
-        view = memoryview(buf)
-        while toread:
-            nbytes = self.sock.recv_into(view, toread)
-            if not nbytes:
-                raise SocketClosedException
-            view = view[nbytes:]
-            toread -= nbytes
-        return buf
+    def readFully(self, count):
+        data = ''
+        while len(data) < count:
+            data += self.read(count - len(data))
+        return data
 
     def readUInt8(self):
         data = self.readFully(1)
