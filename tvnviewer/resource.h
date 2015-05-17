@@ -71,6 +71,7 @@
 #define IDS_TB_SCALEAUTO                214
 #define IDS_TB_FULLSCREEN               215
 #define IDS_TB_CONFIGURATION            216
+#define IDS_URL_GITHUB_PROJECT          217
 #define IDD_FS_WARNING                  230
 #define IDD_SESSION_ENTRY               231
 #define IDC_LABEL                       1001
@@ -149,6 +150,8 @@
 #define IDC_STQUALITY                   1077
 #define IDC_STQUALITY2                  1078
 #define IDC_VISIT_WEB_SITE_BUTTON       1079
+#define IDC_VISIT_GITHUB_PROJECT_BUTTON2 1080
+#define IDC_VISIT_GITHUB_PROJECT_BUTTON 1080
 #define IDC_STATIC_VERSION              1081
 #define IDC_STATIC_LICENSING            1082
 #define IDC_LISTENING                   1083
@@ -156,7 +159,6 @@
 #define IDC_OPEN_LOG_FOLDER_BUTTON      1087
 #define IDC_CWARN_FS                    1088
 #define IDC_SESSION_ID                  1089
-#define IDC_EDIT1                       1090
 #define IDC_CONTACT_NAME                1090
 #define ID_CONN_OPTIONS                 40001
 #define ID_CONN_INFO                    40002

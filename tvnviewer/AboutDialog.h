@@ -52,6 +52,10 @@ protected:
    */
   void onVisitSiteButtonClick();
   /**
+   * Called when user press "Visit Github Project Page" button.
+   */
+  void onVisitGithubButtonClick();
+  /**
    * Opens url in default browser or shows error message on fail.
    */
   void openUrl(const TCHAR *url);

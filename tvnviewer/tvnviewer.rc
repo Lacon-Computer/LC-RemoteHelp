@@ -34,6 +34,7 @@ BEGIN
     LTEXT           "Copyright (C) 2015 Lacon Computer\nCopyright (C) 2008-2013 GlavSoft LLC.\nAll Rights Reserved.",IDC_STATIC,107,38,189,25
     LTEXT           "",IDC_STATIC_LICENSING,107,67,189,10
     DEFPUSHBUTTON   "Visit the Web Site",IDC_VISIT_WEB_SITE_BUTTON,7,78,94,16,WS_GROUP
+    PUSHBUTTON      "Visit GitHub Project Page",IDC_VISIT_GITHUB_PROJECT_BUTTON,107,78,94,16,WS_GROUP
     PUSHBUTTON      "Close This Window",IDCANCEL,208,78,94,16
 END
 
@@ -518,6 +519,7 @@ BEGIN
     IDS_TB_SCALEAUTO        "Scale: Auto"
     IDS_TB_FULLSCREEN       "&Full screen\tCtrl+Alt+Shift+F"
     IDS_TB_CONFIGURATION    "&Configuration..."
+    IDS_URL_GITHUB_PROJECT  "https://github.com/Lacon-Computer/LC-RemoteHelp"
 END
 
 STRINGTABLE
